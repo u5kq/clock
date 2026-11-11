@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#f7f6f2">
 <meta name="description" content="DAYLINE — 時計・天気・ニュース・防災情報をひとつの画面に。">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23dcd6eb'/%3E%3Cpath d='M16 32h32M32 16v32' stroke='%235e5870' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23090b0e'/%3E%3Cpath d='M14 16h36v32H14z' fill='none' stroke='%23f4f6f8' stroke-width='4'/%3E%3Cpath d='M22 25h20M22 33h20M22 41h11' stroke='%23f4f6f8' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
 <title>DAYLINE — Daily Information Dashboard</title>
 <style>
 :root{color-scheme:light;--bg:#f7f6f2;--ink:#34343b;--muted:#85838d;--line:#e9e6e3;--white:#fff;--lav:#eee9f5;--sage:#e8f0e9;--blue:#e8eff6;--peach:#f7eee7;--butter:#f5f0df;--accent:#77708d}
@@ -1143,6 +1143,64 @@ html,body{background:#090b0e!important;color:#f4f5f6!important}
 .disaster-checked{color:#a0a6ad!important}
 @media(prefers-reduced-motion:reduce){.disaster-card.alert{animation:none}}
 
+
+/* DAYLINE 3.0 compact mono redesign */
+:root{color-scheme:dark;--bg:#090b0e;--ink:#f4f6f8;--muted:#9ba4ae;--line:#2c333b}
+html,body{background:#090b0e!important;color:#f4f6f8!important}
+.screen{max-width:1920px;padding:12px clamp(14px,1.8vw,30px) 10px}
+.topbar{padding-bottom:9px;border-color:#303740!important}
+.brand-mark{width:34px;height:34px;border-radius:9px;background:#f1f3f5!important;color:#101317!important;border:0!important;font-size:0}
+.brand-mark:after{content:"D";font-size:20px;font-weight:900}
+.brand{font-size:18px;letter-spacing:.18em;color:#fff}
+.tagline,.eyebrow,.card-note{color:#a0aab5!important}
+.live{color:#c2c8ce}.live-dot{background:#e4e8ec;box-shadow:0 0 0 4px #ffffff14}
+.fullscreen,.disaster-button,.test-button{background:#20262d!important;color:#f2f4f6!important;border:1px solid #414a54!important;border-radius:6px}
+.dashboard{gap:10px;padding-top:10px}
+.card,.mini-card{background:#151a20!important;border:1px solid #303841!important;border-radius:11px!important;box-shadow:0 7px 20px #0005!important}
+.card{padding:clamp(12px,1vw,17px)}
+.clock-card{background:linear-gradient(135deg,#242b33,#11161b)!important;border-color:#48525e!important;min-height:0}
+.clock-card .date{color:#fff!important;font-size:clamp(17px,1.4vw,22px);margin-top:10px}
+.clock-card .date-en{color:#aab3bd!important}
+.clock-card .time{color:#fff!important;font-size:clamp(76px,8vw,138px)!important;letter-spacing:-.07em!important;line-height:.98;margin-top:12px;text-shadow:0 4px 24px #0008}
+.clock-card .seconds{color:#aeb8c2!important}
+.clock-foot{color:#9ba5af!important;border-color:#ffffff20!important;margin-top:12px;padding-top:9px}
+.weather-card{min-height:0;background:#151a20!important}.weather-temp{color:#fff}
+.detail-label,.date-en,.news-meta,.source,.news-num,.calendar-weekday,.calendar-extra,.disaster-sub,.disaster-checked{color:#aab4be!important}
+.news-card{min-height:0;grid-column:span 2}.news-card h1{font-size:19px;color:#fff;margin:4px 0 0}
+.news-tabs{display:flex;flex-wrap:wrap;gap:5px;margin:10px 0 5px}
+.news-tab{border:1px solid #3a424b;background:#1b2128;color:#c5cdd5;border-radius:6px;padding:6px 10px;font-size:11px;cursor:pointer}
+.news-tab[aria-pressed=true]{background:#f1f3f5;color:#11161b;border-color:#f1f3f5;font-weight:800}
+.news-list{margin-top:4px}.news-item{padding:8px 0!important;border-color:#303841!important;grid-template-columns:20px minmax(0,1fr)!important;gap:9px!important}
+.news-title{color:#f0f3f6!important;font-size:clamp(11px,.85vw,14px)!important;line-height:1.4!important}
+.calendar-card{background:#151a20!important}.calendar-date{color:#fff!important}.calendar-extra{border-color:#303841!important}
+.disaster-card{background:#151a20!important;border:1px solid #38414b!important;border-radius:11px!important;padding:10px 14px!important;margin-top:9px}
+.disaster-title,.disaster-main{color:#f4f6f8!important}.disaster-status{background:#303841!important;color:#f2f4f6!important}
+.disaster-card.alert{background:#24080d!important;border:3px solid #ff2638!important;box-shadow:0 0 0 2px #ff263855,0 0 30px #ff263833!important}
+.disaster-card.alert .disaster-title,.disaster-card.alert .disaster-main{color:#fff!important}
+.disaster-card.alert .disaster-status{background:#e51d31!important;color:#fff!important}
+.disaster-card.alert .disaster-sub{color:#ffcbd0!important}
+.alert-overlay:not(.test-mode){background:#08090bed!important}
+.alert-overlay:not(.test-mode) .alert-panel{background:#17090d!important;border:4px solid #ff2638!important;box-shadow:0 0 0 9px #ff263833,0 28px 100px #000!important;border-radius:14px;text-align:left}
+.alert-overlay:not(.test-mode) .alert-panel:before{background:#ff2638!important;width:10px}
+.alert-overlay:not(.test-mode) .alert-kicker{background:#d7192d!important;color:#fff!important}
+.alert-overlay:not(.test-mode) .alert-headline{color:#fff!important}.alert-overlay:not(.test-mode) .alert-detail{color:#ffd9dd!important}
+.alert-overlay:not(.test-mode) .alert-close{background:#f4f5f6!important;color:#111!important}
+.alert-overlay.test-mode .alert-panel{background:#171a1e!important;border:3px dashed #c4cbd2!important}
+.alert-overlay.test-mode .alert-panel:before{background:#aeb6be!important}
+.alert-overlay.test-mode .alert-kicker{background:#424a52!important;color:#fff!important}
+.alert-overlay.test-mode .alert-headline{color:#fff!important}.alert-overlay.test-mode .alert-detail{color:#d2d8de!important}
+.alert-overlay.test-mode .alert-close{background:#eef0f2!important;color:#111!important}
+.lower-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:8px}
+.mini-card{padding:9px 12px;min-height:70px}.mini-content{color:#edf1f4;font-size:12px}
+.schedule-card{display:flex;flex-direction:column;gap:7px}
+.schedule-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.schedule-input{min-width:0;flex:1;background:#0e1217;border:1px solid #3b444e;color:#f3f5f7;border-radius:6px;padding:8px;font-size:11px}
+.schedule-action{background:#e8ebee;color:#11161b;border:0;border-radius:6px;padding:8px 10px;font-size:11px;font-weight:750;cursor:pointer}
+.schedule-result{font-size:10px;color:#b3bdc7;line-height:1.5;max-height:76px;overflow:auto}
+@media(min-width:1051px){html,body{height:auto;min-height:100%;overflow:auto}.screen{height:auto;min-height:100vh;overflow:visible}.dashboard{grid-template-columns:minmax(280px,1.05fr) minmax(220px,.8fr) minmax(360px,1.45fr);grid-template-rows:auto;align-items:stretch}.clock-card,.weather-card,.news-card{grid-column:auto;min-height:250px}.side-stack{grid-column:1/-1;display:block;min-height:0}.side-stack .calendar-card{min-height:0}.news-list{max-height:220px;overflow:auto}}
+@media(max-width:1050px){.dashboard{grid-template-columns:1fr 1fr}.clock-card,.news-card{grid-column:span 2}.side-stack{grid-column:span 2}.lower-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.screen{padding:12px}.dashboard{grid-template-columns:1fr}.clock-card,.weather-card,.news-card,.side-stack{grid-column:auto}.clock-card{min-height:220px}.clock-card .time{font-size:clamp(66px,17vw,100px)!important}.news-tab{padding:6px 8px}.lower-grid{grid-template-columns:1fr 1fr}.disaster-body{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -1174,7 +1232,7 @@ html,body{background:#090b0e!important;color:#f4f5f6!important}
  </section>
  <section class="card news-card">
   <div class="card-top"><div><div class="eyebrow">LATEST HEADLINES</div><h1>今日のニュース</h1></div><div class="card-note" id="news-count">TOP STORIES</div></div>
-  <div class="news-list" id="news-list" aria-live="polite"><div class="empty">最新ニュースを読み込んでいます…</div></div>
+  <div class="news-tabs" id="news-tabs" aria-label="ニュースの分野"><button class="news-tab" data-topic="NATION" aria-pressed="true">国内</button><button class="news-tab" data-topic="WORLD" aria-pressed="false">国際</button><button class="news-tab" data-topic="BUSINESS" aria-pressed="false">経済</button><button class="news-tab" data-topic="TECHNOLOGY" aria-pressed="false">科学・技術</button><button class="news-tab" data-topic="SPORTS" aria-pressed="false">スポーツ</button><button class="news-tab" data-topic="ENTERTAINMENT" aria-pressed="false">エンタメ</button></div><div class="news-list" id="news-list" aria-live="polite"><div class="empty">最新ニュースを読み込んでいます…</div></div>
   <div class="card-note" id="updated" style="text-align:right;margin-top:10px">更新を準備中</div>
  </section>
  <div class="side-stack">
@@ -1209,6 +1267,7 @@ html,body{background:#090b0e!important;color:#f4f5f6!important}
  <section class="mini-card"><div class="mini-label">WORLD CLOCK · LONDON</div><div class="mini-content" id="london-time">--:--</div></section>
  <section class="mini-card"><div class="mini-label">WORLD CLOCK · NEW YORK</div><div class="mini-content" id="newyork-time">--:--</div></section>
  <section class="mini-card"><div class="mini-label">TODAY'S NOTE</div><div class="mini-content" id="daily-note">小さな一歩を積み重ねる一日に。</div></section>
+ <section class="mini-card schedule-card"><div class="mini-label">SCHEDULE · URL連携</div><div class="schedule-row"><input class="schedule-input" id="schedule-url" type="url" placeholder="公開カレンダー / ICS URL"><button class="schedule-action" id="schedule-save">保存</button></div><div class="schedule-row"><button class="schedule-action" id="schedule-load">予定を取得</button><span class="schedule-result" id="schedule-result">公開ICS URLを登録して予定を読み込めます。</span></div></section>
 </div>
 <footer class="footer"><span>DAYLINE — YOUR PERSONAL INFORMATION DESK.</span><span>情報は取得元の配信状況により遅延・停止する場合があります。</span></footer>
 </main>
@@ -1232,23 +1291,18 @@ updateClock();setInterval(updateClock,1000);
 document.getElementById("fullscreen-button").addEventListener("click",async()=>{try{if(!document.fullscreenElement)await document.documentElement.requestFullscreen();else await document.exitFullscreen()}catch(e){document.getElementById("fullscreen-button").textContent="F11で全画面表示"}});
 document.addEventListener("fullscreenchange",()=>{document.getElementById("fullscreen-button").textContent=document.fullscreenElement?"全画面を終了":"全画面表示 ↗"});
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-const feed="https://news.google.com/rss?hl=ja&gl=JP&ceid=JP:ja";
+const newsTopics={NATION:"国内",WORLD:"国際",BUSINESS:"経済",TECHNOLOGY:"科学・技術",SPORTS:"スポーツ",ENTERTAINMENT:"エンタメ"};
+let selectedNewsTopic=localStorage.getItem("dayline_news_topic")||"NATION";
 async function loadNews(){
- const list=document.getElementById("news-list");
- try{
-  const res=await fetch("https://api.rss2json.com/v1/api.json?rss_url="+encodeURIComponent(feed),{cache:"no-store"});
-  if(!res.ok)throw Error("feed");const data=await res.json();if(data.status!=="ok")throw Error("feed");
-  const items=(data.items||[]).filter(x=>x.title&&x.link).slice(0,6);if(!items.length)throw Error("empty");
-  list.innerHTML=items.map((x,i)=>{
-   const d=x.pubDate?new Date(x.pubDate):null;
-   const when=d&&!isNaN(d)?new Intl.DateTimeFormat("ja-JP",{...jst,month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"}).format(d):"";
-   let link="https://news.google.com/?hl=ja&gl=JP&ceid=JP:ja";try{const u=new URL(x.link);if(u.protocol==="https:")link=u.href}catch(e){}
-   return '<a class="news-item" href="'+esc(link)+'" target="_blank" rel="noopener noreferrer"><div class="news-num">'+String(i+1).padStart(2,"0")+'</div><div><div class="news-meta"><span class="source">'+esc(x.author||"Google ニュース")+'</span><span>'+esc(when)+'</span></div><div class="news-title">'+esc(x.title)+'</div></div></a>'
-  }).join("");
-  document.getElementById("news-count").textContent="最新 "+items.length+" 件";
-  document.getElementById("updated").textContent="最終更新 "+new Intl.DateTimeFormat("ja-JP",{...jst,hour:"2-digit",minute:"2-digit"}).format(new Date());
- }catch(e){list.innerHTML='<div class="empty">ニュースを取得できませんでした。<a href="https://news.google.com/?hl=ja&gl=JP&ceid=JP:ja" target="_blank" rel="noopener">Google ニュースを開く</a></div>';document.getElementById("news-count").textContent="取得できません";document.getElementById("updated").textContent="通信を確認してください"}
+ const list=document.getElementById("news-list"),topic=selectedNewsTopic;
+ document.querySelectorAll(".news-tab").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.topic===topic)));
+ const feed="https://news.google.com/rss/headlines/section/topic/"+topic+"?hl=ja&gl=JP&ceid=JP:ja";
+ try{const res=await fetch("https://api.rss2json.com/v1/api.json?rss_url="+encodeURIComponent(feed),{cache:"no-store"});if(!res.ok)throw Error("feed");const data=await res.json();if(data.status!=="ok")throw Error("feed");const items=(data.items||[]).filter(x=>x.title&&x.link).slice(0,5);if(!items.length)throw Error("empty");
+ list.innerHTML=items.map((x,i)=>{const d=x.pubDate?new Date(x.pubDate):null;const when=d&&!isNaN(d)?new Intl.DateTimeFormat("ja-JP",{...jst,month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"}).format(d):"";let link="https://news.google.com/?hl=ja&gl=JP&ceid=JP:ja";try{const u=new URL(x.link);if(u.protocol==="https:")link=u.href}catch(e){}return '<a class="news-item" href="'+esc(link)+'" target="_blank" rel="noopener noreferrer"><div class="news-num">'+String(i+1).padStart(2,"0")+'</div><div><div class="news-meta"><span class="source">'+esc(x.author||newsTopics[topic])+'</span><span>'+esc(when)+'</span></div><div class="news-title">'+esc(x.title)+'</div></div></a>'}).join("");
+ document.getElementById("news-count").textContent=newsTopics[topic]+" · "+items.length+"件";document.getElementById("updated").textContent="最終更新 "+new Intl.DateTimeFormat("ja-JP",{...jst,hour:"2-digit",minute:"2-digit"}).format(new Date());
+ }catch(e){list.innerHTML='<div class="empty">この分野のニュースを取得できませんでした。通信状況を確認してください。</div>';document.getElementById("news-count").textContent=newsTopics[topic]+" · 取得不可";document.getElementById("updated").textContent="取得を再試行します"}
 }
+document.getElementById("news-tabs").addEventListener("click",e=>{const b=e.target.closest("button[data-topic]");if(!b)return;selectedNewsTopic=b.dataset.topic;localStorage.setItem("dayline_news_topic",selectedNewsTopic);loadNews()});
 loadNews();setInterval(loadNews,2*60*1000);
 
 const disasterCard=document.getElementById("disaster-card");
@@ -1380,18 +1434,18 @@ document.getElementById("test-quake").addEventListener("click",()=>{
  showTestAlert("地震情報（訓練）","これはDAYLINEの画面確認用テストです。実際の地震情報ではありません。気象庁などの外部サービスには何も送信していません。");
  setDisasterState("normal","テスト表示中","地震情報のテストを表示しています。","画面表示の確認用です。実際の速報ではありません。");
 });
-// Scheduled local display test: 17:01:30 JST today. This is a visual simulation only.
-const scheduledTestKey="dayline_scheduled_test_2026-11-11";
+// Scheduled local display test: 17:17 JST today. This is a visual simulation only.
+const scheduledTestKey="dayline_scheduled_test_2026-11-11_1717";
 function checkScheduledTest(){
  const now=new Date();
  const jstParts=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Tokyo",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"}).formatToParts(now);
  const p=Object.fromEntries(jstParts.map(x=>[x.type,x.value]));
  const stamp=p.year+"-"+p.month+"-"+p.day;
  const seconds=Number(p.hour)*3600+Number(p.minute)*60+Number(p.second);
- if(stamp==="2026-11-11"&&seconds>=17*3600+1*60+30&&!localStorage.getItem(scheduledTestKey)){
+ if(stamp==="2026-11-11"&&seconds>=17*3600+17*60&&!localStorage.getItem(scheduledTestKey)){
   localStorage.setItem(scheduledTestKey,"shown");
-  showTestAlert("緊急地震速報（訓練）","17:01:30の予約テスト表示です。これはDAYLINEの画面確認用シミュレーションで、実際の地震・気象庁の速報ではありません。");
-  setDisasterState("normal","予約テスト表示中","緊急地震速報のテストを表示しています。","予約時刻：17:01:30。実際の速報ではありません。");
+  showTestAlert("緊急地震速報（訓練）","【架空の訓練データ】発表時刻 17:17／震源 神奈川県東部／想定規模 M6.2／想定深さ 10km／想定最大震度 5弱。表示確認のための完全なフィクションで、実際の地震・気象庁の速報ではありません。");
+  setDisasterState("normal","予約テスト表示中","緊急地震速報のテストを表示しています。","予約時刻：17:17。架空の訓練表示です。実際の速報ではありません。");
  }
 }
 checkScheduledTest();
@@ -1405,6 +1459,11 @@ document.getElementById("test-clear").addEventListener("click",()=>{
 });
 
 
+
+const scheduleUrlInput=document.getElementById("schedule-url"),scheduleResult=document.getElementById("schedule-result");
+scheduleUrlInput.value=localStorage.getItem("dayline_schedule_url")||"";
+document.getElementById("schedule-save").addEventListener("click",()=>{const value=scheduleUrlInput.value.trim();if(value&&!value.startsWith("https://")){scheduleResult.textContent="https:// で始まるURLを入力してください。";return;}localStorage.setItem("dayline_schedule_url",value);scheduleResult.textContent=value?"URLを保存しました。『予定を取得』を押してください。":"登録URLを削除しました。";});
+document.getElementById("schedule-load").addEventListener("click",async()=>{const url=scheduleUrlInput.value.trim();if(!url){scheduleResult.textContent="先に公開ICS URLを登録してください。";return;}if(!url.startsWith("https://")){scheduleResult.textContent="https:// のURLを指定してください。";return;}scheduleResult.textContent="予定を取得中…";try{const response=await fetch(url,{cache:"no-store"});if(!response.ok)throw Error("HTTP");const raw=await response.text();if(!raw.includes("BEGIN:VCALENDAR"))throw Error("ICS");const blocks=raw.split("BEGIN:VEVENT").slice(1);const events=blocks.slice(0,5).map(block=>{const title=(block.match(/^SUMMARY(?:;[^:]*)?:(.*)$/mi)||[])[1]||"（タイトルなし）";const start=(block.match(/^DTSTART(?:;[^:]*)?:(.*)$/mi)||[])[1]||"";return start+" · "+title.replace(/\\n/g," ").replace(/\\,/g,",")});scheduleResult.textContent=events.length?events.join(" ／ "):"予定が見つかりませんでした。";}catch(err){scheduleResult.textContent="取得できません。公開ICS URLか配信元のCORS設定を確認してください。";}});
 
 const weatherCodes={0:["☀️","快晴"],1:["🌤️","おおむね晴れ"],2:["⛅","一部くもり"],3:["☁️","くもり"],45:["🌫️","霧"],48:["🌫️","着氷性の霧"],51:["🌦️","弱い霧雨"],53:["🌦️","霧雨"],55:["🌧️","強い霧雨"],61:["🌧️","弱い雨"],63:["🌧️","雨"],65:["🌧️","強い雨"],71:["🌨️","弱い雪"],73:["🌨️","雪"],75:["❄️","強い雪"],80:["🌦️","にわか雨"],81:["🌧️","雨の可能性"],82:["⛈️","強いにわか雨"],95:["⛈️","雷雨"],96:["⛈️","ひょうを伴う雷雨"],99:["⛈️","強い雷雨"]};
 async function loadWeather(){
