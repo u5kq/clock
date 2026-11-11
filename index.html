@@ -1241,6 +1241,42 @@ html,body{background:#090b0e!important;color:#f4f6f8!important}
 .alert-overlay.test-mode .alert-close{background:#f4f5f6!important;color:#111!important;border-radius:7px!important;font-weight:750}
 .breaking-strip.show.test-mode{background:linear-gradient(90deg,#a90e22,#e51d31)!important;border:1px solid #ff6472!important;color:#fff!important}
 
+
+/* DAYLINE disaster center — expanded situational awareness */
+.disaster-card{padding:clamp(16px,1.8vw,26px)!important;min-height:360px!important;background:#11161c!important;border:1px solid #424b55!important;border-radius:14px!important}
+.disaster-head{padding-bottom:12px;border-bottom:1px solid #343c45}
+.disaster-title{font-size:clamp(15px,1.2vw,19px)!important;color:#f2f4f6!important;letter-spacing:.02em}
+.disaster-title>span{color:#ff394c!important}
+.disaster-status{font-size:11px!important;background:#252d36!important;color:#e3e8ed!important;border:1px solid #414b56}
+.disaster-body{margin-top:16px!important;display:grid!important;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr)!important;gap:14px!important;align-items:stretch!important}
+.disaster-overview{min-width:0}
+.disaster-main{font-size:clamp(15px,1.15vw,19px)!important;color:#f5f7f9!important}
+.disaster-sub{font-size:12px!important;color:#aab4be!important}
+.quake-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:16px}
+.quake-metric{min-width:0;background:#090d12;border:1px solid #303a45;border-radius:9px;padding:11px 10px;display:flex;flex-direction:column;gap:5px}
+.quake-metric span{font-size:9px;letter-spacing:.1em;color:#8e9aa6}
+.quake-metric strong{font-size:clamp(17px,1.7vw,26px);line-height:1.15;color:#fff;overflow-wrap:anywhere}
+.quake-metric small{font-size:10px;color:#9ea9b4}
+.quake-map-wrap{min-width:0;background:#090d12;border:1px solid #303a45;border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:8px}
+.quake-map-head{display:flex;justify-content:space-between;gap:8px;color:#f1f4f6;font-size:12px;font-weight:750}
+.quake-map-head span+span{color:#9ca8b3;font-size:10px;font-weight:500}
+#quake-map{width:100%;height:210px;border:0;border-radius:7px;background:#1c252e}
+.quake-map-empty{height:210px;display:grid;place-items:center;text-align:center;color:#9ba6b1;font-size:11px;padding:12px;background:linear-gradient(145deg,#171e26,#0d1218);border-radius:7px}
+.quake-map-link{color:#cbd4dc;font-size:10px;text-decoration:none;align-self:flex-end}
+.disaster-actions{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}
+.disaster-card.alert{background:linear-gradient(145deg,#260a10,#11161c)!important;border:2px solid #ff2638!important}
+.disaster-card.alert .quake-metric{border-color:#71313a;background:#190b10}
+.disaster-card.alert .quake-metric strong{color:#fff}
+.jalert-card{margin-top:12px;background:#151a20!important;border:1px solid #38424d!important;border-radius:12px!important;padding:15px 18px!important}
+.jalert-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.jalert-title{font-size:14px;font-weight:800;color:#f2f4f6;letter-spacing:.05em}
+.jalert-state{font-size:10px;color:#e0c68d;background:#29251c;border:1px solid #57492e;border-radius:20px;padding:5px 9px}
+.jalert-copy{font-size:11px;line-height:1.7;color:#aeb8c2;margin-top:8px;max-width:1050px}
+.jalert-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.jalert-links a{font-size:10px;color:#e0e5ea;text-decoration:none;border:1px solid #434d57;background:#20272f;border-radius:6px;padding:7px 10px}
+@media(max-width:850px){.disaster-body{grid-template-columns:1fr!important}.quake-map-wrap{min-height:0}.quake-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.disaster-actions{grid-column:auto}}
+@media(max-width:480px){.quake-metrics{gap:6px}.quake-metric{padding:9px 8px}.quake-metric strong{font-size:19px}#quake-map,.quake-map-empty{height:180px}}
+
 </style>
 </head>
 <body>
@@ -1290,7 +1326,22 @@ html,body{background:#090b0e!important;color:#f4f6f8!important}
    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span class="disaster-checked" id="disaster-checked">最終確認 --:--:--</span><div class="disaster-status" id="disaster-status">接続確認中</div></div>
   </div>
   <div class="disaster-body">
-   <div><div class="disaster-main" id="disaster-main">気象庁の公開情報を確認しています。</div><div class="disaster-sub" id="disaster-sub">気象庁の公開XMLは毎分更新のため、DAYLINEも60秒間隔で確認します。緊急地震速報の受信を保証するものではありません。スマホの緊急速報・公式情報を必ず併用してください。</div></div>
+   <div class="disaster-overview">
+    <div class="disaster-main" id="disaster-main">気象庁の公開情報を確認しています。</div>
+    <div class="disaster-sub" id="disaster-sub">気象庁の公開XMLを60秒間隔で確認します。緊急地震速報の受信を保証するものではありません。スマホの緊急速報・公式情報を必ず併用してください。</div>
+    <div class="quake-metrics" id="quake-metrics">
+     <div class="quake-metric"><span>MAGNITUDE</span><strong id="quake-mag">--</strong><small>マグニチュード</small></div>
+     <div class="quake-metric"><span>MAX INTENSITY</span><strong id="quake-intensity">--</strong><small>最大震度</small></div>
+     <div class="quake-metric"><span>DEPTH</span><strong id="quake-depth">--</strong><small>震源の深さ</small></div>
+     <div class="quake-metric"><span>HYPOCENTER</span><strong id="quake-place">--</strong><small>震央・震源地</small></div>
+    </div>
+   </div>
+   <div class="quake-map-wrap" id="quake-map-wrap">
+    <div class="quake-map-head"><span>震源地マップ</span><span id="quake-map-caption">震源情報を待機中</span></div>
+    <iframe id="quake-map" title="震源地周辺地図" loading="lazy" referrerpolicy="no-referrer" hidden></iframe>
+    <div class="quake-map-empty" id="quake-map-empty">地震情報を取得すると、震源地を地図に表示します。</div>
+    <a class="quake-map-link" id="quake-map-link" href="https://www.jma.go.jp/bosai/map.html#contents=earthquake_map" target="_blank" rel="noopener noreferrer">気象庁の地震情報マップ ↗</a>
+   </div>
    <div class="disaster-actions"><button class="disaster-button" id="sound-enable" type="button">音声を有効化</button><button class="disaster-button" id="settings-button" type="button" aria-expanded="false" aria-controls="disaster-settings">設定・テスト</button><button class="disaster-button" id="notify-button" type="button">通知を許可</button><a class="disaster-button" href="https://www.jma.go.jp/bosai/" target="_blank" rel="noopener noreferrer">気象庁公式</a></div>
   <div class="disaster-settings" id="disaster-settings" hidden>
    <div class="settings-heading">表示テスト <span>実際の速報・外部配信ではありません</span></div>
@@ -1303,6 +1354,11 @@ html,body{background:#090b0e!important;color:#f4f6f8!important}
   </div>
  </section>
 
+<section class="card jalert-card" aria-label="Jアラート情報">
+ <div class="jalert-head"><div class="jalert-title">J-ALERT ／ 全国瞬時警報システム</div><div class="jalert-state">公式情報リンク · 直接受信は未接続</div></div>
+ <div class="jalert-copy">Jアラートは国から自治体の防災行政無線や携帯電話などへ緊急情報を伝える仕組みです。このWebサイトは自治体の放送設備やJアラート受信機に接続していないため、放送音声を直接受信・再送することはできません。公式発表の確認用リンクを掲載しています。実際の警報はスマートフォンの緊急速報・自治体放送・公式情報を優先してください。</div>
+ <div class="jalert-links"><a href="https://www.fdma.go.jp/about/organization/post-18.html" target="_blank" rel="noopener noreferrer">消防庁｜Jアラートの概要 ↗</a><a href="https://www.kokuminhogo.go.jp/kuminnhogo/jalert.html" target="_blank" rel="noopener noreferrer">内閣官房｜国民保護ポータル ↗</a><a href="https://www.jma.go.jp/bosai/" target="_blank" rel="noopener noreferrer">気象庁｜防災情報 ↗</a></div>
+</section>
 <div class="lower-grid">
  <section class="mini-card"><div class="mini-label">WORLD CLOCK · LONDON</div><div class="mini-content" id="london-time">--:--</div></section>
  <section class="mini-card"><div class="mini-label">WORLD CLOCK · NEW YORK</div><div class="mini-content" id="newyork-time">--:--</div></section>
@@ -1407,6 +1463,40 @@ function setDisasterState(kind,status,main,sub){
  document.getElementById("disaster-sub").textContent=sub;
 }
 let disasterRequestRunning=false;
+
+function clearQuakeDetails(){
+ ["quake-mag","quake-intensity","quake-depth","quake-place"].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent="--";});
+ const frame=document.getElementById("quake-map"),empty=document.getElementById("quake-map-empty");
+ if(frame){frame.hidden=true;frame.removeAttribute("src");}if(empty){empty.hidden=false;empty.textContent="地震情報を取得すると、震源地を地図に表示します。"}
+ document.getElementById("quake-map-caption").textContent="震源情報を待機中";
+}
+function localTagText(root,name){const el=[...root.getElementsByTagName("*")].find(x=>x.localName===name);return el?el.textContent.trim():""}
+function renderQuakeDetails(info){
+ const set=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value||"--";};
+ set("quake-mag",info.mag?("M"+info.mag):"--");set("quake-intensity",info.intensity||"--");set("quake-depth",info.depth||"--");set("quake-place",info.place||"--");
+ const frame=document.getElementById("quake-map"),empty=document.getElementById("quake-map-empty"),caption=document.getElementById("quake-map-caption");
+ if(Number.isFinite(info.lat)&&Number.isFinite(info.lon)&&Math.abs(info.lat)<=90&&Math.abs(info.lon)<=180){
+  const d=.55,bbox=[info.lon-d,info.lat-d,info.lon+d,info.lat+d].join("%2C");
+  frame.src="https://www.openstreetmap.org/export/embed.html?bbox="+bbox+"&layer=mapnik&marker="+info.lat+"%2C"+info.lon;
+  frame.hidden=false;empty.hidden=true;caption.textContent=info.place||"震源位置";
+ }else{frame.hidden=true;empty.hidden=false;empty.textContent="震源座標を取得できませんでした。気象庁の地震情報マップをご確認ください。";caption.textContent=info.place||"座標未取得";}
+}
+async function loadQuakeDetails(url){
+ if(!url)return;
+ try{
+  const r=await fetch(url,{cache:"no-store"});if(!r.ok)throw Error("detail");const xml=new DOMParser().parseFromString(await r.text(),"application/xml");if(xml.querySelector("parsererror"))throw Error("xml");
+  const mag=localTagText(xml,"Magnitude").replace(/[^d.]/g,"");
+  const place=localTagText(xml,"Name");
+  const coords=[...xml.getElementsByTagName("*")].filter(x=>x.localName==="Coordinate").map(x=>x.textContent.trim()).find(x=>/[+-]\d{2,3}\.\d+/.test(x))||"";
+  const m=coords.match(/([+-]\d{2,3}\.\d+)([+-]\d{3}\.\d+)/);const lat=m?Number(m[1]):NaN,lon=m?Number(m[2]):NaN;
+  const depthMatch=coords.match(/([+-]\d{1,6})\/$/);const depth=depthMatch?Math.round(Math.abs(Number(depthMatch[1]))/1000)+" km":"--";
+  const levels=[...xml.getElementsByTagName("*")].filter(x=>x.localName==="Intensity").map(x=>x.textContent.trim()).filter(x=>/^(震度)?[0-7][弱強]?$/.test(x)).map(x=>x.replace("震度",""));
+  const rank={ "7":7,"6強":6.5,"6弱":6,"5強":5.5,"5弱":5,"4":4,"3":3,"2":2,"1":1,"0":0};
+  const intensity=levels.sort((a,b)=>(rank[b]??-1)-(rank[a]??-1))[0]||"--";
+  renderQuakeDetails({mag,place,lat,lon,depth,intensity});
+ }catch(e){document.getElementById("quake-map-caption").textContent="詳細データを取得できません";}
+}
+
 async function loadDisaster(){
  if(disasterRequestRunning)return;
  disasterRequestRunning=true;
@@ -1433,6 +1523,7 @@ async function loadDisaster(){
   const quake=parsed.find(x=>/震源・震度|震度速報|震源情報|地震情報/.test(x.title));
   const newest=parsed[0];
   const updated=newest.updated?new Date(newest.updated):null;
+  if(quake&&quake.link)await loadQuakeDetails(quake.link);else clearQuakeDetails();
   const stamp=updated&&!isNaN(updated)?new Intl.DateTimeFormat("ja-JP",{...jst,month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit",second:"2-digit"}).format(updated):"時刻不明";
   const seen=localStorage.getItem(disasterSeenKey);
   if(eew){
@@ -1444,10 +1535,10 @@ async function loadDisaster(){
    if(eew.id)localStorage.setItem(disasterSeenKey,eew.id);
   }else{
    const isFresh=updated&&!isNaN(updated)&&now-updated.getTime()<15*60*1000;
-   setDisasterState("normal",isFresh?"気象庁フィード取得済み":"公開情報を取得・確認",quake?quake.title:"現在、表示対象の地震関連情報はありません", "フィード最終更新："+stamp+"。これは公開フィード上の確認結果であり、緊急地震速報が発表されていないことを保証する表示ではありません。");
+   setDisasterState("normal",isFresh?"気象庁フィード取得済み":"公開情報を取得・確認",quake?quake.title:"現在、表示対象の地震関連情報はありません", "フィード最終更新："+stamp+"。震源詳細は気象庁XMLから取得できた場合に表示します。公開フィードは緊急地震速報の即時受信を保証しません。");
   }
  }catch(error){
-  setDisasterState("error","取得状態を確認できません", "気象庁の防災情報を取得できませんでした。", "通信・配信状況を確認してください。未取得のため「速報なし」とは判断できません。公式ページやスマホの緊急速報を確認してください。");
+  setDisasterState("error","取得状態を確認できません", "気象庁の防災情報を取得できませんでした。", "通信・配信状況を確認してください。未取得のため「速報なし」とは判断できません。公式ページやスマホの緊急速報を確認してください。");clearQuakeDetails();
  }
  finally{
   disasterRequestRunning=false;
@@ -1467,11 +1558,11 @@ document.getElementById("settings-button").addEventListener("click",()=>{
  document.getElementById("settings-button").setAttribute("aria-expanded",String(opening));
 });
 document.getElementById("test-eew").addEventListener("click",()=>{
- showTestAlert("緊急地震速報（訓練）","これはDAYLINEの画面確認用テストです。実際の地震は発生しておらず、気象庁へ送信・照会もしていません。実際の速報として行動しないでください。");
+ showTestAlert("緊急地震速報（訓練）","【架空の訓練データ】震源：神奈川県東部／マグニチュード：M6.2／深さ：10km／想定最大震度：5弱。実際の地震・気象庁の発表ではありません。");renderQuakeDetails({mag:"6.2",intensity:"5弱",depth:"10 km",place:"神奈川県東部（架空）",lat:35.58,lon:139.58});
  setDisasterState("normal","テスト表示中","緊急地震速報のテストを表示しています。","画面表示の確認用です。実際の速報ではありません。");
 });
 document.getElementById("test-quake").addEventListener("click",()=>{
- showTestAlert("地震情報（訓練）","これはDAYLINEの画面確認用テストです。実際の地震情報ではありません。気象庁などの外部サービスには何も送信していません。");
+ showTestAlert("地震情報（訓練）","【架空の訓練データ】震源：神奈川県東部／マグニチュード：M5.4／深さ：20km／最大震度：4。実際の地震・気象庁の発表ではありません。");renderQuakeDetails({mag:"5.4",intensity:"4",depth:"20 km",place:"神奈川県東部（架空）",lat:35.58,lon:139.58});
  setDisasterState("normal","テスト表示中","地震情報のテストを表示しています。","画面表示の確認用です。実際の速報ではありません。");
 });
 // Scheduled local display test: 17:17 JST today. This is a visual simulation only.
@@ -1495,7 +1586,7 @@ setTimeout(()=>clearInterval(scheduledTestTimer),10*60*1000);
 document.getElementById("test-clear").addEventListener("click",()=>{
  document.getElementById("alert-overlay").classList.remove("show");
  document.getElementById("breaking-strip").classList.remove("show");
- setDisasterState("normal","通常表示","テスト表示を終了しました。","実際の防災情報は気象庁公式ページとスマホの緊急速報で確認してください。");
+ clearQuakeDetails();setDisasterState("normal","通常表示","テスト表示を終了しました。","実際の防災情報は気象庁公式ページとスマホの緊急速報で確認してください。");
 });
 
 
