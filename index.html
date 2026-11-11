@@ -2475,6 +2475,18 @@ html,body{background:var(--bg);color:var(--ink)}
  .disaster-card{padding:14px}
 }
 
+
+/* Public JMA feed history */
+.disaster-feed-history{margin-top:18px;padding:15px 16px;background:#fff9;border:1px solid #e8e1e7;border-radius:12px}
+.disaster-feed-heading{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px;font-size:12px;font-weight:750;color:#655b68}
+.disaster-feed-heading span+span{font-size:10px;font-weight:500;color:#938995}
+.disaster-feed-list{display:grid;gap:0}
+.disaster-feed-item{display:grid;grid-template-columns:112px minmax(0,1fr);gap:12px;padding:9px 0;border-top:1px solid #eae4e9;text-decoration:none;color:inherit}
+.disaster-feed-item time{font-size:10px;color:#8b828d;font-variant-numeric:tabular-nums}
+.disaster-feed-item strong{font-size:11px;line-height:1.55;font-weight:650;color:#514a55}
+.disaster-feed-item:hover strong{text-decoration:underline}
+.disaster-feed-empty{padding:10px 0;font-size:11px;color:#8b828d}
+@media(max-width:650px){.disaster-feed-item{grid-template-columns:1fr;gap:3px}}
 </style>
 </head>
 <body>
@@ -2533,12 +2545,16 @@ html,body{background:var(--bg);color:var(--ink)}
   <div class="disaster-body">
    <div class="disaster-overview">
     <div class="disaster-main" id="disaster-main">気象庁の公開情報を確認しています。</div>
-    <div class="disaster-sub" id="disaster-sub">気象庁の公開XMLを60秒間隔で確認します。緊急地震速報の受信を保証するものではありません。スマホの緊急速報・公式情報を必ず併用してください。</div>
+    <div class="disaster-sub" id="disaster-sub">気象庁の地震・火山の高頻度公開XMLを約1分間隔で確認します。配信遅延・停止があり、緊急地震速報の受信を保証するものではありません。スマホの緊急速報・公式情報を必ず併用してください。</div>
     <div class="quake-metrics" id="quake-metrics">
      <div class="quake-metric"><span>MAGNITUDE</span><strong id="quake-mag">--</strong><small>マグニチュード</small></div>
      <div class="quake-metric"><span>MAX INTENSITY</span><strong id="quake-intensity">--</strong><small>最大震度</small></div>
      <div class="quake-metric"><span>DEPTH</span><strong id="quake-depth">--</strong><small>震源の深さ</small></div>
      <div class="quake-metric"><span>HYPOCENTER</span><strong id="quake-place">--</strong><small>震央・震源地</small></div>
+    </div>
+    <div class="disaster-feed-history">
+     <div class="disaster-feed-heading"><span>地震・火山の発表履歴</span><span>気象庁公開XML</span></div>
+     <div id="disaster-feed-list" class="disaster-feed-list"><div class="disaster-feed-empty">発表情報を確認しています…</div></div>
     </div>
    </div>
    <div class="quake-map-wrap" id="quake-map-wrap">
@@ -2627,6 +2643,7 @@ loadNews();setInterval(loadNews,2*60*1000);
 
 const disasterCard=document.getElementById("disaster-card");
 const disasterFeed="https://www.data.jma.go.jp/developer/xml/feed/eqvol.xml";
+const disasterFeedInterval=60*1000;
 const disasterSeenKey="dayline_jma_seen_id";
 function disasterText(node,tag){const el=node.getElementsByTagName(tag)[0];return el?el.textContent.trim():""}
 /* Original DAYLINE chime — not the official emergency warning sound */
@@ -2742,10 +2759,23 @@ async function loadDisaster(){
    link:entry.getElementsByTagName("link")[0]?.getAttribute("href")||""
   }));
   const now=Date.now();
-  const recent=parsed.filter(x=>{const t=Date.parse(x.updated);return Number.isFinite(t)&&now-t<30*60*1000&&now-t>=-2*60*1000;});
-  const eew=recent.find(x=>/緊急地震速報/.test(x.title)&&!/取消|訓練/.test(x.title));
+  parsed.sort((a,b)=>(Date.parse(b.updated)||0)-(Date.parse(a.updated)||0));
+  const recent=parsed.filter(x=>{const t=Date.parse(x.updated);return Number.isFinite(t)&&now-t<10*60*1000&&now-t>=-2*60*1000;});
+  const eewItems=recent.filter(x=>/緊急地震速報/.test(x.title)&&!/訓練/.test(x.title));
+  const latestEewItem=eewItems[0]||null;
+  const eew=latestEewItem&&!/取消/.test(latestEewItem.title)?latestEewItem:null;
+  const eewCancelled=!!(latestEewItem&&/取消/.test(latestEewItem.title));
   const quake=parsed.find(x=>/震源・震度|震度速報|震源情報|地震情報/.test(x.title));
   const newest=parsed[0];
+  const history=document.getElementById("disaster-feed-list");
+  const historyItems=parsed.filter(x=>/地震|火山|津波/.test(x.title)).slice(0,5);
+  if(history){
+   history.innerHTML=historyItems.length?historyItems.map(x=>{
+    const d=new Date(x.updated);
+    const time=Number.isNaN(d.getTime())?"時刻不明":new Intl.DateTimeFormat("ja-JP",{timeZone:"Asia/Tokyo",month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"}).format(d);
+    return '<a class="disaster-feed-item" href="'+esc(x.link||"https://www.jma.go.jp/bosai/")+'" target="_blank" rel="noopener noreferrer"><time>'+esc(time)+'</time><strong>'+esc(x.title)+'</strong></a>';
+   }).join(""):'<div class="disaster-feed-empty">現在、表示できる地震・火山情報はありません。</div>';
+  }
   const updated=newest.updated?new Date(newest.updated):null;
   if(quake&&quake.link)await loadQuakeDetails(quake.link);else clearQuakeDetails();
   const stamp=updated&&!isNaN(updated)?new Intl.DateTimeFormat("ja-JP",{...jst,month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit",second:"2-digit"}).format(updated):"時刻不明";
@@ -2759,7 +2789,9 @@ async function loadDisaster(){
    if(eew.id)localStorage.setItem(disasterSeenKey,eew.id);
   }else{
    const isFresh=updated&&!isNaN(updated)&&now-updated.getTime()<15*60*1000;
-   setDisasterState("normal",isFresh?"気象庁フィード取得済み":"公開情報を取得・確認",quake?quake.title:"現在、表示対象の地震関連情報はありません", "フィード最終更新："+stamp+"。震源詳細は気象庁XMLから取得できた場合に表示します。公開フィードは緊急地震速報の即時受信を保証しません。");
+   const status=eewCancelled?"緊急地震速報の取消情報を確認":isFresh?"気象庁フィード取得済み":"公開情報を取得・確認";
+   const main=eewCancelled?"直近の緊急地震速報に取消情報があります。":quake?quake.title:"現在、表示対象の地震関連情報はありません";
+   setDisasterState("normal",status,main,"フィード最終更新："+stamp+"。地震・火山の直近発表を下に表示しています。公開XMLは毎分更新の高頻度フィードですが、配信遅延・停止があり、速報の即時受信は保証されません。");
   }
  }catch(error){
   setDisasterState("error","取得状態を確認できません", "気象庁の防災情報を取得できませんでした。", "通信・配信状況を確認してください。未取得のため「速報なし」とは判断できません。公式ページやスマホの緊急速報を確認してください。");clearQuakeDetails();
@@ -2774,7 +2806,7 @@ document.getElementById("notify-button").addEventListener("click",async()=>{
  try{const permission=await Notification.requestPermission();document.getElementById("notify-button").textContent=permission==="granted"?"通知は許可済み":permission==="denied"?"通知はブロック中":"通知を許可";}
  catch(e){document.getElementById("notify-button").textContent="通知設定を確認";}
 });
-loadDisaster();setInterval(loadDisaster,60*1000);
+loadDisaster();setInterval(loadDisaster,disasterFeedInterval);
 document.getElementById("settings-button").addEventListener("click",()=>{
  const panel=document.getElementById("disaster-settings");
  const opening=panel.hidden;
@@ -2789,25 +2821,6 @@ document.getElementById("test-quake").addEventListener("click",()=>{
  showTestAlert("地震情報（訓練）","【架空の訓練データ】震源：神奈川県東部／マグニチュード：M5.4／深さ：20km／最大震度：4。実際の地震・気象庁の発表ではありません。");renderQuakeDetails({mag:"5.4",intensity:"4",depth:"20 km",place:"神奈川県東部（架空）",lat:35.58,lon:139.58});
  setDisasterState("normal","テスト表示中","地震情報のテストを表示しています。","画面表示の確認用です。実際の速報ではありません。");
 });
-// Scheduled local display test: 17:17 JST today. This is a visual simulation only.
-// Scheduled local display test: 17:26 JST on 2026-11-11. Fictional training only.
-const scheduledTestKey="dayline_scheduled_test_2026-11-11_1726";
-function checkScheduledTest(){
- const now=new Date();
- const parts=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Tokyo",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"}).formatToParts(now);
- const p=Object.fromEntries(parts.map(x=>[x.type,x.value]));
- const stamp=p.year+"-"+p.month+"-"+p.day;
- const seconds=Number(p.hour)*3600+Number(p.minute)*60+Number(p.second);
- if(stamp==="2026-11-11"&&seconds>=17*3600+26*60&&seconds<17*3600+36*60&&!localStorage.getItem(scheduledTestKey)){
-  localStorage.setItem(scheduledTestKey,"shown");
-  showTestAlert("緊急地震速報（訓練）","【架空の訓練データ】発表時刻 17:26／震源 神奈川県東部／想定規模 M6.2／想定深さ 10km／想定最大震度 5弱。画面表示確認専用のフィクションで、実際の地震・気象庁の発表ではありません。");
-  renderQuakeDetails({mag:"6.2",intensity:"5弱",depth:"10 km",place:"神奈川県東部（架空）",lat:35.58,lon:139.58});
-  setDisasterState("normal","予約テスト表示中","緊急地震速報のテストを表示しています。","予約時刻：17:26。架空の訓練表示です。実際の速報ではありません。");
- }
-}
-checkScheduledTest();
-const scheduledTestTimer=setInterval(checkScheduledTest,1000);
-
 document.getElementById("test-clear").addEventListener("click",()=>{
  document.getElementById("alert-overlay").classList.remove("show");
  document.getElementById("breaking-strip").classList.remove("show");
