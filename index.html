@@ -327,6 +327,68 @@ html,body{background:var(--bg);color:var(--ink)}
  .dashboard{grid-template-rows:minmax(180px,auto) minmax(190px,auto)!important}
 }
 
+
+/* Refined panoramic clock: clear hierarchy and high legibility */
+.clock-card{
+  background:linear-gradient(115deg,#f5f7f8 0%,#edf2f4 55%,#e9eef1 100%)!important;
+  border:1px solid #dce4e8!important;
+  border-radius:22px!important;
+  padding:clamp(20px,3vw,42px)!important;
+  display:grid!important;
+  grid-template-columns:minmax(170px,.72fr) minmax(0,2fr)!important;
+  align-items:center!important;
+  gap:clamp(16px,3vw,48px)!important;
+  min-height:clamp(210px,30vh,330px)!important;
+  box-shadow:0 10px 30px rgba(28,45,58,.06)!important;
+}
+.clock-card>div:first-child{min-width:0}
+.clock-card .date,#date{
+  color:#536575!important;
+  font-size:clamp(16px,1.45vw,22px)!important;
+  font-weight:600!important;
+  letter-spacing:.04em!important;
+}
+.clock-card .time,#time{
+  color:#142b3b!important;
+  font-variant-numeric:tabular-nums!important;
+  font-feature-settings:"tnum" 1!important;
+  font-weight:650!important;
+  letter-spacing:-.065em!important;
+  line-height:.98!important;
+  white-space:nowrap!important;
+  text-shadow:0 1px 0 rgba(255,255,255,.7)!important;
+}
+.clock-card .seconds{
+  color:#718493!important;
+  font-size:.34em!important;
+  font-weight:500!important;
+  letter-spacing:-.02em!important;
+  vertical-align:baseline!important;
+  margin-left:.12em!important;
+}
+.clock-card .clock-foot{
+  color:#6d7d89!important;
+  font-size:12px!important;
+  letter-spacing:.12em!important;
+  margin-top:18px!important;
+}
+@media (min-width:1051px){
+ .clock-card #time{font-size:clamp(92px,10.5vw,190px)!important}
+}
+@media (min-width:651px) and (max-width:1050px){
+ .clock-card{grid-template-columns:1fr!important;gap:8px!important;min-height:220px!important}
+ .clock-card #time{font-size:clamp(86px,13vw,150px)!important}
+}
+@media (max-width:650px){
+ .clock-card{grid-template-columns:1fr!important;gap:8px!important;min-height:170px!important;padding:20px!important}
+ .clock-card #time{font-size:clamp(54px,14vw,88px)!important;letter-spacing:-.07em!important}
+ .clock-card .date{font-size:15px!important}
+ .clock-card .clock-foot{margin-top:10px!important}
+}
+@media (max-width:380px){
+ .clock-card #time{font-size:clamp(48px,13vw,62px)!important}
+}
+
 </style>
 </head>
 <body>
