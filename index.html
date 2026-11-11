@@ -1277,6 +1277,54 @@ html,body{background:#090b0e!important;color:#f4f6f8!important}
 @media(max-width:850px){.disaster-body{grid-template-columns:1fr!important}.quake-map-wrap{min-height:0}.quake-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.disaster-actions{grid-column:auto}}
 @media(max-width:480px){.quake-metrics{gap:6px}.quake-metric{padding:9px 8px}.quake-metric strong{font-size:19px}#quake-map,.quake-map-empty{height:180px}}
 
+
+/* DAYLINE disaster zone — genuinely larger, priority panel */
+.disaster-card{
+ width:100%!important;min-height:560px!important;
+ padding:clamp(22px,2.5vw,38px)!important;
+ margin-top:clamp(14px,1.6vw,24px)!important;
+ border-radius:16px!important;
+ border:1px solid #515d69!important;
+ background:linear-gradient(145deg,#171d24,#0d1116)!important;
+ box-shadow:0 16px 42px #0008!important
+}
+.disaster-head{padding-bottom:18px!important}
+.disaster-title{font-size:clamp(18px,1.5vw,23px)!important}
+.disaster-status,.disaster-checked{font-size:12px!important}
+.disaster-body{grid-template-columns:minmax(0,1fr) minmax(360px,.95fr)!important;gap:clamp(18px,2vw,30px)!important;margin-top:22px!important}
+.disaster-main{font-size:clamp(19px,1.55vw,25px)!important;line-height:1.55!important}
+.disaster-sub{font-size:13px!important;line-height:1.85!important;margin-top:9px!important}
+.quake-metrics{gap:11px!important;margin-top:22px!important}
+.quake-metric{padding:17px 14px!important;min-height:112px;justify-content:center;border-radius:11px!important}
+.quake-metric span{font-size:10px!important}
+.quake-metric strong{font-size:clamp(23px,2.2vw,34px)!important}
+.quake-metric small{font-size:12px!important}
+.quake-map-wrap{padding:15px!important;gap:12px!important;border-radius:12px!important}
+.quake-map-head{font-size:15px!important}
+.quake-map-head span+span{font-size:11px!important}
+#quake-map,.quake-map-empty{height:330px!important;border-radius:9px!important}
+.quake-map-empty{font-size:13px!important}
+.quake-map-link{font-size:12px!important}
+.disaster-actions{gap:10px!important;margin-top:3px}
+.disaster-button{padding:11px 15px!important;font-size:12px!important}
+.jalert-card{padding:22px 26px!important;min-height:165px!important;border-radius:14px!important}
+.jalert-title{font-size:17px!important}
+.jalert-state{font-size:11px!important}
+.jalert-copy{font-size:13px!important;line-height:1.85!important;max-width:1400px!important}
+.jalert-links a{font-size:12px!important;padding:9px 13px!important}
+.disaster-card.alert{border:3px solid #ff2638!important;box-shadow:0 0 0 2px #ff263833,0 16px 42px #0009!important}
+@media(max-width:850px){
+ .disaster-card{min-height:0!important;padding:18px!important}
+ .disaster-body{grid-template-columns:1fr!important}
+ #quake-map,.quake-map-empty{height:260px!important}
+}
+@media(max-width:480px){
+ .disaster-card{padding:14px!important}
+ .quake-metric{min-height:90px;padding:12px 10px!important}
+ #quake-map,.quake-map-empty{height:220px!important}
+ .jalert-card{padding:16px!important}
+}
+
 </style>
 </head>
 <body>
@@ -1566,22 +1614,23 @@ document.getElementById("test-quake").addEventListener("click",()=>{
  setDisasterState("normal","テスト表示中","地震情報のテストを表示しています。","画面表示の確認用です。実際の速報ではありません。");
 });
 // Scheduled local display test: 17:17 JST today. This is a visual simulation only.
-const scheduledTestKey="dayline_scheduled_test_2026-11-11_1717";
+// Scheduled local display test: 17:26 JST on 2026-11-11. Fictional training only.
+const scheduledTestKey="dayline_scheduled_test_2026-11-11_1726";
 function checkScheduledTest(){
  const now=new Date();
- const jstParts=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Tokyo",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"}).formatToParts(now);
- const p=Object.fromEntries(jstParts.map(x=>[x.type,x.value]));
+ const parts=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Tokyo",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"}).formatToParts(now);
+ const p=Object.fromEntries(parts.map(x=>[x.type,x.value]));
  const stamp=p.year+"-"+p.month+"-"+p.day;
  const seconds=Number(p.hour)*3600+Number(p.minute)*60+Number(p.second);
- if(stamp==="2026-11-11"&&seconds>=17*3600+17*60&&!localStorage.getItem(scheduledTestKey)){
+ if(stamp==="2026-11-11"&&seconds>=17*3600+26*60&&seconds<17*3600+36*60&&!localStorage.getItem(scheduledTestKey)){
   localStorage.setItem(scheduledTestKey,"shown");
-  showTestAlert("緊急地震速報（訓練）","【架空の訓練データ】発表時刻 17:17／震源 神奈川県東部／想定規模 M6.2／想定深さ 10km／想定最大震度 5弱。表示確認のための完全なフィクションで、実際の地震・気象庁の速報ではありません。");
-  setDisasterState("normal","予約テスト表示中","緊急地震速報のテストを表示しています。","予約時刻：17:17。架空の訓練表示です。実際の速報ではありません。");
+  showTestAlert("緊急地震速報（訓練）","【架空の訓練データ】発表時刻 17:26／震源 神奈川県東部／想定規模 M6.2／想定深さ 10km／想定最大震度 5弱。画面表示確認専用のフィクションで、実際の地震・気象庁の発表ではありません。");
+  renderQuakeDetails({mag:"6.2",intensity:"5弱",depth:"10 km",place:"神奈川県東部（架空）",lat:35.58,lon:139.58});
+  setDisasterState("normal","予約テスト表示中","緊急地震速報のテストを表示しています。","予約時刻：17:26。架空の訓練表示です。実際の速報ではありません。");
  }
 }
 checkScheduledTest();
-const scheduledTestTimer=setInterval(checkScheduledTest,250);
-setTimeout(()=>clearInterval(scheduledTestTimer),10*60*1000);
+const scheduledTestTimer=setInterval(checkScheduledTest,1000);
 
 document.getElementById("test-clear").addEventListener("click",()=>{
  document.getElementById("alert-overlay").classList.remove("show");
