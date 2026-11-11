@@ -1020,6 +1020,39 @@ a{color:inherit}
  .clock-card{background:linear-gradient(135deg,#202d3b,#17222e)!important}
 }
 
+/* DAYLINE refined dark visual system */
+:root{color-scheme:dark;--bg:#0b1118;--ink:#edf2f7;--muted:#94a2b1;--line:#263342}
+html,body{background:#0b1118!important;color:#edf2f7}
+.screen{max-width:2048px}
+.topbar{border-color:#263342}.brand-mark{background:#1c2b3a;color:#d9e7f4;border:1px solid #34485c}.brand{color:#f2f6fa;letter-spacing:.16em}
+.tagline,.live,.card-note,.eyebrow{color:#9aaaba}.live-dot{background:#62c995;box-shadow:0 0 0 4px #62c99520}
+.fullscreen{background:#172330;color:#dce6ef;border-color:#344454}.fullscreen:hover{background:#223446}
+.card,.mini-card{background:#141e29!important;border:1px solid #2a3948!important;border-radius:14px;box-shadow:0 12px 34px #0003}
+.clock-card{background:linear-gradient(120deg,#1b2b3b,#111c28)!important;border-color:#34485c!important}
+.clock-card .eyebrow{color:#a9bdcf}.clock-card .date{color:#e4ebf2}.clock-card .date-en{color:#8296aa}.clock-card .time{color:#f7fbff;text-shadow:0 5px 28px #0005}.clock-card .seconds{color:#8da8c1}
+.clock-foot{border-color:#ffffff18;color:#9aabba}
+.detail-label,.market-label,.mini-label,.world-city{color:#9aabba}.detail-value,.market-value,.world-time{color:#f0f5fa}
+.news-item{border-color:#293746}.news-title{color:#e7edf3}.news-meta{color:#91a0af}.news-num,.source{color:#8eabc5}.news-item:hover .news-title{color:#b9d8f2}
+.calendar-weekday,.calendar-extra{color:#a6b7a8}.calendar-extra{border-color:#ffffff18}
+.disaster-card{background:#17212b!important;border-color:#344454!important}.disaster-title,.disaster-main{color:#e2ebf3}.disaster-status{background:#263544;color:#c1d0dd}.disaster-sub{color:#a0adba}
+.disaster-button{background:#1d2b38;color:#e0e9f1;border-color:#405366}.disaster-button:hover{background:#2a3c4d}
+.disaster-settings{border-color:#344454}.settings-heading{color:#e5edf4}.settings-heading span{color:#b0a28a}
+.test-button{background:#253748;color:#e4edf5;border-color:#496177}.test-button:hover{background:#30485e}.test-button.secondary{background:#17232e;color:#c5d0da}
+.disaster-card.alert{background:#351b22!important;border-color:#a83f4b!important}.disaster-card.alert .disaster-title,.disaster-card.alert .disaster-main{color:#ffd9dc}.disaster-card.alert .disaster-status{background:#682b35;color:#ffe5e7}
+.disaster-card.error{background:#2c271c!important;border-color:#78613a!important}.disaster-card.error .disaster-main{color:#f3dfb7}
+.mini-card{color:#e3ebf2}.footer{color:#718091}
+.breaking-strip.show{background:#54242c;border:1px solid #a94a55;color:#fff0f1;box-shadow:0 8px 26px #0004}
+.alert-overlay{background:rgba(3,8,14,.86);backdrop-filter:blur(12px)}
+.alert-panel{position:relative;width:min(1040px,100%);background:linear-gradient(145deg,#281b22,#171d27);border:1px solid #bb5660;border-radius:20px;padding:clamp(28px,5vw,66px);box-shadow:0 30px 100px #0009;text-align:left}
+.alert-panel:before{content:"";position:absolute;inset:0 auto 0 0;width:7px;background:#e0525e;border-radius:20px 0 0 20px}
+.alert-kicker{display:inline-flex;padding:8px 12px;border-radius:6px;background:#5b2932;color:#ffcbd0;font-size:12px;letter-spacing:.12em}
+.alert-headline{font-size:clamp(32px,5vw,68px);font-weight:800;line-height:1.2;color:#fff1f2;margin:24px 0 16px}
+.alert-detail{max-width:780px;font-size:clamp(15px,1.5vw,20px);line-height:1.8;color:#d8c7ca}
+.alert-close{background:#f1dfe1;color:#46242a;border-radius:8px;padding:13px 22px;font-weight:750}
+.alert-overlay.test-mode .alert-panel{background:linear-gradient(145deg,#2b261c,#1a2028);border-color:#bd914c}
+.alert-overlay.test-mode .alert-panel:before{background:#d3a04d}.alert-overlay.test-mode .alert-kicker{background:#594522;color:#ffe3ad}.alert-overlay.test-mode .alert-headline{color:#fff0cf}.alert-overlay.test-mode .alert-detail{color:#e0d4bb}.alert-overlay.test-mode .alert-close{background:#ead8b5;color:#382a16}
+@media(max-width:650px){.alert-panel{padding:28px 22px 24px;border-radius:14px}.alert-headline{margin:18px 0 12px}.alert-close{width:100%}}
+
 </style>
 </head>
 <body>
@@ -1070,13 +1103,13 @@ a{color:inherit}
   </div>
   <div class="disaster-body">
    <div><div class="disaster-main" id="disaster-main">気象庁の公開情報を確認しています。</div><div class="disaster-sub" id="disaster-sub">気象庁の公開XMLは毎分更新のため、DAYLINEも60秒間隔で確認します。緊急地震速報の受信を保証するものではありません。スマホの緊急速報・公式情報を必ず併用してください。</div></div>
-   <div class="disaster-actions"><button class="disaster-button" id="settings-button" type="button" aria-expanded="false" aria-controls="disaster-settings">設定・テスト</button><button class="disaster-button" id="notify-button" type="button">通知を許可</button><a class="disaster-button" href="https://www.jma.go.jp/bosai/" target="_blank" rel="noopener noreferrer">気象庁公式</a></div>
+   <div class="disaster-actions"><button class="disaster-button" id="sound-enable" type="button">音声を有効化</button><button class="disaster-button" id="settings-button" type="button" aria-expanded="false" aria-controls="disaster-settings">設定・テスト</button><button class="disaster-button" id="notify-button" type="button">通知を許可</button><a class="disaster-button" href="https://www.jma.go.jp/bosai/" target="_blank" rel="noopener noreferrer">気象庁公式</a></div>
   <div class="disaster-settings" id="disaster-settings" hidden>
    <div class="settings-heading">表示テスト <span>実際の速報・外部配信ではありません</span></div>
    <div class="test-actions">
     <button class="test-button" id="test-eew" type="button">緊急地震速報をテスト</button>
     <button class="test-button" id="test-quake" type="button">地震情報をテスト</button>
-    <button class="test-button secondary" id="test-clear" type="button">テスト表示を終了</button>
+    <button class="test-button secondary" id="sound-test" type="button">通知音を試聴</button><button class="test-button secondary" id="test-clear" type="button">テスト表示を終了</button>
    </div>
   </div>
   </div>
@@ -1132,7 +1165,32 @@ const disasterCard=document.getElementById("disaster-card");
 const disasterFeed="https://www.data.jma.go.jp/developer/xml/feed/eqvol.xml";
 const disasterSeenKey="dayline_jma_seen_id";
 function disasterText(node,tag){const el=node.getElementsByTagName(tag)[0];return el?el.textContent.trim():""}
+/* Original DAYLINE chime — not the official emergency warning sound */
+let daylineAudioContext=null;
+let daylineSoundEnabled=localStorage.getItem("dayline_sound_enabled")==="true";
+function updateSoundButton(){const b=document.getElementById("sound-enable");if(b)b.textContent=daylineSoundEnabled?"音声 ON":"音声を有効化";}
+async function unlockDaylineAudio(){
+ const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return false;
+ try{if(!daylineAudioContext)daylineAudioContext=new AC();if(daylineAudioContext.state==="suspended")await daylineAudioContext.resume();return daylineAudioContext.state==="running";}catch(e){return false;}
+}
+async function playDaylineChime(){
+ if(!daylineAudioContext||daylineAudioContext.state!=="running")return;
+ const ctx=daylineAudioContext,start=ctx.currentTime+.03;
+ [660,880,990].forEach((hz,i)=>{const o=ctx.createOscillator(),g=ctx.createGain(),t=start+i*.19;o.type="sine";o.frequency.setValueAtTime(hz,t);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.10,t+.025);g.gain.exponentialRampToValueAtTime(.0001,t+.17);o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+.19);});
+}
+document.getElementById("sound-enable").addEventListener("click",async()=>{
+ daylineSoundEnabled=!daylineSoundEnabled;
+ if(daylineSoundEnabled){const ok=await unlockDaylineAudio();if(!ok){daylineSoundEnabled=false;alert("このブラウザでは音声を有効にできませんでした。");}else await playDaylineChime();}
+ localStorage.setItem("dayline_sound_enabled",String(daylineSoundEnabled));updateSoundButton();
+});
+document.getElementById("sound-test").addEventListener("click",async()=>{
+ if(!daylineAudioContext||daylineAudioContext.state!=="running"){if(!await unlockDaylineAudio()){alert("このブラウザでは音声を再生できません。");return;}}
+ await playDaylineChime();
+});
+updateSoundButton();
+
 function showBigAlert(title,detail){
+ if(daylineSoundEnabled)playDaylineChime();
  const overlay=document.getElementById("alert-overlay");
  overlay.classList.remove("test-mode");
  document.getElementById("alert-kicker").textContent="DAYLINE · 防災情報";
@@ -1143,6 +1201,7 @@ function showBigAlert(title,detail){
  document.getElementById("breaking-strip").classList.add("show");
 }
 function showTestAlert(title,detail){
+ if(daylineSoundEnabled)playDaylineChime();
  const overlay=document.getElementById("alert-overlay");
  overlay.classList.add("test-mode");
  document.getElementById("alert-kicker").textContent="訓練・テスト表示 ／ 実際の速報ではありません";
