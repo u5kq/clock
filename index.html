@@ -777,6 +777,109 @@ html,body{background:var(--canvas)!important;color:var(--ink)!important}
  .alert-headline{font-size:clamp(32px,8vw,48px)!important}
 }
 
+
+/* DAYLINE UI REFRESH — reliable clock geometry and readable information grid */
+html,body{background:#f3f5f7!important;color:#1e2b38!important}
+.screen{width:min(100%,1920px)!important;max-width:1920px!important;margin:0 auto!important}
+.topbar{border-bottom:1px solid #d9e0e6!important}
+.card,.mini-card{border:1px solid #dce2e8!important;border-radius:14px!important;box-shadow:0 2px 10px rgba(24,42,58,.035)!important}
+.dashboard{display:grid!important;gap:14px!important;align-content:stretch!important}
+
+/* Clock: one full-width block; time is no longer trapped in a narrow grid column */
+.dashboard>.clock-card{
+ grid-column:1/-1!important;grid-row:1!important;
+ display:flex!important;flex-direction:column!important;
+ align-items:stretch!important;justify-content:center!important;
+ width:100%!important;min-width:0!important;min-height:0!important;
+ overflow:visible!important;
+ padding:clamp(18px,2.4vw,34px) clamp(18px,3vw,48px)!important;
+ background:linear-gradient(115deg,#e8eef4 0%,#f6f8fa 52%,#e8eef4 100%)!important;
+ border:1px solid #cfd9e2!important;border-radius:16px!important;
+}
+.clock-card>div:first-child{display:flex!important;flex-direction:column!important;align-items:stretch!important;width:100%!important;min-width:0!important}
+.clock-card .card-top{width:100%!important;display:flex!important;justify-content:space-between!important;align-items:center!important}
+.clock-card .eyebrow{color:#506276!important;font-size:11px!important;font-weight:800!important;letter-spacing:.15em!important}
+.clock-card .card-note{color:#66788a!important;font-size:10px!important}
+.clock-card .date{margin:10px 0 0!important;color:#31475c!important;font-size:clamp(16px,1.5vw,23px)!important;font-weight:650!important}
+.clock-card .date-en{margin-top:3px!important;color:#738294!important;font-size:10px!important;letter-spacing:.1em!important}
+.clock-card .time{
+ display:block!important;position:relative!important;
+ width:100%!important;max-width:100%!important;min-width:0!important;
+ margin:clamp(8px,1.5vw,18px) 0 0!important;padding:0!important;
+ overflow:visible!important;text-align:center!important;
+ color:#142b40!important;font-size:clamp(76px,12.2vw,196px)!important;
+ font-weight:650!important;letter-spacing:-.065em!important;line-height:1!important;
+ white-space:nowrap!important;font-variant-numeric:tabular-nums!important;
+ font-feature-settings:"tnum" 1!important;
+}
+.clock-card .time .seconds{display:inline!important;color:#708397!important;font-size:.36em!important;font-weight:550!important;letter-spacing:-.015em!important;margin-left:.1em!important;vertical-align:baseline!important}
+.clock-card .clock-foot{display:flex!important;width:100%!important;justify-content:space-between!important;align-items:center!important;margin:12px 0 0!important;padding:9px 0 0!important;border-top:1px solid #d2dce5!important;color:#647587!important;font-size:10px!important}
+
+/* Balanced information blocks */
+@media(min-width:1051px){
+ html,body{height:auto!important;min-height:100%!important;overflow:auto!important}
+ .screen{height:auto!important;min-height:100vh!important;overflow:visible!important;padding:14px clamp(20px,2.2vw,38px)!important}
+ .dashboard{
+  grid-template-columns:minmax(220px,1fr) minmax(360px,1.55fr) minmax(220px,.9fr)!important;
+  grid-template-rows:clamp(190px,27vh,285px) minmax(265px,auto)!important;
+  gap:12px!important;padding-top:12px!important;flex:0 0 auto!important;
+ }
+ .dashboard>.clock-card{grid-column:1/-1!important;grid-row:1!important}
+ .clock-card .time{font-size:clamp(100px,11.5vw,190px)!important}
+ .dashboard>.weather-card{grid-column:1!important;grid-row:2!important;min-height:265px!important}
+ .dashboard>.news-card{grid-column:2!important;grid-row:2!important;min-height:265px!important}
+ .dashboard>.side-stack{grid-column:3!important;grid-row:2!important;display:block!important;min-height:265px!important}
+ .side-stack .calendar-card{height:100%!important;min-height:265px!important}
+ .news-list{max-height:430px!important;overflow:auto!important;scrollbar-width:thin}
+ .disaster-card{margin-top:12px!important}
+ .lower-grid{margin-top:12px!important}
+}
+@media(min-width:1500px){
+ .clock-card .time{font-size:clamp(150px,12vw,220px)!important}
+ .dashboard{grid-template-rows:clamp(220px,29vh,320px) minmax(290px,auto)!important}
+}
+@media(min-width:651px) and (max-width:1050px){
+ html,body{height:auto!important;overflow:auto!important}
+ .screen{height:auto!important;min-height:100vh!important;overflow:visible!important;padding:16px 20px!important}
+ .dashboard{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:auto!important;gap:12px!important}
+ .dashboard>.clock-card{grid-column:1/-1!important;grid-row:auto!important;min-height:190px!important}
+ .clock-card .time{font-size:clamp(82px,13vw,145px)!important}
+ .dashboard>.weather-card{grid-column:1!important;grid-row:auto!important;min-height:245px!important}
+ .dashboard>.news-card{grid-column:2!important;grid-row:auto!important;min-height:300px!important}
+ .dashboard>.side-stack{grid-column:1/-1!important;grid-row:auto!important;display:block!important;min-height:145px!important}
+ .side-stack .calendar-card{min-height:145px!important}
+ .lower-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
+@media(max-width:650px){
+ html,body{height:auto!important;min-height:100%!important;overflow:auto!important}
+ .screen{width:100%!important;height:auto!important;min-height:100vh!important;overflow:visible!important;padding:12px 10px 18px!important}
+ .topbar{gap:8px!important;padding-bottom:12px!important}
+ .brand{font-size:15px!important}.tagline{font-size:7px!important}
+ .top-right{gap:7px!important}.live{font-size:8px!important}
+ .dashboard{display:flex!important;flex-direction:column!important;gap:10px!important;padding-top:10px!important}
+ .dashboard>.clock-card{display:flex!important;min-height:155px!important;padding:16px 14px!important}
+ .clock-card .date{font-size:16px!important;margin-top:8px!important}
+ .clock-card .date-en{font-size:9px!important}
+ .clock-card .time{font-size:clamp(58px,14.5vw,92px)!important;text-align:left!important;margin-top:10px!important;letter-spacing:-.07em!important}
+ .clock-card .time .seconds{font-size:.34em!important}
+ .clock-card .clock-foot{margin-top:9px!important;padding-top:7px!important}
+ .dashboard>.weather-card{min-height:190px!important}
+ .dashboard>.news-card{min-height:240px!important}
+ .dashboard>.side-stack{display:block!important;min-height:0!important}
+ .side-stack .calendar-card{min-height:145px!important}
+ .disaster-card{margin-top:10px!important;padding:13px!important}
+ .disaster-body{grid-template-columns:1fr!important}
+ .disaster-actions{justify-content:flex-start!important}
+ .lower-grid{grid-template-columns:1fr!important;gap:8px!important}
+ .footer{flex-direction:column!important;gap:5px!important}
+ .alert-panel{padding:24px 17px!important}
+ .alert-headline{font-size:clamp(30px,8vw,46px)!important}
+}
+@media(max-width:360px){
+ .clock-card .time{font-size:clamp(50px,14vw,58px)!important}
+ .clock-card .card-note{font-size:8px!important}
+}
+
 </style>
 </head>
 <body>
