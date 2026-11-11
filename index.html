@@ -1201,6 +1201,17 @@ html,body{background:#090b0e!important;color:#f4f6f8!important}
 @media(max-width:1050px){.dashboard{grid-template-columns:1fr 1fr}.clock-card,.news-card{grid-column:span 2}.side-stack{grid-column:span 2}.lower-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:650px){.screen{padding:12px}.dashboard{grid-template-columns:1fr}.clock-card,.weather-card,.news-card,.side-stack{grid-column:auto}.clock-card{min-height:220px}.clock-card .time{font-size:clamp(66px,17vw,100px)!important}.news-tab{padding:6px 8px}.lower-grid{grid-template-columns:1fr 1fr}.disaster-body{grid-template-columns:1fr}}
 
+
+/* Training EEW remains unmistakably red, with explicit TRAINING label */
+.alert-overlay.test-mode{background:rgba(20,0,3,.91)!important}
+.alert-overlay.test-mode .alert-panel{background:linear-gradient(145deg,#390b12,#17090d)!important;border:4px dashed #ff5360!important;box-shadow:0 0 0 8px #ff263833,0 28px 100px #000!important}
+.alert-overlay.test-mode .alert-panel:before{background:#ff2638!important;width:9px}
+.alert-overlay.test-mode .alert-kicker{background:#bd172a!important;color:#fff!important;font-weight:900}
+.alert-overlay.test-mode .alert-headline{color:#fff!important}
+.alert-overlay.test-mode .alert-detail{color:#ffd9dd!important}
+.alert-overlay.test-mode .alert-close{background:#f4f5f6!important;color:#111!important}
+.breaking-strip.show.test-mode{background:#b91529!important;border:2px dashed #ff7580!important;color:#fff!important}
+
 </style>
 </head>
 <body>
