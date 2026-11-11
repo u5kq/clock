@@ -2487,6 +2487,81 @@ html,body{background:var(--bg);color:var(--ink)}
 .disaster-feed-item:hover strong{text-decoration:underline}
 .disaster-feed-empty{padding:10px 0;font-size:11px;color:#8b828d}
 @media(max-width:650px){.disaster-feed-item{grid-template-columns:1fr;gap:3px}}
+
+/* DAYLINE disaster panel — rebuilt hierarchy */
+.disaster-card{
+ width:100%!important;min-height:0!important;margin:18px 0 0!important;padding:clamp(20px,2vw,30px)!important;
+ border:1px solid #e6e4ee!important;border-radius:20px!important;
+ background:linear-gradient(135deg,#fbfaff 0%,#f5f8fd 58%,#f8f5fb 100%)!important;
+ box-shadow:0 8px 28px rgba(72,65,94,.055)!important;color:#343342!important;
+}
+.disaster-head{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:18px!important;padding:0 0 18px!important;border-bottom:1px solid #e8e6ef}
+.disaster-heading-group{display:flex;align-items:center;gap:11px;flex-wrap:wrap}
+.disaster-title{display:flex!important;align-items:center;gap:10px!important;font-size:17px!important;font-weight:760!important;letter-spacing:.015em;color:#454257!important}
+.disaster-symbol{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:#e9e5f4;color:#766d98;font-size:19px;font-weight:500}
+.disaster-kicker{font-size:9px;letter-spacing:.16em;color:#9993a8;font-weight:650}
+.disaster-head-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.disaster-checked{font-size:10px!important;color:#9993a2!important}
+.disaster-status{font-size:10px!important;padding:7px 11px!important;border-radius:99px!important;background:#e9f1eb!important;color:#5f806b!important;border:1px solid #dce9df}
+.disaster-body{display:grid!important;grid-template-columns:minmax(0,1.05fr) minmax(280px,.95fr)!important;gap:16px!important;margin-top:18px!important;align-items:stretch!important}
+.disaster-overview{min-width:0;padding:19px!important;border-radius:15px!important;background:#fff!important;border:1px solid #eceaf1!important}
+.disaster-section-label{font-size:9px;letter-spacing:.15em;font-weight:750;color:#9993aa;margin-bottom:9px}
+.disaster-main{font-size:clamp(16px,1.4vw,21px)!important;font-weight:720!important;line-height:1.5!important;color:#454257!important}
+.disaster-sub{font-size:11px!important;line-height:1.75!important;color:#858294!important;margin-top:8px!important}
+.quake-metrics{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important;margin-top:18px!important}
+.quake-metric{min-width:0!important;min-height:85px!important;padding:12px 13px!important;border-radius:12px!important;background:#f7f6fb!important;border:1px solid #eeebf4!important;display:flex!important;flex-direction:column!important;justify-content:center!important;gap:4px!important}
+.quake-metric span{font-size:9px!important;letter-spacing:.11em!important;color:#9992a8!important}
+.quake-metric strong{font-size:clamp(19px,1.7vw,25px)!important;line-height:1.2!important;color:#4c4960!important;overflow-wrap:anywhere}
+.quake-metric small{font-size:10px!important;color:#918b9c!important}
+.quake-map-wrap{min-width:0!important;padding:15px!important;border-radius:15px!important;background:#fff!important;border:1px solid #eceaf1!important;display:flex!important;flex-direction:column!important;gap:10px!important}
+.quake-map-head{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;font-size:12px!important;font-weight:750!important;color:#555168!important}
+.quake-map-head span+span{font-size:10px!important;font-weight:500!important;color:#9993a4!important;text-align:right}
+#quake-map,.quake-map-empty{width:100%!important;height:clamp(210px,22vw,300px)!important;border-radius:10px!important;background:#f0f2f6!important}
+.quake-map-empty{display:grid;place-items:center;text-align:center;padding:18px!important;color:#9995a3!important;font-size:11px!important;line-height:1.7;background:linear-gradient(145deg,#f5f6fa,#eef1f7)!important}
+.quake-map-link{align-self:flex-start!important;color:#7c7398!important;font-size:10px!important;text-decoration:none!important}
+.quake-map-link:hover{text-decoration:underline!important}
+.disaster-feed-history{grid-column:1/-1!important;margin:0!important;padding:16px 18px!important;border-radius:15px!important;background:#fff!important;border:1px solid #eceaf1!important}
+.disaster-feed-heading{display:flex!important;justify-content:space-between!important;align-items:center!important;gap:10px!important;margin:0 0 8px!important;font-size:12px!important;font-weight:750!important;color:#555168!important}
+.disaster-feed-heading span+span{font-size:9px!important;letter-spacing:.13em!important;color:#aaa4b2!important;font-weight:650!important}
+.disaster-feed-list{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;column-gap:20px!important}
+.disaster-feed-item{min-width:0!important;display:grid!important;grid-template-columns:92px minmax(0,1fr)!important;gap:9px!important;align-items:center!important;padding:10px 0!important;border-top:1px solid #f0eef3!important;text-decoration:none!important}
+.disaster-feed-item time{font-size:10px!important;color:#9993a2!important}
+.disaster-feed-item strong{font-size:11px!important;line-height:1.5!important;color:#555168!important;font-weight:620!important}
+.disaster-feed-empty{padding:12px 0!important;color:#9993a2!important;font-size:11px!important}
+.disaster-actions{grid-column:1/-1!important;display:flex!important;gap:8px!important;flex-wrap:wrap!important;padding-top:1px}
+.disaster-button{border:1px solid #e5e1ee!important;border-radius:9px!important;padding:9px 12px!important;background:#fff!important;color:#6d6683!important;font-size:10px!important;text-decoration:none!important;cursor:pointer}
+.disaster-button:hover{background:#f3f0f8!important}
+.disaster-card.alert{background:linear-gradient(135deg,#fff5f4,#fcebed)!important;border:1px solid #e9bfc5!important;animation:none!important}
+.disaster-card.alert .disaster-title,.disaster-card.alert .disaster-main{color:#913f4b!important}
+.disaster-card.alert .disaster-status{background:#f7dfe2!important;color:#9a4350!important;border-color:#edc5cb!important}
+.disaster-card.error{background:linear-gradient(135deg,#fffaf0,#f7f1e4)!important;border:1px solid #eadfca!important}
+.disaster-card.error .disaster-main{color:#806c46!important}
+.disaster-settings{grid-column:1/-1!important;padding:16px!important;border-radius:13px!important;background:#fff!important;border:1px solid #eceaf1!important}
+.jalert-card{margin-top:14px!important;padding:18px 20px!important;border-radius:16px!important;background:#f0edf7!important;border:1px solid #e5e0ef!important;box-shadow:none!important}
+.jalert-title{font-size:13px!important;color:#5f5876!important}
+.jalert-state{background:#e7e2f1!important;color:#7a7190!important;border-color:#ddd6ea!important}
+.jalert-copy{font-size:11px!important;line-height:1.8!important;color:#817b91!important}
+.jalert-links a{background:#fff!important;color:#756c8d!important;border:1px solid #e3deec!important;border-radius:8px!important}
+@media(max-width:760px){
+ .disaster-card{padding:16px!important;border-radius:16px!important}
+ .disaster-head{align-items:flex-start!important;flex-direction:column!important}
+ .disaster-head-meta{width:100%;justify-content:space-between}
+ .disaster-body{grid-template-columns:1fr!important;gap:11px!important}
+ .disaster-overview{padding:15px!important}
+ .quake-map-wrap{padding:12px!important}
+ #quake-map,.quake-map-empty{height:220px!important}
+ .disaster-feed-list{grid-template-columns:1fr!important}
+ .disaster-feed-item{grid-template-columns:92px minmax(0,1fr)!important}
+ .disaster-actions{gap:7px!important}
+}
+@media(max-width:420px){
+ .disaster-heading-group{gap:8px}
+ .disaster-kicker{width:100%;padding-left:44px}
+ .disaster-head-meta{align-items:flex-start;flex-direction:column}
+ .quake-metrics{gap:7px!important}
+ .quake-metric{min-height:76px!important;padding:10px!important}
+ .jalert-card{padding:15px!important}
+}
 </style>
 </head>
 <body>
@@ -2538,43 +2613,56 @@ html,body{background:var(--bg);color:var(--ink)}
 </div>
 
  <section class="card disaster-card" id="disaster-card" aria-live="polite">
-  <div class="disaster-head">
-   <div class="disaster-title"><span aria-hidden="true">◇</span> 防災情報・地震速報</div>
-   <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span class="disaster-checked" id="disaster-checked">最終確認 --:--:--</span><div class="disaster-status" id="disaster-status">接続確認中</div></div>
+ <div class="disaster-head">
+  <div class="disaster-heading-group">
+   <div class="disaster-title"><span class="disaster-symbol" aria-hidden="true">＋</span><span>防災・地震情報</span></div>
+   <div class="disaster-kicker">DISASTER INFORMATION</div>
   </div>
-  <div class="disaster-body">
-   <div class="disaster-overview">
-    <div class="disaster-main" id="disaster-main">気象庁の公開情報を確認しています。</div>
-    <div class="disaster-sub" id="disaster-sub">気象庁の地震・火山の高頻度公開XMLを約1分間隔で確認します。配信遅延・停止があり、緊急地震速報の受信を保証するものではありません。スマホの緊急速報・公式情報を必ず併用してください。</div>
-    <div class="quake-metrics" id="quake-metrics">
-     <div class="quake-metric"><span>MAGNITUDE</span><strong id="quake-mag">--</strong><small>マグニチュード</small></div>
-     <div class="quake-metric"><span>MAX INTENSITY</span><strong id="quake-intensity">--</strong><small>最大震度</small></div>
-     <div class="quake-metric"><span>DEPTH</span><strong id="quake-depth">--</strong><small>震源の深さ</small></div>
-     <div class="quake-metric"><span>HYPOCENTER</span><strong id="quake-place">--</strong><small>震央・震源地</small></div>
-    </div>
-    <div class="disaster-feed-history">
-     <div class="disaster-feed-heading"><span>地震・火山の発表履歴</span><span>気象庁公開XML</span></div>
-     <div id="disaster-feed-list" class="disaster-feed-list"><div class="disaster-feed-empty">発表情報を確認しています…</div></div>
-    </div>
+  <div class="disaster-head-meta">
+   <span class="disaster-checked" id="disaster-checked">最終確認 --:--:--</span>
+   <div class="disaster-status" id="disaster-status">接続確認中</div>
+  </div>
+ </div>
+ <div class="disaster-body">
+  <div class="disaster-overview">
+   <div class="disaster-section-label">LATEST UPDATE</div>
+   <div class="disaster-main" id="disaster-main">気象庁の公開情報を確認しています。</div>
+   <div class="disaster-sub" id="disaster-sub">気象庁の公開XMLを約1分間隔で確認します。配信遅延・停止があり、緊急地震速報の受信を保証するものではありません。スマホの緊急速報・公式情報を必ず併用してください。</div>
+   <div class="quake-metrics" id="quake-metrics">
+    <div class="quake-metric"><span>MAGNITUDE</span><strong id="quake-mag">--</strong><small>マグニチュード</small></div>
+    <div class="quake-metric"><span>INTENSITY</span><strong id="quake-intensity">--</strong><small>最大震度</small></div>
+    <div class="quake-metric"><span>DEPTH</span><strong id="quake-depth">--</strong><small>震源の深さ</small></div>
+    <div class="quake-metric"><span>LOCATION</span><strong id="quake-place">--</strong><small>震央・震源地</small></div>
    </div>
-   <div class="quake-map-wrap" id="quake-map-wrap">
-    <div class="quake-map-head"><span>震源地マップ</span><span id="quake-map-caption">震源情報を待機中</span></div>
-    <iframe id="quake-map" title="震源地周辺地図" loading="lazy" referrerpolicy="no-referrer" hidden></iframe>
-    <div class="quake-map-empty" id="quake-map-empty">地震情報を取得すると、震源地を地図に表示します。</div>
-    <a class="quake-map-link" id="quake-map-link" href="https://www.jma.go.jp/bosai/map.html#contents=earthquake_map" target="_blank" rel="noopener noreferrer">気象庁の地震情報マップ ↗</a>
-   </div>
-   <div class="disaster-actions"><button class="disaster-button" id="sound-enable" type="button">音声を有効化</button><button class="disaster-button" id="settings-button" type="button" aria-expanded="false" aria-controls="disaster-settings">設定・テスト</button><button class="disaster-button" id="notify-button" type="button">通知を許可</button><a class="disaster-button" href="https://www.jma.go.jp/bosai/" target="_blank" rel="noopener noreferrer">気象庁公式</a></div>
+  </div>
+  <div class="quake-map-wrap" id="quake-map-wrap">
+   <div class="quake-map-head"><span>震源地マップ</span><span id="quake-map-caption">震源情報を待機中</span></div>
+   <iframe id="quake-map" title="震源地周辺地図" loading="lazy" referrerpolicy="no-referrer" hidden></iframe>
+   <div class="quake-map-empty" id="quake-map-empty">地震情報を取得すると、震源地を地図に表示します。</div>
+   <a class="quake-map-link" id="quake-map-link" href="https://www.jma.go.jp/bosai/map.html#contents=earthquake_map" target="_blank" rel="noopener noreferrer">気象庁の地震情報マップを見る ↗</a>
+  </div>
+  <div class="disaster-feed-history">
+   <div class="disaster-feed-heading"><span>最近の発表</span><span>JMA · PUBLIC FEED</span></div>
+   <div id="disaster-feed-list" class="disaster-feed-list"><div class="disaster-feed-empty">発表情報を確認しています…</div></div>
+  </div>
+  <div class="disaster-actions">
+   <button class="disaster-button" id="sound-enable" type="button">音声を有効化</button>
+   <button class="disaster-button" id="settings-button" type="button" aria-expanded="false" aria-controls="disaster-settings">設定・テスト</button>
+   <button class="disaster-button" id="notify-button" type="button">通知を許可</button>
+   <a class="disaster-button" href="https://www.jma.go.jp/bosai/" target="_blank" rel="noopener noreferrer">気象庁公式 ↗</a>
+  </div>
   <div class="disaster-settings" id="disaster-settings" hidden>
    <div class="settings-heading">表示設定・テスト <span>実際の速報・外部配信ではありません</span></div>
    <div class="device-setting"><label for="device-layout">端末に合わせた表示</label><select id="device-layout" class="device-select"><option value="auto">自動（おすすめ）</option><option value="desktop">PC・大画面</option><option value="tablet">タブレット</option><option value="mobile">スマートフォン</option></select><span id="device-layout-note">画面幅に合わせて文字・情報量・配置を自動調整します。</span></div>
    <div class="test-actions">
     <button class="test-button" id="test-eew" type="button">緊急地震速報をテスト</button>
     <button class="test-button" id="test-quake" type="button">地震情報をテスト</button>
-    <button class="test-button secondary" id="sound-test" type="button">通知音を試聴</button><button class="test-button secondary" id="test-clear" type="button">テスト表示を終了</button>
+    <button class="test-button secondary" id="sound-test" type="button">通知音を試聴</button>
+    <button class="test-button secondary" id="test-clear" type="button">テスト表示を終了</button>
    </div>
   </div>
-  </div>
- </section>
+ </div>
+</section>
 
 <section class="card jalert-card" aria-label="Jアラート情報">
  <div class="jalert-head"><div class="jalert-title">J-ALERT ／ 全国瞬時警報システム</div><div class="jalert-state">公式情報リンク · 直接受信は未接続</div></div>
