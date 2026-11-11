@@ -942,6 +942,84 @@ html,body{background:#f3f5f7!important;color:#1e2b38!important}
  .dashboard>.side-stack{grid-column:1/-1!important;grid-row:3!important}
 }
 
+
+/* DAYLINE — refined graphite / midnight visual system */
+:root{
+ --canvas:#10151c;--ink:#edf1f5;--muted:#aab5c1;--rule:#303a46;
+ --navy:#172330;--bluewash:#202d3b;--red:#c83b48;--red-dark:#8f202c;
+}
+html,body{background:#10151c!important;color:#edf1f5!important}
+.screen{background:transparent!important}
+.topbar{border-bottom:1px solid #303a46!important}
+.brand-mark{background:#e9edf1!important;color:#172330!important}
+.brand{color:#f2f5f8!important;letter-spacing:.18em!important}
+.tagline,.live{color:#9eabb8!important}
+.live-dot{background:#70c7a0!important;box-shadow:0 0 0 3px #70c7a01c!important}
+.fullscreen{background:#202b37!important;color:#eaf0f5!important;border:1px solid #3a4653!important;border-radius:7px!important}
+.card,.mini-card{
+ background:#1a232d!important;color:#edf1f5!important;
+ border:1px solid #303c49!important;border-radius:12px!important;
+ box-shadow:0 8px 24px rgba(0,0,0,.16)!important;
+}
+.clock-card{
+ background:linear-gradient(115deg,#202d3b 0%,#17222e 58%,#121b25 100%)!important;
+ border:1px solid #3a4857!important;border-radius:14px!important;
+ box-shadow:inset 0 1px 0 #ffffff0b,0 12px 30px #0003!important;
+}
+.clock-card .eyebrow{color:#9eafc0!important;letter-spacing:.18em!important}
+.clock-card .date{color:#f0f3f6!important;font-weight:650!important}
+.clock-card .date-en{color:#91a0af!important}
+.clock-card #time{color:#ffffff!important;text-shadow:0 2px 18px #0005!important}
+.clock-card .seconds{color:#8fa2b5!important}
+.clock-card .clock-foot{color:#8999a9!important;border-color:#3a4857!important}
+.weather-card{background:#1b2834!important}
+.news-card{background:#1a232d!important}
+.calendar-card{background:#202a33!important}
+.card-top{border-color:#303c49!important}
+.eyebrow,.card-note,.detail-label,.mini-label{color:#9eabb8!important}
+.weather-temp,.weather-desc,.detail-value,.calendar-date,.calendar-weekday{color:#f0f3f6!important}
+.weather-icon{filter:saturate(.78)!important}
+.news-card h1{color:#f3f5f7!important}
+.news-title{color:#e7edf2!important;font-weight:600!important}
+.news-meta,.news-num,.news-count,.empty{color:#98a7b5!important}
+.news-item{border-color:#303c49!important}
+.news-item:hover{background:#25313d!important}
+.calendar-extra{color:#aab5c1!important}
+.mini-content{color:#edf1f5!important}
+.footer{color:#7f8c99!important;border-color:#303a46!important}
+.disaster-card{
+ background:#211f1c!important;border:1px solid #6b5230!important;
+ border-left:6px solid #c18a3b!important;color:#f0e8dc!important;
+}
+.disaster-title,.disaster-main{color:#f3e7d2!important}
+.disaster-sub{color:#bdb09d!important}
+.disaster-status{background:#3a3023!important;color:#f0c77e!important;border:1px solid #66502e!important}
+.disaster-button,.test-button{
+ background:#29333d!important;color:#edf1f5!important;
+ border:1px solid #465361!important;border-radius:6px!important;
+}
+.disaster-button:hover,.test-button:hover,.fullscreen:hover{background:#354352!important}
+.disaster-settings{background:#191f26!important;border-color:#3a4652!important;color:#e8edf2!important}
+.settings-heading,.settings-heading span{color:#d8e0e7!important}
+.disaster-card.alert{
+ background:#351b21!important;border-color:#c83b48!important;
+ border-left-color:#e34a57!important;box-shadow:0 0 0 2px #c83b4825,0 10px 28px #0004!important;
+}
+.disaster-card.alert .disaster-title,.disaster-card.alert .disaster-main{color:#fff0f1!important}
+.disaster-card.alert .disaster-status{background:#a82c38!important;color:#fff!important;border-color:#d14a55!important}
+.disaster-card.error{background:#30271b!important;border-color:#8c682e!important;border-left-color:#c18a3b!important}
+.disaster-card.error .disaster-title,.disaster-card.error .disaster-main{color:#f4dfb6!important}
+.breaking-strip{background:#b52e3b!important;color:#fff!important}
+.alert-overlay{background:rgba(4,8,12,.92)!important}
+.alert-panel{background:#f7f4f1!important;color:#202832!important}
+.alert-detail{color:#3d4853!important}
+.alert-close{background:#263544!important;color:#fff!important}
+.lower-grid .mini-card{background:#1a232d!important}
+a{color:inherit}
+@media(max-width:650px){
+ .clock-card{background:linear-gradient(135deg,#202d3b,#17222e)!important}
+}
+
 </style>
 </head>
 <body>
