@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#f7f6f2">
+<meta name="theme-color" content="#08090b">
 <meta name="description" content="DAYLINE — 時計・天気・ニュース・防災情報をひとつの画面に。">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23090b0e'/%3E%3Cpath d='M14 16h36v32H14z' fill='none' stroke='%23f4f6f8' stroke-width='4'/%3E%3Cpath d='M22 25h20M22 33h20M22 41h11' stroke='%23f4f6f8' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
 <title>DAYLINE — Daily Information Dashboard</title>
@@ -1907,6 +1907,153 @@ html,body{background:#f2f4f6!important;color:#11161b!important}
 .breaking-strip.show,.breaking-strip.show.test-mode{background:#d91f36!important;color:#fff!important;border-color:#f36a79!important}
 @media(prefers-color-scheme:dark){:root{color-scheme:light}}
 
+
+/* DAYLINE / PANORAMA TYPOGRAPHY & FLIP CLOCK */
+:root{
+ color-scheme:dark;
+ --bg:#08090b;--ink:#f5f6f7;--muted:#92979f;--line:#282b30;
+ --white:#17191d;--accent:#e9edf2;
+}
+html,body{background:#08090b!important;color:#f5f6f7!important}
+body{
+ font-family:Inter,"SF Pro Display",-apple-system,BlinkMacSystemFont,"Helvetica Neue",
+ "Hiragino Kaku Gothic ProN","Yu Gothic UI","Meiryo",sans-serif;
+ font-feature-settings:"tnum" 1,"ss01" 1;
+ letter-spacing:.005em;
+}
+.screen{max-width:1920px}
+.topbar{border-color:#25282d}
+.brand-mark{background:#f0f2f4!important;color:#101216!important;border-radius:10px}
+.brand{font-weight:800;letter-spacing:.2em}
+.tagline{color:#92979f;letter-spacing:.2em}
+.live{color:#b6bbc2}
+.live-dot{background:#b7d7c2;box-shadow:0 0 0 4px #b7d7c21c}
+.fullscreen,.disaster-button{
+ background:#17191d!important;color:#f1f3f5!important;border:1px solid #373b42!important;
+ border-radius:8px;font-weight:650
+}
+.card,.mini-card{
+ background:#17191d!important;border:1px solid #292d33!important;
+ border-radius:16px;box-shadow:none;color:#f3f4f6
+}
+.clock-card{
+ grid-column:1/-1!important;grid-row:1!important;
+ display:flex!important;flex-direction:column;justify-content:space-between;
+ min-height:0!important;padding:clamp(18px,2.3vw,36px)!important;
+ background:#090a0c!important;border:0!important;border-radius:0!important;
+}
+.clock-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.clock-heading .eyebrow{color:#aeb4bd;font-size:11px;letter-spacing:.14em}
+.clock-heading .eyebrow span{color:#555b64;padding:0 5px}
+.clock-heading .card-note{color:#7f8791;font-size:10px;letter-spacing:.12em}
+.clock-card .time{
+ display:grid!important;
+ grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,.72fr);
+ align-items:center;gap:clamp(7px,1.2vw,20px);
+ width:100%;margin:clamp(12px,2vw,28px) 0!important;
+ font-size:clamp(76px,13vw,220px)!important;line-height:1;
+ letter-spacing:-.065em!important;font-weight:750!important;
+ color:#fff!important;font-variant-numeric:tabular-nums;
+}
+.time-unit{
+ min-width:0;display:flex;align-items:center;justify-content:center;
+ aspect-ratio:1.08/1;padding:.08em .05em .13em;
+ border-radius:clamp(12px,1.8vw,28px);
+ background:#303236;color:#fff;
+ font-size:1em;line-height:1;
+ font-weight:750;letter-spacing:-.065em;
+ position:relative;overflow:hidden;
+}
+.time-unit::after{
+ content:"";position:absolute;left:0;right:0;top:50%;
+ height:2px;background:#090a0c;opacity:.92;
+}
+.time-unit-small{font-size:.72em;aspect-ratio:1.08/1}
+.time-separator{
+ color:#f5f6f7;font-size:.55em;font-weight:600;
+ letter-spacing:0;line-height:1;transform:translateY(-.02em)
+}
+.clock-card .clock-foot{
+ display:flex;align-items:end;justify-content:space-between;gap:16px;
+ border:0!important;padding:0!important;margin:0!important;color:#aeb4bd
+}
+.clock-date-group{display:flex;flex-direction:column;gap:3px}
+.clock-card .date{
+ margin:0!important;color:#f5f6f7;font-size:clamp(18px,2vw,30px)!important;
+ font-weight:700;letter-spacing:-.035em
+}
+.clock-card .date-en{display:block!important;margin:2px 0 0;color:#858b94;font-size:10px;letter-spacing:.13em}
+.clock-format{font-size:10px;color:#777f89;letter-spacing:.16em;font-weight:650}
+.weather-card{background:#17191d!important}
+.weather-icon{filter:grayscale(.15)}
+.weather-temp{font-weight:700!important;letter-spacing:-.055em}
+.weather-desc,.detail-label,.card-note,.market-label,.mini-label{color:#a1a7b0!important}
+.detail-value,.market-value,.mini-content{color:#f0f2f4}
+.news-card,.calendar-card,.market-card{background:#17191d!important}
+.eyebrow,.news-num,.source{color:#b1bac5!important}
+.news-item{border-color:#2c3036!important}
+.news-title{color:#f0f2f4}
+.news-item:hover .news-title{color:#fff}
+.calendar-weekday,.calendar-extra,.world-city{color:#a1a7b0}
+.world-row{border-color:#2c3036}
+.disaster-card{
+ background:#17191d!important;border:1px solid #343941!important;color:#f2f3f5
+}
+.disaster-title,.disaster-main{color:#f2f3f5!important}
+.disaster-status{background:#292d33!important;color:#d5d9de!important}
+.disaster-sub{color:#a6adb6!important}
+.disaster-card.alert{
+ background:#330d13!important;border:2px solid #f02b42!important;
+ box-shadow:0 0 0 1px #f02b4230,0 12px 42px #e51f361c
+}
+.disaster-card.alert .disaster-title,.disaster-card.alert .disaster-main{color:#fff!important}
+.disaster-card.error{background:#282116!important;border-color:#8e713a!important}
+.alert-overlay{background:#050608eF!important;backdrop-filter:blur(10px)}
+.alert-panel{
+ background:#1a1013!important;border:2px solid #f02b42!important;
+ border-radius:18px!important;color:#fff;box-shadow:0 24px 100px #000b!important
+}
+.alert-kicker,.alert-headline{color:#fff!important}
+.alert-detail{color:#e5cfd2!important}
+.alert-close{background:#e51f36!important;border-radius:8px!important}
+.breaking-strip.show{background:#e51f36!important;color:#fff!important;border-color:#ff6677!important}
+.test-button{background:#252a31!important;color:#f3f4f6!important;border-color:#59616d!important}
+.test-button.secondary{background:#17191d!important;color:#d5d9de!important}
+.alert-overlay.test-mode .alert-panel{background:#211a10!important;border-color:#d59b3d!important}
+.footer{color:#727982}
+@media(min-width:1051px){
+ .dashboard{
+  grid-template-columns:minmax(230px,.9fr) minmax(340px,1.25fr) minmax(230px,.9fr)!important;
+  grid-template-rows:minmax(0,1.1fr) minmax(0,.9fr)!important;
+  gap:12px!important
+ }
+ .clock-card{grid-column:1/-1!important;grid-row:1!important}
+ .clock-card .time{font-size:clamp(105px,13vw,225px)!important}
+ .weather-card{grid-column:1!important;grid-row:2!important}
+ .news-card{grid-column:2!important;grid-row:2!important}
+ .side-stack{grid-column:3!important;grid-row:2!important}
+}
+@media(min-width:651px) and (max-width:1050px){
+ .clock-card{grid-column:1/-1!important}
+ .clock-card .time{font-size:clamp(90px,14vw,160px)!important}
+}
+@media(max-width:650px){
+ .clock-card{padding:18px 14px!important;min-height:0!important}
+ .clock-heading{align-items:flex-start}
+ .clock-heading .card-note{font-size:8px}
+ .clock-card .time{
+  gap:5px!important;font-size:clamp(52px,15vw,100px)!important;
+  margin:18px 0!important
+ }
+ .time-unit{border-radius:10px}
+ .clock-card .date{font-size:18px!important}
+ .clock-card .date-en{font-size:8px}
+ .clock-format{font-size:8px}
+}
+@media(max-width:390px){
+ .clock-card .time{font-size:clamp(44px,13.5vw,64px)!important;gap:3px!important}
+}
+
 </style>
 </head>
 <body>
@@ -1928,8 +2075,9 @@ html,body{background:#f2f4f6!important;color:#11161b!important}
 </header>
 <div class="dashboard">
  <section class="card clock-card">
-  <div><div class="card-top"><div class="eyebrow">DATE & TIME</div><div class="card-note">JAPAN STANDARD TIME</div></div><div class="date" id="date">日付を読み込み中</div><div class="date-en" id="date-en"></div><div class="time" id="time">--:--:<span class="seconds">--</span></div></div>
-  <div class="clock-foot"><span>ASIA / TOKYO · UTC +09:00</span><span>24-HOUR CLOCK</span></div>
+  <div class="clock-heading"><div class="eyebrow">現在時刻 <span>／</span> JAPAN STANDARD TIME</div><div class="card-note">ASIA / TOKYO · UTC+09:00</div></div>
+  <div class="time" id="time" aria-label="現在時刻"><span class="time-unit" id="time-hour">--</span><span class="time-separator">:</span><span class="time-unit" id="time-minute">--</span><span class="time-separator">:</span><span class="time-unit time-unit-small" id="time-second">--</span></div>
+  <div class="clock-foot"><div class="clock-date-group"><div class="date" id="date">日付を読み込み中</div><div class="date-en" id="date-en"></div></div><span class="clock-format">24-HOUR DISPLAY</span></div>
  </section>
  <section class="card weather-card">
   <div class="card-top"><div class="eyebrow">WEATHER</div><div class="card-note" id="weather-place">神奈川県川崎市宮前区</div></div>
@@ -2030,7 +2178,9 @@ function updateClock(){
  const get=t=>parts.find(p=>p.type===t).value;
  document.getElementById("date").textContent=dateFmt.format(now);
  document.getElementById("date-en").textContent=dateEnFmt.format(now).toUpperCase();
- document.getElementById("time").innerHTML=get("hour")+":"+get("minute")+':<span class="seconds">'+get("second")+"</span>";
+ document.getElementById("time-hour").textContent=get("hour");
+ document.getElementById("time-minute").textContent=get("minute");
+ document.getElementById("time-second").textContent=get("second");
  document.getElementById("calendar-date").textContent=new Intl.DateTimeFormat("ja-JP",{...jst,month:"numeric",day:"numeric"}).format(now);
  document.getElementById("calendar-weekday").textContent=new Intl.DateTimeFormat("ja-JP",{...jst,weekday:"long"}).format(now);
  document.getElementById("london-time").textContent=new Intl.DateTimeFormat("ja-JP",{timeZone:"Europe/London",hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"}).format(now);
