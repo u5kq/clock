@@ -31,6 +31,23 @@ h1{margin:7px 0 0;font-size:clamp(20px,1.8vw,27px);font-weight:650;letter-spacin
 .calendar-date{font-size:clamp(32px,3vw,46px);font-weight:350;letter-spacing:-.06em;margin-top:17px}.calendar-weekday{font-size:13px;color:#68786c;margin-top:3px}.calendar-extra{margin-top:15px;padding-top:12px;border-top:1px solid rgba(90,120,95,.14);font-size:11px;color:#718075;line-height:1.7}
 .market-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}.market-label{font-size:10px;color:#85806d}.market-value{font-size:clamp(18px,1.8vw,25px);font-weight:600;margin-top:5px;font-variant-numeric:tabular-nums}.market-sub{font-size:10px;color:#8c8778;margin-top:3px}
 .world-row{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:11px}.world-row:last-child{border:0}.world-city{color:#77727e}.world-time{font-variant-numeric:tabular-nums;font-weight:650}
+
+.disaster-card{grid-column:1/-1;background:#f5edf0;border-color:#eadde3;min-height:150px}
+.disaster-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.disaster-title{display:flex;align-items:center;gap:10px;font-weight:750;color:#765a68;font-size:14px}
+.disaster-status{font-size:10px;color:#806f79;background:#fff8;border-radius:99px;padding:6px 10px}
+.disaster-body{margin-top:15px;display:grid;grid-template-columns:1fr auto;gap:15px;align-items:center}
+.disaster-main{font-size:14px;font-weight:650;color:#65515b;line-height:1.65}
+.disaster-sub{font-size:11px;color:#877780;line-height:1.7;margin-top:5px}
+.disaster-actions{display:flex;gap:8px;flex-wrap:wrap}
+.disaster-button{border:1px solid #dfcbd4;border-radius:9px;padding:9px 12px;background:#fff;color:#6d5662;font-size:11px;cursor:pointer}
+.disaster-button:hover{background:#fff9}
+.disaster-card.alert{background:#f9e4e5;border-color:#e7bfc2}
+.disaster-card.alert .disaster-title,.disaster-card.alert .disaster-main{color:#8e343a}
+.disaster-card.error{background:#f5f0e7;border-color:#e8ddc7}
+.disaster-card.error .disaster-main{color:#786748}
+@media(max-width:650px){.disaster-body{grid-template-columns:1fr}.disaster-actions{justify-content:flex-start}}
+
 .lower-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:16px}
 .mini-card{background:#fff;border:1px solid rgba(100,90,100,.07);border-radius:16px;padding:17px 20px;min-height:94px}.mini-label{font-size:10px;letter-spacing:.12em;color:#88828f}.mini-content{font-size:13px;margin-top:9px;line-height:1.6}
 .footer{display:flex;justify-content:space-between;gap:12px;padding-top:17px;color:#a09ba2;font-size:9px;letter-spacing:.04em}
@@ -75,6 +92,18 @@ h1{margin:7px 0 0;font-size:clamp(20px,1.8vw,27px);font-weight:650;letter-spacin
   </section>
  </div>
 </div>
+
+ <section class="card disaster-card" id="disaster-card" aria-live="polite">
+  <div class="disaster-head">
+   <div class="disaster-title"><span aria-hidden="true">◇</span> 防災情報・地震速報</div>
+   <div class="disaster-status" id="disaster-status">接続確認中</div>
+  </div>
+  <div class="disaster-body">
+   <div><div class="disaster-main" id="disaster-main">気象庁の公開情報を確認しています。</div><div class="disaster-sub" id="disaster-sub">公開フィードは配信遅延・停止する場合があります。緊急速報の代替ではありません。</div></div>
+   <div class="disaster-actions"><button class="disaster-button" id="notify-button" type="button">通知を許可</button><a class="disaster-button" href="https://www.jma.go.jp/bosai/" target="_blank" rel="noopener noreferrer">気象庁 防災情報</a></div>
+  </div>
+ </section>
+
 <div class="lower-grid">
  <section class="mini-card"><div class="mini-label">WORLD CLOCK · LONDON</div><div class="mini-content" id="london-time">--:--</div></section>
  <section class="mini-card"><div class="mini-label">WORLD CLOCK · NEW YORK</div><div class="mini-content" id="newyork-time">--:--</div></section>
@@ -131,6 +160,63 @@ async function loadRates(){
  }catch(e){document.getElementById("usd-jpy").textContent="—";document.getElementById("eur-jpy").textContent="—";document.getElementById("usd-date").textContent="取得できません";document.getElementById("eur-date").textContent="取得できません"}
 }
 loadRates();setInterval(loadRates,60*60*1000);
+
+const disasterCard=document.getElementById("disaster-card");
+const disasterFeed="https://www.data.jma.go.jp/developer/xml/feed/eqvol.xml";
+const disasterSeenKey="dayline_jma_seen_id";
+function disasterText(node,tag){const el=node.getElementsByTagName(tag)[0];return el?el.textContent.trim():""}
+function setDisasterState(kind,status,main,sub){
+ disasterCard.classList.toggle("alert",kind==="alert");
+ disasterCard.classList.toggle("error",kind==="error");
+ document.getElementById("disaster-status").textContent=status;
+ document.getElementById("disaster-main").textContent=main;
+ document.getElementById("disaster-sub").textContent=sub;
+}
+async function loadDisaster(){
+ try{
+  const response=await fetch(disasterFeed,{cache:"no-store"});
+  if(!response.ok)throw Error("HTTP "+response.status);
+  const xmlText=await response.text();
+  const xml=new DOMParser().parseFromString(xmlText,"application/xml");
+  if(xml.querySelector("parsererror"))throw Error("XML parse");
+  const entries=[...xml.getElementsByTagName("entry")];
+  if(!entries.length)throw Error("No entries");
+  const parsed=entries.map(entry=>({
+   id:disasterText(entry,"id"),
+   title:disasterText(entry,"title"),
+   updated:disasterText(entry,"updated"),
+   summary:disasterText(entry,"summary"),
+   link:entry.getElementsByTagName("link")[0]?.getAttribute("href")||""
+  }));
+  const now=Date.now();
+  const recent=parsed.filter(x=>{const t=Date.parse(x.updated);return Number.isFinite(t)&&now-t<30*60*1000&&now-t>=-2*60*1000;});
+  const eew=recent.find(x=>/緊急地震速報/.test(x.title)&&!/取消|訓練/.test(x.title));
+  const quake=parsed.find(x=>/震源・震度|震度速報|震源情報|地震情報/.test(x.title));
+  const newest=parsed[0];
+  const updated=newest.updated?new Date(newest.updated):null;
+  const stamp=updated&&!isNaN(updated)?new Intl.DateTimeFormat("ja-JP",{...jst,month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit",second:"2-digit"}).format(updated):"時刻不明";
+  const seen=localStorage.getItem(disasterSeenKey);
+  if(eew){
+   setDisasterState("alert","速報関連情報を検出",eew.title,"発表時刻："+(eew.updated||"不明")+"。公開フィード経由の情報です。最新の公式情報とスマホの緊急速報を必ず確認してください。");
+   if(eew.id&&eew.id!==seen&&"Notification" in window&&Notification.permission==="granted"){
+    try{const n=new Notification("DAYLINE｜防災情報",{body:eew.title+" — 気象庁公開情報",tag:"dayline-jma-eew"});n.onclick=()=>window.open("https://www.jma.go.jp/bosai/","_blank","noopener");}catch(err){}
+   }
+   if(eew.id)localStorage.setItem(disasterSeenKey,eew.id);
+  }else{
+   const isFresh=updated&&!isNaN(updated)&&now-updated.getTime()<15*60*1000;
+   setDisasterState("normal",isFresh?"気象庁フィード取得済み":"公開情報を取得・確認",quake?quake.title:"現在、表示対象の地震関連情報はありません", "フィード最終更新："+stamp+"。これは公開フィード上の確認結果であり、緊急地震速報が発表されていないことを保証する表示ではありません。");
+  }
+ }catch(error){
+  setDisasterState("error","取得状態を確認できません", "気象庁の防災情報を取得できませんでした。", "通信・配信状況を確認してください。未取得のため「速報なし」とは判断できません。公式ページやスマホの緊急速報を確認してください。");
+ }
+}
+document.getElementById("notify-button").addEventListener("click",async()=>{
+ if(!("Notification" in window)){setDisasterState("error","通知非対応","このブラウザは通知に対応していません。","気象庁公式ページやスマホの緊急速報を利用してください。");return;}
+ try{const permission=await Notification.requestPermission();document.getElementById("notify-button").textContent=permission==="granted"?"通知は許可済み":permission==="denied"?"通知はブロック中":"通知を許可";}
+ catch(e){document.getElementById("notify-button").textContent="通知設定を確認";}
+});
+loadDisaster();setInterval(loadDisaster,60*1000);
+
 const notes=["小さな一歩を積み重ねる一日に。","新しいことをひとつ知るだけでも前進。","焦らず、自分のペースで進めよう。","今日の発見が明日の力になる。","余白をつくることも、大切な準備。"];
 const day=Math.floor(Date.now()/86400000);document.getElementById("daily-note").textContent=notes[((day%notes.length)+notes.length)%notes.length];
 </script>
