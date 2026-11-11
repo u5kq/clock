@@ -2908,6 +2908,73 @@ html,body{height:auto!important;min-height:100%!important;overflow-x:hidden!impo
  .alert-overlay.show .alert-panel{animation:daylineAlertEnter .24s ease-out both}
  @keyframes daylineAlertEnter{from{opacity:0;transform:translateY(10px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
 }
+
+/* DAYLINE — brighter palette, legible type and generous clock */
+:root{color-scheme:light}
+html,body{background:#f4f8f8!important;color:#465466!important}
+.screen{color:#465466!important}
+.card,.mini-card{color:#465466!important}
+.clock-card{background:linear-gradient(135deg,#e8efff 0%,#eef3ff 100%)!important;border-color:#dce5fa!important}
+.time{font-size:clamp(76px,6.1vw,112px)!important;line-height:1.06!important;letter-spacing:-.055em!important;display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:clamp(3px,.45vw,9px)!important;white-space:nowrap!important;overflow:visible!important;margin-top:12px!important}
+.time-unit{padding:0 2px 5px!important;border-radius:11px!important;color:#49648f!important;background:linear-gradient(180deg,#f9fbff,#e0e9fc)!important;box-shadow:0 3px 9px rgba(79,105,157,.09)!important}
+.time-unit-small{font-size:.68em!important;color:#7890b5!important}
+.time-separator{color:#a0b2d2!important;font-size:.78em!important}
+.clock-card{overflow:visible!important;min-width:0!important}
+.clock-heading,.clock-foot{min-width:0!important}
+.clock-foot{border-color:#d8e2f4!important}
+.date{font-size:15px!important;color:#61769a!important}
+.weather-card{background:linear-gradient(135deg,#e5f5f1,#eff9f5)!important;border-color:#d7eee6!important}
+.news-card{background:linear-gradient(135deg,#fff0f3,#fff6f5)!important;border-color:#f2dfe5!important}
+.calendar-card{background:linear-gradient(135deg,#eff7e9,#f5f8ed)!important;border-color:#e2edd9!important}
+.disaster-card{background:linear-gradient(135deg,#fff5ed,#fff9f1)!important;border-color:#f2e1d1!important;border-left-color:#e8b58e!important}
+.disaster-overview,.quake-map-wrap,.disaster-feed-history{background:#fffefa!important;border-color:#f0e7df!important}
+.quake-metric{background:#f8f5ef!important;border-color:#eee6db!important}
+.quake-metric strong{color:#596779!important}
+.jalert-card{background:linear-gradient(120deg,#eef5ff,#f2f5ff)!important;border-color:#dfe8f7!important}
+.lower-grid .mini-card{background:#f1f5fb!important;border-color:#e2e9f3!important;color:#4d5e76!important}
+.lower-grid .mini-card:nth-child(2){background:#edf7f4!important;border-color:#dceee7!important}
+.lower-grid .mini-card:nth-child(3){background:#fff4ed!important;border-color:#f2e5d9!important}
+.lower-grid .mini-card:nth-child(4){background:#f4f0fb!important;border-color:#e8e0f3!important}
+.footer{color:#98a4b1!important;border-color:#e3eaf0!important}
+/* Prevent Japanese text clipping and awkward overflow */
+.screen,.dashboard,.dashboard>.card,.side-stack,.disaster-card,.disaster-body,.disaster-overview,.quake-map-wrap,.disaster-feed-history,.jalert-card,.lower-grid,.mini-card{min-width:0!important}
+.disaster-card,.disaster-body,.disaster-overview,.quake-map-wrap,.disaster-feed-history,.jalert-card,.mini-card{overflow:visible!important}
+.disaster-main,.disaster-sub,.disaster-feed-item strong,.disaster-feed-item time,.jalert-copy,.alert-kicker,.alert-headline,.alert-detail,.alert-footer>span,.news-title,.mini-content{overflow-wrap:anywhere!important;word-break:normal!important;white-space:normal!important;min-width:0!important}
+.disaster-feed-item{min-width:0!important}
+.disaster-feed-item strong{display:block!important}
+.alert-overlay{background:rgba(82,105,133,.30)!important;-webkit-backdrop-filter:blur(15px) saturate(1.1)!important;backdrop-filter:blur(15px) saturate(1.1)!important}
+.alert-panel{background:linear-gradient(145deg,#fffefa 0%,#f4f8ff 100%)!important;color:#46566d!important;border:1px solid #dfe8f2!important;border-left:7px solid #e5a1a2!important;box-shadow:0 24px 80px rgba(76,99,127,.22)!important}
+.alert-panel:before{background:linear-gradient(90deg,#e59a9e,#f1c4b6,#d6e8e5)!important}
+.alert-brand{color:#72839b!important}
+.alert-brand i{color:#dc8e91!important}
+.alert-live-mark{background:#fff0ed!important;border-color:#f3d8d1!important;color:#b86f68!important}
+.alert-live-mark b{background:#df8d88!important;box-shadow:0 0 0 3px #f9e1dc!important}
+.alert-kicker{background:#fff0e8!important;color:#a96f58!important;border:1px solid #f3dfd3!important}
+.alert-headline{color:#455873!important;line-height:1.25!important;letter-spacing:-.025em!important}
+.alert-detail{background:#f2f7fb!important;border-color:#e2eaf1!important;border-left-color:#e4b2a5!important;color:#53667d!important}
+.alert-footer{border-color:#e5ebf0!important}
+.alert-footer>span{color:#8392a4!important}
+.alert-close{background:#eaf1fb!important;border-color:#dce6f3!important;color:#506887!important}
+.alert-close:hover{background:#dfeafa!important}
+.alert-close span{color:#d68182!important}
+.alert-overlay.test-mode .alert-panel{border-left-color:#dfba7c!important}
+.alert-overlay.test-mode .alert-panel:before{background:linear-gradient(90deg,#e1bd7d,#f1dfb6,#dcece5)!important}
+.alert-overlay.test-mode .alert-live-mark{background:#fff7e8!important;border-color:#f0e2c4!important;color:#977744!important}
+.alert-overlay.test-mode .alert-live-mark b{background:#cda45d!important;box-shadow:0 0 0 3px #f5ebd8!important}
+.alert-overlay.test-mode .alert-kicker{background:#fff7e9!important;color:#8c7143!important;border-color:#f0e4cb!important}
+.alert-overlay.test-mode .alert-detail{border-left-color:#d7bd8e!important}
+@media(min-width:1100px){
+ .dashboard{grid-template-columns:minmax(0,1.18fr) minmax(0,1fr) minmax(0,1.2fr) minmax(165px,.62fr)!important}
+ .time{font-size:clamp(82px,6.3vw,116px)!important}
+}
+@media(max-width:1099px){
+ .time{font-size:clamp(72px,9vw,100px)!important}
+}
+@media(max-width:650px){
+ .time{font-size:clamp(66px,15.5vw,94px)!important;gap:3px!important}
+ .time-unit{padding-inline:1px!important}
+ .alert-panel{background:linear-gradient(145deg,#fffefa,#f1f7ff)!important}
+}
 </style>
 </head>
 <body>
