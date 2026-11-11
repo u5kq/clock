@@ -1053,6 +1053,38 @@ html,body{background:#0b1118!important;color:#edf2f7}
 .alert-overlay.test-mode .alert-panel:before{background:#d3a04d}.alert-overlay.test-mode .alert-kicker{background:#594522;color:#ffe3ad}.alert-overlay.test-mode .alert-headline{color:#fff0cf}.alert-overlay.test-mode .alert-detail{color:#e0d4bb}.alert-overlay.test-mode .alert-close{background:#ead8b5;color:#382a16}
 @media(max-width:650px){.alert-panel{padding:28px 22px 24px;border-radius:14px}.alert-headline{margin:18px 0 12px}.alert-close{width:100%}}
 
+
+/* EEW alert treatment: strong red frame, clear hierarchy */
+.disaster-card.alert{
+ background:#260d12!important;
+ border:2px solid #ef3340!important;
+ box-shadow:0 0 0 1px #ef334055,0 12px 34px #0007,0 0 28px #ef334022!important;
+}
+.disaster-card.alert .disaster-title{color:#ff7b83!important}
+.disaster-card.alert .disaster-title>span{color:#ff3344}
+.disaster-card.alert .disaster-main{color:#fff!important;font-size:clamp(16px,1.5vw,22px);font-weight:800}
+.disaster-card.alert .disaster-status{background:#b91f2b!important;color:#fff!important;font-weight:800;letter-spacing:.04em}
+.disaster-card.alert .disaster-sub{color:#f0bfc3!important}
+.disaster-card.alert .disaster-button{background:#481820!important;border-color:#a93640!important;color:#ffe7e9!important}
+.disaster-card.alert .disaster-button:hover{background:#64202b!important}
+.alert-overlay:not(.test-mode){background:rgba(25,0,4,.9)!important}
+.alert-overlay:not(.test-mode) .alert-panel{
+ background:linear-gradient(145deg,#430d16,#210b11)!important;
+ border:3px solid #f02f3d!important;
+ box-shadow:0 0 0 8px #ef334022,0 28px 100px #000b!important;
+}
+.alert-overlay:not(.test-mode) .alert-panel:before{background:#ff2638!important;width:10px}
+.alert-overlay:not(.test-mode) .alert-kicker{background:#a91627!important;color:#fff!important}
+.alert-overlay:not(.test-mode) .alert-headline{color:#fff!important}
+.alert-overlay:not(.test-mode) .alert-detail{color:#ffdadd!important}
+.alert-overlay:not(.test-mode) .alert-close{background:#f5e8e9!important;color:#4a1018!important}
+.breaking-strip.show:not(.test-mode){background:#a91020!important;border:2px solid #ff5360!important;color:#fff!important}
+.disaster-checked{font-size:10px;color:#8e9ba8;font-variant-numeric:tabular-nums;white-space:nowrap}
+.disaster-card.alert .disaster-checked{color:#f5b7bd}
+@keyframes eewBorderPulse{0%,100%{box-shadow:0 0 0 1px #ef334055,0 12px 34px #0007}50%{box-shadow:0 0 0 3px #ef334088,0 12px 38px #0009,0 0 32px #ef334044}}
+.disaster-card.alert{animation:eewBorderPulse 1.8s ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){.disaster-card.alert{animation:none}}
+
 </style>
 </head>
 <body>
@@ -1099,7 +1131,7 @@ html,body{background:#0b1118!important;color:#edf2f7}
  <section class="card disaster-card" id="disaster-card" aria-live="polite">
   <div class="disaster-head">
    <div class="disaster-title"><span aria-hidden="true">◇</span> 防災情報・地震速報</div>
-   <div class="disaster-status" id="disaster-status">接続確認中</div>
+   <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span class="disaster-checked" id="disaster-checked">最終確認 --:--:--</span><div class="disaster-status" id="disaster-status">接続確認中</div></div>
   </div>
   <div class="disaster-body">
    <div><div class="disaster-main" id="disaster-main">気象庁の公開情報を確認しています。</div><div class="disaster-sub" id="disaster-sub">気象庁の公開XMLは毎分更新のため、DAYLINEも60秒間隔で確認します。緊急地震速報の受信を保証するものではありません。スマホの緊急速報・公式情報を必ず併用してください。</div></div>
@@ -1222,7 +1254,12 @@ function setDisasterState(kind,status,main,sub){
  document.getElementById("disaster-main").textContent=main;
  document.getElementById("disaster-sub").textContent=sub;
 }
+let disasterRequestRunning=false;
 async function loadDisaster(){
+ if(disasterRequestRunning)return;
+ disasterRequestRunning=true;
+ const checkedEl=document.getElementById("disaster-checked");
+ if(checkedEl)checkedEl.textContent="確認中…";
  try{
   const response=await fetch(disasterFeed,{cache:"no-store"});
   if(!response.ok)throw Error("HTTP "+response.status);
@@ -1259,6 +1296,10 @@ async function loadDisaster(){
   }
  }catch(error){
   setDisasterState("error","取得状態を確認できません", "気象庁の防災情報を取得できませんでした。", "通信・配信状況を確認してください。未取得のため「速報なし」とは判断できません。公式ページやスマホの緊急速報を確認してください。");
+ }
+ finally{
+  disasterRequestRunning=false;
+  if(checkedEl)checkedEl.textContent="最終確認 "+new Intl.DateTimeFormat("ja-JP",{timeZone:"Asia/Tokyo",hour:"2-digit",minute:"2-digit",second:"2-digit"}).format(new Date());
  }
 }
 document.getElementById("notify-button").addEventListener("click",async()=>{
