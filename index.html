@@ -127,6 +127,51 @@ h1{margin:7px 0 0;font-size:clamp(20px,1.8vw,27px);font-weight:650;letter-spacin
  .lower-grid{display:none}
 }
 
+
+/* DAYLINE unified high-visibility visual system */
+:root{color-scheme:light;--bg:#f2f4f6;--ink:#202832;--muted:#66717d;--line:#dce1e6;--white:#fff;--lav:#fff;--sage:#fff;--blue:#fff;--peach:#fff;--butter:#fff;--accent:#42566d}
+html,body{background:var(--bg);color:var(--ink)}
+.screen{max-width:1920px}
+.topbar{border-color:var(--line)}
+.brand-mark{background:#e8edf2;color:#34465a;border-radius:8px;font-size:19px}
+.brand{letter-spacing:.12em}
+.tagline,.eyebrow{color:#586777}
+.live-dot{background:#4d8b6b;box-shadow:none}
+.fullscreen,.disaster-button{border:1px solid #cbd3dc;background:#fff;color:#34465a;border-radius:7px}
+.card,.mini-card{background:#fff!important;border:1px solid var(--line);border-radius:11px;box-shadow:none}
+.clock-card{background:#edf1f5!important}
+.weather-card,.news-card,.calendar-card,.market-card{background:#fff!important}
+.time{color:#18232f;font-weight:300;letter-spacing:-.075em}
+.seconds{color:#65768a}
+.card-note,.detail-label,.market-label,.mini-label{color:#687583}
+.disaster-card{background:#fff!important;border-color:#cbd3dc}
+.disaster-title,.disaster-main{color:#34465a}
+.disaster-status{background:#edf1f5;color:#46586b}
+.disaster-card.alert{background:#fff0f0!important;border-color:#d65a60}
+.disaster-card.alert .disaster-title,.disaster-card.alert .disaster-main{color:#8d2029}
+.disaster-card.error{background:#fff8eb!important;border-color:#d8bd86}
+.alert-overlay{background:rgba(20,29,39,.82)}
+.alert-panel{border:2px solid #bd343d;border-radius:12px;box-shadow:none}
+.alert-kicker{letter-spacing:.1em}
+.alert-close{border-radius:7px}
+.breaking-strip{border-radius:7px}
+.disaster-settings{margin-top:12px;padding-top:12px;border-top:1px solid #d9dfe5}
+.disaster-settings[hidden]{display:none}
+.settings-heading{display:flex;align-items:baseline;gap:12px;font-size:12px;font-weight:750;color:#34465a}
+.settings-heading span{font-size:10px;font-weight:450;color:#7a6262}
+.test-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}
+.test-button{border:1px solid #b9c5d1;border-radius:7px;padding:9px 12px;background:#eaf0f5;color:#2f4358;font-size:11px;font-weight:700;cursor:pointer}
+.test-button:hover{background:#dfe8f0}
+.test-button.secondary{background:#fff;color:#596674}
+.alert-overlay.test-mode .alert-panel{background:#fff9ec;border-color:#c58b35}
+.alert-overlay.test-mode .alert-kicker{color:#8b5b16}
+.alert-overlay.test-mode .alert-headline{color:#654719}
+.alert-overlay.test-mode .alert-detail{color:#65563f}
+.alert-overlay.test-mode .alert-close{background:#805b25}
+.breaking-strip.show{background:#fff4df;border-color:#e2c58e;color:#765018}
+@media(min-width:1051px){.disaster-card{padding:10px 16px}}
+@media(max-width:650px){.settings-heading{display:block}.settings-heading span{display:block;margin-top:4px}}
+
 </style>
 </head>
 <body>
@@ -184,7 +229,15 @@ h1{margin:7px 0 0;font-size:clamp(20px,1.8vw,27px);font-weight:650;letter-spacin
   </div>
   <div class="disaster-body">
    <div><div class="disaster-main" id="disaster-main">気象庁の公開情報を確認しています。</div><div class="disaster-sub" id="disaster-sub">気象庁の公開XMLは毎分更新のため、DAYLINEも60秒間隔で確認します。緊急地震速報の受信を保証するものではありません。スマホの緊急速報・公式情報を必ず併用してください。</div></div>
-   <div class="disaster-actions"><button class="disaster-button" id="notify-button" type="button">通知を許可</button><a class="disaster-button" href="https://www.jma.go.jp/bosai/" target="_blank" rel="noopener noreferrer">気象庁 防災情報</a></div>
+   <div class="disaster-actions"><button class="disaster-button" id="settings-button" type="button" aria-expanded="false" aria-controls="disaster-settings">設定・テスト</button><button class="disaster-button" id="notify-button" type="button">通知を許可</button><a class="disaster-button" href="https://www.jma.go.jp/bosai/" target="_blank" rel="noopener noreferrer">気象庁公式</a></div>
+  <div class="disaster-settings" id="disaster-settings" hidden>
+   <div class="settings-heading">表示テスト <span>実際の速報・外部配信ではありません</span></div>
+   <div class="test-actions">
+    <button class="test-button" id="test-eew" type="button">緊急地震速報をテスト</button>
+    <button class="test-button" id="test-quake" type="button">地震情報をテスト</button>
+    <button class="test-button secondary" id="test-clear" type="button">テスト表示を終了</button>
+   </div>
+  </div>
   </div>
  </section>
 
@@ -250,14 +303,29 @@ const disasterFeed="https://www.data.jma.go.jp/developer/xml/feed/eqvol.xml";
 const disasterSeenKey="dayline_jma_seen_id";
 function disasterText(node,tag){const el=node.getElementsByTagName(tag)[0];return el?el.textContent.trim():""}
 function showBigAlert(title,detail){
- document.getElementById("alert-kicker").textContent="DAYLINE · 緊急防災情報";
+ const overlay=document.getElementById("alert-overlay");
+ overlay.classList.remove("test-mode");
+ document.getElementById("alert-kicker").textContent="DAYLINE · 防災情報";
  document.getElementById("alert-headline").textContent=title;
  document.getElementById("alert-detail").textContent=detail;
- document.getElementById("alert-overlay").classList.add("show");
+ overlay.classList.add("show");
  document.getElementById("breaking-strip").textContent="速報："+title;
  document.getElementById("breaking-strip").classList.add("show");
 }
-document.getElementById("alert-close").addEventListener("click",()=>document.getElementById("alert-overlay").classList.remove("show"));
+function showTestAlert(title,detail){
+ const overlay=document.getElementById("alert-overlay");
+ overlay.classList.add("test-mode");
+ document.getElementById("alert-kicker").textContent="訓練・テスト表示 ／ 実際の速報ではありません";
+ document.getElementById("alert-headline").textContent=title;
+ document.getElementById("alert-detail").textContent=detail;
+ overlay.classList.add("show");
+ document.getElementById("breaking-strip").textContent="【訓練】"+title+" — 実際の速報ではありません";
+ document.getElementById("breaking-strip").classList.add("show");
+}
+document.getElementById("alert-close").addEventListener("click",()=>{
+ document.getElementById("alert-overlay").classList.remove("show");
+ document.getElementById("breaking-strip").classList.remove("show");
+});
 function setDisasterState(kind,status,main,sub){
  disasterCard.classList.toggle("alert",kind==="alert");
  disasterCard.classList.toggle("error",kind==="error");
@@ -310,6 +378,26 @@ document.getElementById("notify-button").addEventListener("click",async()=>{
  catch(e){document.getElementById("notify-button").textContent="通知設定を確認";}
 });
 loadDisaster();setInterval(loadDisaster,60*1000);
+document.getElementById("settings-button").addEventListener("click",()=>{
+ const panel=document.getElementById("disaster-settings");
+ const opening=panel.hidden;
+ panel.hidden=!opening;
+ document.getElementById("settings-button").setAttribute("aria-expanded",String(opening));
+});
+document.getElementById("test-eew").addEventListener("click",()=>{
+ showTestAlert("緊急地震速報（訓練）","これはDAYLINEの画面確認用テストです。実際の地震は発生しておらず、気象庁へ送信・照会もしていません。実際の速報として行動しないでください。");
+ setDisasterState("normal","テスト表示中","緊急地震速報のテストを表示しています。","画面表示の確認用です。実際の速報ではありません。");
+});
+document.getElementById("test-quake").addEventListener("click",()=>{
+ showTestAlert("地震情報（訓練）","これはDAYLINEの画面確認用テストです。実際の地震情報ではありません。気象庁などの外部サービスには何も送信していません。");
+ setDisasterState("normal","テスト表示中","地震情報のテストを表示しています。","画面表示の確認用です。実際の速報ではありません。");
+});
+document.getElementById("test-clear").addEventListener("click",()=>{
+ document.getElementById("alert-overlay").classList.remove("show");
+ document.getElementById("breaking-strip").classList.remove("show");
+ setDisasterState("normal","通常表示","テスト表示を終了しました。","実際の防災情報は気象庁公式ページとスマホの緊急速報で確認してください。");
+});
+
 
 
 const weatherCodes={0:["☀️","快晴"],1:["🌤️","おおむね晴れ"],2:["⛅","一部くもり"],3:["☁️","くもり"],45:["🌫️","霧"],48:["🌫️","着氷性の霧"],51:["🌦️","弱い霧雨"],53:["🌦️","霧雨"],55:["🌧️","強い霧雨"],61:["🌧️","弱い雨"],63:["🌧️","雨"],65:["🌧️","強い雨"],71:["🌨️","弱い雪"],73:["🌨️","雪"],75:["❄️","強い雪"],80:["🌦️","にわか雨"],81:["🌧️","雨の可能性"],82:["⛈️","強いにわか雨"],95:["⛈️","雷雨"],96:["⛈️","ひょうを伴う雷雨"],99:["⛈️","強い雷雨"]};
