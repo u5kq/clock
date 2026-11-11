@@ -1325,13 +1325,73 @@ html,body{background:#090b0e!important;color:#f4f6f8!important}
  .jalert-card{padding:16px!important}
 }
 
+
+/* Refined emergency alert presentation + user-selectable device layout */
+.alert-overlay{background:rgba(3,6,10,.88)!important;backdrop-filter:blur(13px) saturate(.75)!important;padding:clamp(10px,3vw,42px)!important}
+.alert-panel{position:relative;width:min(980px,100%)!important;max-height:92vh!important;overflow:auto!important;text-align:left!important;padding:clamp(20px,3.4vw,44px)!important;border:1px solid #ff5666!important;border-radius:18px!important;background:radial-gradient(ellipse at 92% 0%,#48131c 0%,#210b11 42%,#101216 100%)!important;box-shadow:0 0 0 1px #ff334433,0 24px 90px #000c!important}
+.alert-panel:before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:linear-gradient(180deg,#ff8790,#ed2038 65%,#86101e)}
+.alert-topline{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:16px;border-bottom:1px solid #ffffff24}
+.alert-brand{font-size:10px;letter-spacing:.16em;font-weight:850;color:#cbd1d8}.alert-brand i{font-style:normal;color:#ff6574}
+.alert-live-mark{display:inline-flex;align-items:center;gap:7px;padding:6px 10px;border:1px solid #ff536466;border-radius:5px;background:#a9132838;color:#ffabb3;font-size:9px;letter-spacing:.15em;font-weight:900}
+.alert-live-mark b{width:7px;height:7px;border-radius:50%;background:#ff3349;box-shadow:0 0 12px #ff3349}
+.alert-kicker{display:inline-flex;margin-top:22px;padding:7px 11px;border-radius:5px;background:#d91d34!important;color:#fff!important;font-size:clamp(11px,1.2vw,14px)!important;font-weight:900;letter-spacing:.12em}
+.alert-headline{margin:15px 0 12px!important;color:#fff!important;font-size:clamp(30px,5vw,58px)!important;font-weight:900!important;line-height:1.15!important;letter-spacing:-.035em}
+.alert-detail{white-space:pre-line;color:#f1cbd0!important;font-size:clamp(14px,1.45vw,18px)!important;line-height:1.85!important;max-width:780px}
+.alert-footer{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;margin-top:24px;padding-top:16px;border-top:1px solid #ffffff24}
+.alert-footer>span{font-size:10px;color:#b5a3a8;line-height:1.6}
+.alert-close{margin:0!important;background:#f4f5f6!important;color:#11151a!important;border-radius:7px!important;padding:11px 16px!important;font-size:12px!important;font-weight:850!important}
+.alert-close span{margin-left:10px;color:#c31b30}
+.alert-overlay.test-mode .alert-panel{border:2px dashed #ff7884!important;background:radial-gradient(ellipse at 92% 0%,#48131c 0%,#210b11 42%,#101216 100%)!important}
+.alert-overlay.test-mode .alert-kicker{background:#9f1728!important;color:#fff!important}
+.alert-overlay.test-mode .alert-detail{color:#f4d5d9!important}
+.device-setting{display:grid;grid-template-columns:minmax(150px,.7fr) minmax(180px,1fr);gap:8px 12px;align-items:center;margin:12px 0 15px;padding:12px;background:#0d1218;border:1px solid #36404a;border-radius:8px}
+.device-setting label{font-size:11px;color:#e8edf2;font-weight:750}
+.device-select{width:100%;min-width:0;padding:9px 10px;border-radius:6px;border:1px solid #46515d;background:#1a222b;color:#f3f5f7;font:inherit;font-size:12px}
+.device-setting>span{grid-column:1/-1;font-size:10px;color:#9ca8b4}
+body.device-desktop .alert-panel{width:min(1180px,100%)!important;padding:clamp(30px,4vw,58px)!important}
+body.device-desktop .alert-detail{max-width:900px}
+body.device-tablet .alert-panel{width:min(760px,100%)!important}
+body.device-tablet .alert-headline{font-size:clamp(28px,5vw,46px)!important}
+body.device-mobile .alert-overlay{padding:8px!important;align-items:flex-end}
+body.device-mobile .alert-panel{width:100%!important;max-height:95dvh!important;padding:19px 16px 15px 21px!important;border-radius:16px 16px 10px 10px!important}
+body.device-mobile .alert-topline{padding-bottom:11px}
+body.device-mobile .alert-brand{font-size:8px}
+body.device-mobile .alert-live-mark{font-size:8px;padding:5px 7px}
+body.device-mobile .alert-kicker{margin-top:15px;font-size:11px!important}
+body.device-mobile .alert-headline{font-size:clamp(27px,8vw,38px)!important;margin:12px 0!important}
+body.device-mobile .alert-detail{font-size:14px!important;line-height:1.7!important}
+body.device-mobile .alert-footer{margin-top:17px;padding-top:12px;display:grid;grid-template-columns:1fr}
+body.device-mobile .alert-close{width:100%;padding:13px!important}
+body.device-mobile .device-setting{grid-template-columns:1fr}
+body.device-mobile .device-setting>span{grid-column:auto}
+@media(max-width:650px){
+ .alert-overlay{padding:8px!important;align-items:flex-end}
+ .alert-panel{width:100%!important;max-height:95dvh!important;padding:19px 16px 15px 21px!important;border-radius:16px 16px 10px 10px!important}
+ .alert-topline{padding-bottom:11px}
+ .alert-brand{font-size:8px}
+ .alert-live-mark{font-size:8px;padding:5px 7px}
+ .alert-kicker{margin-top:15px;font-size:11px!important}
+ .alert-headline{font-size:clamp(27px,8vw,38px)!important;margin:12px 0!important}
+ .alert-detail{font-size:14px!important;line-height:1.7!important}
+ .alert-footer{margin-top:17px;padding-top:12px;display:grid;grid-template-columns:1fr}
+ .alert-close{width:100%;padding:13px!important}
+ .device-setting{grid-template-columns:1fr}
+ .device-setting>span{grid-column:auto}
+}
+
 </style>
 </head>
 <body>
 <main class="screen">
 <div class="breaking-strip" id="breaking-strip" role="status"></div>
 <div class="alert-overlay" id="alert-overlay" role="alertdialog" aria-modal="true" aria-labelledby="alert-headline">
- <div class="alert-panel"><div class="alert-kicker" id="alert-kicker">DAYLINE · 緊急防災情報</div><div class="alert-headline" id="alert-headline">速報を受信しました</div><div class="alert-detail" id="alert-detail"></div><button class="alert-close" id="alert-close" type="button">確認しました（表示を閉じる）</button></div>
+ <div class="alert-panel">
+  <div class="alert-topline"><span class="alert-brand">DAYLINE <i>／</i> DISASTER ALERT</span><span class="alert-live-mark"><b></b> EMERGENCY</span></div>
+  <div class="alert-kicker" id="alert-kicker">緊急地震速報</div>
+  <div class="alert-headline" id="alert-headline">速報を受信しました</div>
+  <div class="alert-detail" id="alert-detail"></div>
+  <div class="alert-footer"><span>公式情報・スマートフォンの緊急速報も確認してください</span><button class="alert-close" id="alert-close" type="button">確認して閉じる <span>→</span></button></div>
+ </div>
 </div>
 
 <header class="topbar">
@@ -1392,7 +1452,8 @@ html,body{background:#090b0e!important;color:#f4f6f8!important}
    </div>
    <div class="disaster-actions"><button class="disaster-button" id="sound-enable" type="button">音声を有効化</button><button class="disaster-button" id="settings-button" type="button" aria-expanded="false" aria-controls="disaster-settings">設定・テスト</button><button class="disaster-button" id="notify-button" type="button">通知を許可</button><a class="disaster-button" href="https://www.jma.go.jp/bosai/" target="_blank" rel="noopener noreferrer">気象庁公式</a></div>
   <div class="disaster-settings" id="disaster-settings" hidden>
-   <div class="settings-heading">表示テスト <span>実際の速報・外部配信ではありません</span></div>
+   <div class="settings-heading">表示設定・テスト <span>実際の速報・外部配信ではありません</span></div>
+   <div class="device-setting"><label for="device-layout">端末に合わせた表示</label><select id="device-layout" class="device-select"><option value="auto">自動（おすすめ）</option><option value="desktop">PC・大画面</option><option value="tablet">タブレット</option><option value="mobile">スマートフォン</option></select><span id="device-layout-note">画面幅に合わせて文字・情報量・配置を自動調整します。</span></div>
    <div class="test-actions">
     <button class="test-button" id="test-eew" type="button">緊急地震速報をテスト</button>
     <button class="test-button" id="test-quake" type="button">地震情報をテスト</button>
@@ -1416,6 +1477,22 @@ html,body{background:#090b0e!important;color:#f4f6f8!important}
 <footer class="footer"><span>DAYLINE — YOUR PERSONAL INFORMATION DESK.</span><span>情報は取得元の配信状況により遅延・停止する場合があります。</span></footer>
 </main>
 <script>
+
+const deviceLayoutSelect=document.getElementById("device-layout");
+const deviceLayoutNote=document.getElementById("device-layout-note");
+function applyDeviceLayout(){
+ const choice=localStorage.getItem("dayline_device_layout")||"auto";
+ const width=window.innerWidth;
+ const resolved=choice==="auto"?(width<=650?"mobile":width<=1050?"tablet":"desktop"):choice;
+ document.body.classList.remove("device-desktop","device-tablet","device-mobile");
+ document.body.classList.add("device-"+resolved);
+ if(deviceLayoutSelect)deviceLayoutSelect.value=choice;
+ if(deviceLayoutNote)deviceLayoutNote.textContent=choice==="auto"?"画面幅に合わせて文字・余白・配置を自動調整します。":({desktop:"PC・大画面向けに情報をゆったり表示します。",tablet:"タブレット向けに文字と情報量を調整します。",mobile:"スマートフォン向けに縦配置・大きな操作ボタンで表示します。"}[choice]);
+}
+deviceLayoutSelect?.addEventListener("change",()=>{localStorage.setItem("dayline_device_layout",deviceLayoutSelect.value);applyDeviceLayout();});
+window.addEventListener("resize",()=>{if((localStorage.getItem("dayline_device_layout")||"auto")==="auto")applyDeviceLayout();});
+applyDeviceLayout();
+
 const jst={timeZone:"Asia/Tokyo"};
 const dateFmt=new Intl.DateTimeFormat("ja-JP",{...jst,year:"numeric",month:"long",day:"numeric",weekday:"long"});
 const dateEnFmt=new Intl.DateTimeFormat("en-US",{...jst,weekday:"long",month:"long",day:"numeric",year:"numeric"});
