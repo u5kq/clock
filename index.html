@@ -606,6 +606,177 @@ body{background:#f3f5f7;color:#172536}
  .disaster-card{margin-top:10px!important}
 }
 
+
+/* DAYLINE 2.0 — balanced editorial grid + refined emergency visual language */
+:root{
+ --canvas:#f1f3f5;--ink:#1d2936;--muted:#667382;--rule:#dce2e8;
+ --navy:#20364b;--bluewash:#eaf0f5;--red:#a51f2d;--red-dark:#741923;
+}
+html,body{background:var(--canvas)!important;color:var(--ink)!important}
+.screen{max-width:1840px!important;padding-left:clamp(16px,2.4vw,40px)!important;padding-right:clamp(16px,2.4vw,40px)!important}
+.topbar{border-bottom:1px solid var(--rule)!important}
+.dashboard{
+ display:grid!important;
+ grid-template-columns:repeat(12,minmax(0,1fr))!important;
+ grid-template-rows:minmax(185px,.72fr) minmax(260px,1.28fr)!important;
+ gap:14px!important;padding-top:14px!important;
+}
+.dashboard>.clock-card{grid-column:1/-1!important;grid-row:1!important}
+.dashboard>.weather-card{grid-column:1/span 3!important;grid-row:2!important}
+.dashboard>.news-card{grid-column:4/span 6!important;grid-row:2!important}
+.dashboard>.side-stack{grid-column:10/span 3!important;grid-row:2!important}
+.card,.mini-card{border:1px solid #dce2e8!important;border-radius:13px!important;box-shadow:0 3px 12px rgba(31,48,66,.035)!important}
+.clock-card{
+ background:linear-gradient(112deg,#e8eef4 0%,#f7f9fb 62%,#e7edf3 100%)!important;
+ display:grid!important;grid-template-columns:minmax(190px,.8fr) minmax(0,1.7fr)!important;
+ align-items:center!important;gap:20px!important;
+ padding:clamp(18px,2vw,30px) clamp(20px,2.8vw,44px)!important;
+}
+.clock-card .time{
+ justify-self:end!important;color:#172d42!important;
+ font-size:clamp(105px,12.2vw,205px)!important;
+ font-weight:580!important;letter-spacing:-.085em!important;line-height:.94!important;
+ font-variant-numeric:tabular-nums!important;
+}
+.clock-card .seconds{font-size:.36em!important;color:#718399!important;font-weight:500!important}
+.clock-card .date{color:#243b51!important;font-weight:650!important}
+.clock-card .date-en{color:#6b7b8b!important}
+.clock-card .clock-foot{grid-column:1/-1!important;border-color:#d0d9e2!important;color:#627386!important}
+.weather-card{background:#eaf1f6!important}
+.news-card{background:#fff!important}
+.side-stack{display:grid!important;grid-template-columns:1fr!important;grid-template-rows:1fr!important;gap:0!important}
+.calendar-card{height:100%!important;background:#edf2ed!important}
+.calendar-date{font-size:clamp(38px,3.2vw,52px)!important;color:#263d32!important}
+.news-card h1{color:#1e2d3c!important}
+.news-item{padding:clamp(9px,1vw,14px) 0!important}
+.news-num{color:#657d94!important}
+.news-title{color:#293746!important;line-height:1.5!important}
+.news-meta{color:#7b8793!important}
+.detail-label,.card-note,.mini-label{color:#657382!important}
+
+/* Emergency panel: sober warning-sign aesthetic, strong red hierarchy */
+.disaster-card{
+ grid-column:1/-1!important;position:relative!important;overflow:hidden!important;
+ background:#fff!important;border:1px solid #d6a5aa!important;
+ border-left:8px solid var(--red)!important;border-radius:12px!important;
+ padding:clamp(13px,1.4vw,20px) clamp(16px,2vw,28px)!important;
+ box-shadow:0 4px 16px rgba(116,25,35,.07)!important;
+}
+.disaster-head{align-items:center!important}
+.disaster-title{
+ color:#76212b!important;font-size:clamp(14px,1.15vw,17px)!important;
+ font-weight:850!important;letter-spacing:.025em!important;
+}
+.disaster-title span{
+ display:grid;place-items:center;width:29px;height:29px;border-radius:7px;
+ background:#f8e8e9;color:#a51f2d;font-size:19px!important;font-weight:900;
+}
+.disaster-status{
+ background:#f4e9ea!important;color:#76212b!important;
+ border:1px solid #ead1d4!important;border-radius:5px!important;
+ font-weight:750!important;letter-spacing:.03em;padding:7px 11px!important;
+}
+.disaster-body{margin-top:10px!important}
+.disaster-main{color:#293746!important;font-size:clamp(13px,1vw,15px)!important;font-weight:650!important}
+.disaster-sub{color:#697583!important;font-size:11px!important}
+.disaster-button{border-color:#d3dbe3!important;color:#35495d!important}
+.disaster-card.alert{
+ background:linear-gradient(105deg,#fff0f0 0%,#fff7f6 100%)!important;
+ border:2px solid #b82b37!important;border-left:12px solid #a51f2d!important;
+ box-shadow:0 0 0 3px rgba(165,31,45,.08),0 8px 24px rgba(116,25,35,.13)!important;
+}
+.disaster-card.alert .disaster-title{color:#8e1724!important}
+.disaster-card.alert .disaster-title span{background:#a51f2d;color:#fff!important}
+.disaster-card.alert .disaster-status{background:#a51f2d!important;color:#fff!important;border-color:#a51f2d!important}
+.disaster-card.alert .disaster-main{color:#741923!important;font-weight:800!important}
+.disaster-card.error{background:#fff8ec!important;border-color:#d7b879!important;border-left-color:#b17a24!important}
+.disaster-card.error .disaster-title,.disaster-card.error .disaster-main{color:#74501d!important}
+
+/* Alert overlay: urgent but disciplined, no clutter */
+.alert-overlay{
+ background:radial-gradient(ellipse at center,rgba(75,10,18,.88),rgba(20,13,18,.97))!important;
+ backdrop-filter:blur(7px)!important;
+}
+.alert-panel{
+ position:relative!important;width:min(1120px,100%)!important;
+ background:#fff8f7!important;border:0!important;border-top:12px solid #a51f2d!important;
+ border-radius:16px!important;padding:clamp(28px,5vw,68px)!important;
+ box-shadow:0 28px 100px rgba(0,0,0,.45)!important;
+}
+.alert-panel:before{
+ content:"";position:absolute;left:0;top:0;bottom:0;width:7px;background:#a51f2d;
+}
+.alert-kicker{
+ display:inline-flex!important;align-items:center;gap:9px;
+ background:#a51f2d!important;color:#fff!important;
+ padding:10px 15px!important;border-radius:5px!important;
+ font-size:clamp(12px,1.3vw,17px)!important;font-weight:900!important;letter-spacing:.13em!important;
+}
+.alert-headline{
+ color:#741923!important;font-size:clamp(34px,5.6vw,76px)!important;
+ font-weight:900!important;letter-spacing:-.035em!important;line-height:1.15!important;
+ margin:25px 0 17px!important;
+}
+.alert-detail{color:#39434d!important;font-size:clamp(16px,1.7vw,22px)!important;line-height:1.75!important}
+.alert-close{background:#293746!important;color:#fff!important;border-radius:7px!important;padding:13px 28px!important;font-weight:750!important}
+.breaking-strip{
+ background:#a51f2d!important;color:#fff!important;border:0!important;
+ border-radius:6px!important;box-shadow:0 5px 18px rgba(116,25,35,.24)!important;
+ font-weight:850!important;letter-spacing:.035em!important;
+}
+.alert-overlay.test-mode{background:rgba(48,37,18,.82)!important}
+.alert-overlay.test-mode .alert-panel{background:#fffaf0!important;border-top-color:#a97825!important}
+.alert-overlay.test-mode .alert-panel:before{background:#a97825!important}
+.alert-overlay.test-mode .alert-kicker{background:#8b641f!important;color:#fff!important}
+.alert-overlay.test-mode .alert-headline{color:#694b18!important}
+.alert-overlay.test-mode .alert-close{background:#71551f!important}
+.breaking-strip.show{display:block!important}
+
+/* Secondary widgets stay compact; never create giant empty panels */
+.lower-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:12px!important}
+.mini-card{min-height:74px!important;padding:12px 16px!important}
+.mini-content{margin-top:5px!important}
+@media(min-width:1051px){
+ html,body{height:auto!important;min-height:100%!important;overflow:auto!important}
+ .screen{height:auto!important;min-height:100vh!important;overflow:visible!important}
+ .dashboard{grid-template-rows:minmax(190px, min(26vh,270px)) minmax(280px,auto)!important}
+ .clock-card .time{font-size:clamp(118px,11.8vw,205px)!important}
+ .weather-card,.news-card,.side-stack{min-height:280px!important;height:100%!important}
+ .news-list{max-height:390px!important;overflow:auto!important;scrollbar-width:thin}
+ .disaster-card{margin-top:12px!important}
+}
+@media(min-width:651px) and (max-width:1050px){
+ html,body{height:auto!important;overflow:auto!important}
+ .screen{height:auto!important;min-height:100vh!important;overflow:visible!important}
+ .dashboard{grid-template-columns:repeat(6,minmax(0,1fr))!important;grid-template-rows:auto!important}
+ .dashboard>.clock-card{grid-column:1/-1!important;grid-row:auto!important;min-height:210px!important}
+ .clock-card{grid-template-columns:1fr!important}
+ .clock-card .time{justify-self:start!important;font-size:clamp(95px,14vw,165px)!important}
+ .dashboard>.weather-card{grid-column:1/span 3!important;grid-row:auto!important;min-height:260px!important}
+ .dashboard>.news-card{grid-column:4/span 3!important;grid-row:auto!important;min-height:300px!important}
+ .dashboard>.side-stack{grid-column:1/-1!important;grid-row:auto!important;min-height:150px!important}
+ .side-stack{grid-template-columns:1fr!important}
+}
+@media(max-width:650px){
+ html,body{height:auto!important;overflow:auto!important}
+ .screen{height:auto!important;min-height:100vh!important;overflow:visible!important;padding:12px 10px 18px!important}
+ .dashboard{display:flex!important;flex-direction:column!important;gap:10px!important}
+ .dashboard>.clock-card,.dashboard>.weather-card,.dashboard>.news-card,.dashboard>.side-stack{width:100%!important;min-height:0!important}
+ .clock-card{display:flex!important;min-height:175px!important;gap:4px!important}
+ .clock-card .time{font-size:clamp(58px,14vw,92px)!important;align-self:flex-start!important}
+ .clock-card .clock-foot{display:flex!important}
+ .weather-card{min-height:195px!important}
+ .news-card{min-height:260px!important}
+ .side-stack{display:block!important}
+ .calendar-card{min-height:150px!important}
+ .disaster-card{margin-top:10px!important;padding:13px!important}
+ .disaster-body{grid-template-columns:1fr!important}
+ .disaster-actions{justify-content:flex-start!important}
+ .lower-grid{grid-template-columns:1fr!important}
+ .alert-panel{padding:27px 19px!important;border-top-width:9px!important}
+ .alert-headline{font-size:clamp(32px,8vw,48px)!important}
+}
+
 </style>
 </head>
 <body>
