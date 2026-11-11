@@ -1222,6 +1222,24 @@ document.getElementById("test-quake").addEventListener("click",()=>{
  showTestAlert("地震情報（訓練）","これはDAYLINEの画面確認用テストです。実際の地震情報ではありません。気象庁などの外部サービスには何も送信していません。");
  setDisasterState("normal","テスト表示中","地震情報のテストを表示しています。","画面表示の確認用です。実際の速報ではありません。");
 });
+// Scheduled local display test: 17:01:30 JST today. This is a visual simulation only.
+const scheduledTestKey="dayline_scheduled_test_2026-11-11";
+function checkScheduledTest(){
+ const now=new Date();
+ const jstParts=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Tokyo",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"}).formatToParts(now);
+ const p=Object.fromEntries(jstParts.map(x=>[x.type,x.value]));
+ const stamp=p.year+"-"+p.month+"-"+p.day;
+ const seconds=Number(p.hour)*3600+Number(p.minute)*60+Number(p.second);
+ if(stamp==="2026-11-11"&&seconds>=17*3600+1*60+30&&!localStorage.getItem(scheduledTestKey)){
+  localStorage.setItem(scheduledTestKey,"shown");
+  showTestAlert("緊急地震速報（訓練）","17:01:30の予約テスト表示です。これはDAYLINEの画面確認用シミュレーションで、実際の地震・気象庁の速報ではありません。");
+  setDisasterState("normal","予約テスト表示中","緊急地震速報のテストを表示しています。","予約時刻：17:01:30。実際の速報ではありません。");
+ }
+}
+checkScheduledTest();
+const scheduledTestTimer=setInterval(checkScheduledTest,250);
+setTimeout(()=>clearInterval(scheduledTestTimer),10*60*1000);
+
 document.getElementById("test-clear").addEventListener("click",()=>{
  document.getElementById("alert-overlay").classList.remove("show");
  document.getElementById("breaking-strip").classList.remove("show");
