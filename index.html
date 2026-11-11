@@ -880,6 +880,68 @@ html,body{background:#f3f5f7!important;color:#1e2b38!important}
  .clock-card .card-note{font-size:8px!important}
 }
 
+
+/* Compact desktop composition: clock no longer spans the whole dashboard */
+@media (min-width:1051px){
+ .dashboard{
+  grid-template-columns:repeat(12,minmax(0,1fr))!important;
+  grid-template-rows:minmax(175px,auto) minmax(250px,auto)!important;
+  gap:12px!important;
+ }
+ .dashboard>.clock-card{
+  grid-column:1/span 4!important;grid-row:1!important;
+  min-height:175px!important;height:auto!important;
+  display:flex!important;flex-direction:column!important;
+  justify-content:center!important;align-items:stretch!important;
+  padding:18px 22px!important;gap:0!important;
+ }
+ .clock-card>div:first-child{width:100%!important}
+ .clock-card .card-top{margin-bottom:5px!important}
+ .clock-card .card-note{display:none!important}
+ .clock-card .date{font-size:16px!important;margin-top:7px!important}
+ .clock-card .date-en{font-size:9px!important;margin-top:2px!important}
+ .clock-card #time{
+  justify-self:start!important;justify-content:flex-start!important;
+  font-size:clamp(66px,5.8vw,94px)!important;
+  line-height:1!important;margin-top:9px!important;
+  letter-spacing:-.075em!important;
+ }
+ .clock-card .seconds{font-size:.36em!important}
+ .clock-card .clock-foot{
+  display:none!important;
+ }
+ .dashboard>.weather-card{
+  grid-column:5/span 4!important;grid-row:1!important;
+  min-height:175px!important;height:auto!important;
+ }
+ .dashboard>.side-stack{
+  grid-column:9/span 4!important;grid-row:1!important;
+  display:block!important;height:auto!important;min-height:175px!important;
+ }
+ .side-stack .calendar-card{
+  height:100%!important;min-height:175px!important;
+ }
+ .dashboard>.news-card{
+  grid-column:1/-1!important;grid-row:2!important;
+  min-height:250px!important;height:auto!important;
+ }
+ .news-list{max-height:310px!important}
+ .news-item{padding:8px 0!important}
+ .weather-main{margin-top:12px!important}
+ .weather-details{margin-top:12px!important;padding-top:10px!important}
+ .calendar-date{margin-top:10px!important}
+}
+@media (min-width:651px) and (max-width:1050px){
+ .dashboard{grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:10px!important}
+ .dashboard>.clock-card{grid-column:1/span 3!important;grid-row:1!important;min-height:185px!important}
+ .clock-card{display:flex!important;flex-direction:column!important;justify-content:center!important;padding:16px!important}
+ .clock-card .card-note,.clock-card .clock-foot{display:none!important}
+ .clock-card #time{font-size:clamp(64px,9vw,105px)!important;justify-content:flex-start!important;margin-top:10px!important}
+ .dashboard>.weather-card{grid-column:4/span 3!important;grid-row:1!important}
+ .dashboard>.news-card{grid-column:1/-1!important;grid-row:2!important}
+ .dashboard>.side-stack{grid-column:1/-1!important;grid-row:3!important}
+}
+
 </style>
 </head>
 <body>
