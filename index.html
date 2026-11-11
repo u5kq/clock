@@ -1513,6 +1513,162 @@ h1{color:#f3f5f7!important}
  .alert-panel{padding:20px!important}
 }
 
+
+/* DAYLINE / SIGNATURE REDESIGN */
+:root{color-scheme:dark;--dl-bg:#080a0d;--dl-panel:#101419;--dl-panel2:#151b21;--dl-line:#28313a;--dl-muted:#8d99a5;--dl-white:#f4f6f8;--dl-red:#ff3048}
+*{box-sizing:border-box}
+html,body{margin:0!important;background:var(--dl-bg)!important;color:var(--dl-white)!important}
+body{font-family:Inter,"SF Pro Display",-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif!important;letter-spacing:.005em}
+.screen{width:100%!important;max-width:2200px!important;margin:0 auto!important;padding:clamp(12px,1.35vw,24px)!important;gap:12px!important}
+.topbar{min-height:48px!important;padding:0 2px 11px!important;border-bottom:1px solid #252d36!important;align-items:center!important}
+.brand-wrap{gap:12px!important}.brand-mark{width:38px!important;height:38px!important;border-radius:11px!important;background:linear-gradient(145deg,#f8fafc,#aeb8c2)!important;color:#090c10!important;font-size:19px!important;font-weight:900!important;box-shadow:0 5px 18px #fff2!important}
+.brand{font-size:17px!important;letter-spacing:.22em!important;font-weight:800!important;color:#f6f8fa!important}
+.tagline{font-size:8px!important;letter-spacing:.19em!important;color:#788490!important;margin-top:3px!important}
+.top-right{gap:12px!important}.live{font-size:9px!important;letter-spacing:.13em!important;color:#aeb8c2!important}.live-dot{background:#65c58b!important;box-shadow:0 0 0 4px #65c58b18!important}
+.fullscreen{background:#171e25!important;border:1px solid #36414c!important;color:#edf1f4!important;border-radius:8px!important;padding:9px 13px!important;font-size:11px!important}
+.card,.mini-card,.jalert-card{background:linear-gradient(145deg,#151b21,#0e1217)!important;border:1px solid #29333d!important;border-radius:13px!important;box-shadow:0 12px 30px #0005,inset 0 1px #ffffff08!important;color:#f0f3f6!important}
+.dashboard{gap:10px!important;margin:0!important}
+.eyebrow,.card-note,.detail-label,.mini-label,.calendar-extra,.date-en{font-size:9px!important;letter-spacing:.13em!important;color:#8995a1!important}
+.card-top{align-items:center!important}
+.clock-card{background:radial-gradient(ellipse at 15% 0%,#171d24 0%,#050607 68%)!important;border:1px solid #39434e!important;border-radius:15px!important;box-shadow:inset 0 1px #ffffff12,0 16px 40px #0009!important;padding:clamp(17px,1.7vw,28px)!important;justify-content:space-between!important}
+.clock-card .eyebrow{color:#9da8b3!important}.clock-card .card-note{color:#65717d!important}
+.clock-card .date{font-size:clamp(15px,1.2vw,20px)!important;color:#f3f5f7!important;font-weight:600!important;margin-top:17px!important}
+.clock-card .date-en{font-size:9px!important;letter-spacing:.15em!important;color:#7f8a95!important;margin-top:4px!important}
+.clock-card .time{font-size:clamp(58px,6.2vw,112px)!important;line-height:1!important;letter-spacing:-.075em!important;font-weight:650!important;color:#fff!important;font-variant-numeric:tabular-nums!important;text-shadow:0 0 34px #fff1!important;margin-top:10px!important;white-space:nowrap!important}
+.clock-card .seconds{font-size:.48em!important;letter-spacing:-.04em!important;color:#aab4be!important;margin-left:3px!important}
+.clock-foot{border-top:1px solid #252d35!important;padding-top:10px!important;color:#73808c!important;font-size:8px!important;letter-spacing:.12em!important}
+.weather-card,.news-card,.calendar-card{padding:15px!important}
+.weather-main{gap:13px!important;margin:18px 0!important}.weather-icon{font-size:42px!important;filter:grayscale(.25)!important}
+.weather-temp{font-size:clamp(38px,3.3vw,56px)!important;font-weight:650!important;letter-spacing:-.06em!important;color:#fff!important;line-height:1!important}
+.weather-desc{font-size:11px!important;color:#aeb8c2!important;margin-top:5px!important}
+.weather-details{border-top:1px solid #29323b!important;padding-top:12px!important;gap:9px!important}
+.detail-label{font-size:8px!important;letter-spacing:.06em!important;color:#85919d!important}.detail-value{font-size:15px!important;color:#edf1f4!important;font-weight:600!important;margin-top:4px!important}
+.news-card{min-width:0!important}.news-card h1{font-size:18px!important;font-weight:650!important;letter-spacing:-.025em!important;margin:5px 0 0!important;color:#f4f6f8!important}
+.news-tabs{gap:5px!important;margin:13px 0 7px!important;flex-wrap:wrap!important}
+.news-tab{border:1px solid #303a45!important;border-radius:6px!important;background:#171e25!important;color:#aeb8c2!important;padding:6px 9px!important;font-size:9px!important;transition:background .18s,border-color .18s!important}
+.news-tab[aria-pressed=true]{background:#edf1f4!important;color:#0b0e12!important;border-color:#edf1f4!important;font-weight:700!important}
+.news-list{gap:0!important}.news-item{display:grid!important;grid-template-columns:25px 1fr!important;gap:9px!important;padding:9px 0!important;border-bottom:1px solid #252e37!important;text-decoration:none!important}
+.news-num{font-size:10px!important;color:#71808e!important;font-variant-numeric:tabular-nums!important}
+.news-meta{font-size:8px!important;color:#82909d!important;margin-bottom:3px!important}.news-title{font-size:11px!important;line-height:1.45!important;color:#e9edf1!important;font-weight:500!important}
+.news-item:hover .news-title{color:#fff!important}.empty{font-size:11px!important;color:#9ba6b1!important;padding:15px 0!important}
+.calendar-card{height:100%!important}.calendar-date{font-size:clamp(34px,3vw,52px)!important;line-height:1!important;letter-spacing:-.06em!important;color:#fff!important;font-weight:650!important;margin-top:24px!important}
+.calendar-weekday{font-size:12px!important;color:#aeb8c2!important;margin-top:8px!important}.calendar-extra{border-top:1px solid #29323b!important;padding-top:12px!important;margin-top:18px!important;line-height:1.6!important;letter-spacing:.02em!important}
+.disaster-card{background:linear-gradient(135deg,#141a20,#0c1014)!important;border:1px solid #3a4651!important;border-radius:15px!important;padding:17px 19px!important;box-shadow:0 14px 36px #0007,inset 0 1px #ffffff09!important}
+.disaster-head{border-bottom:1px solid #2a343e!important;padding-bottom:12px!important;align-items:center!important}
+.disaster-title{font-size:16px!important;font-weight:700!important;letter-spacing:.025em!important;color:#f1f4f6!important}.disaster-title>span{color:#aebbc7!important;margin-right:7px!important}
+.disaster-checked{font-size:9px!important;color:#8996a2!important;letter-spacing:.04em!important}
+.disaster-status{background:#1d2831!important;border:1px solid #394753!important;color:#c6d0d9!important;border-radius:5px!important;font-size:9px!important;padding:5px 8px!important}
+.disaster-body{grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr)!important;gap:16px!important;margin-top:14px!important}
+.disaster-main{font-size:clamp(15px,1.35vw,21px)!important;font-weight:650!important;line-height:1.45!important;color:#f2f5f7!important}
+.disaster-sub{font-size:10px!important;line-height:1.65!important;color:#9ba7b2!important;margin-top:7px!important}
+.quake-metrics{gap:8px!important;margin-top:14px!important}
+.quake-metric{background:linear-gradient(145deg,#1a222a,#10151a)!important;border:1px solid #303c47!important;border-radius:9px!important;padding:12px!important;min-height:82px!important}
+.quake-metric span{font-size:8px!important;letter-spacing:.12em!important;color:#83909c!important}
+.quake-metric strong{font-size:clamp(19px,1.7vw,28px)!important;color:#f7f9fa!important;letter-spacing:-.04em!important}
+.quake-metric small{font-size:9px!important;color:#9ca8b3!important}
+.quake-map-wrap{background:#0b1015!important;border:1px solid #303b46!important;border-radius:10px!important;padding:11px!important}
+.quake-map-head{font-size:11px!important;color:#e9edf1!important;margin-bottom:8px!important}
+.quake-map-head span+span{font-size:8px!important;color:#8996a2!important}
+#quake-map,.quake-map-empty{height:clamp(150px,20vh,220px)!important;border-radius:7px!important}
+.quake-map-empty{background:linear-gradient(145deg,#18212a,#0e141a)!important;color:#a6b2bd!important;font-size:10px!important}
+.quake-map-link{font-size:9px!important;color:#c4ced7!important;margin-top:8px!important}
+.disaster-actions{gap:7px!important;margin-top:13px!important}
+.disaster-button{background:#1a232c!important;border:1px solid #3a4652!important;color:#e5ebf0!important;border-radius:7px!important;padding:8px 11px!important;font-size:10px!important;text-decoration:none!important}
+.disaster-button:hover,.test-button:hover{background:#283541!important}
+.disaster-settings{background:#0c1116!important;border:1px solid #34404b!important;border-radius:9px!important;padding:13px!important;margin-top:12px!important}
+.settings-heading{font-size:11px!important;color:#f0f3f6!important}.settings-heading span{color:#8f9ba6!important}
+.device-select,.schedule-input{background:#080c10!important;border:1px solid #394550!important;color:#eef2f5!important;border-radius:6px!important}
+.device-setting>span{font-size:9px!important;color:#8f9ba6!important}
+.test-button,.schedule-action{background:#1b252e!important;border:1px solid #3b4854!important;color:#edf1f4!important;border-radius:6px!important;padding:8px 10px!important;font-size:10px!important}
+.test-button.secondary{background:#11181f!important;color:#b7c2cc!important}
+.jalert-card{padding:13px 16px!important;border-radius:12px!important}
+.jalert-title{font-size:11px!important;font-weight:700!important;letter-spacing:.06em!important;color:#edf1f4!important}
+.jalert-state{font-size:8px!important;background:#1b252d!important;border:1px solid #36434e!important;color:#b4c0ca!important;border-radius:5px!important;padding:5px 7px!important}
+.jalert-copy{font-size:9px!important;line-height:1.55!important;color:#9ba7b2!important;margin-top:7px!important}
+.jalert-links{gap:6px!important;margin-top:8px!important}.jalert-links a{font-size:9px!important;color:#dce3e9!important;background:#18212a!important;border:1px solid #34414d!important;border-radius:5px!important;padding:5px 8px!important;text-decoration:none!important}
+.lower-grid{gap:9px!important;margin:0!important}
+.mini-card{padding:11px 13px!important;min-width:0!important}
+.mini-label{font-size:8px!important;letter-spacing:.13em!important;color:#84919d!important}
+.mini-content{font-size:15px!important;font-weight:600!important;color:#e9edf1!important;margin-top:7px!important}
+.schedule-row{gap:6px!important;margin-top:6px!important}.schedule-input{min-width:0!important;padding:7px 8px!important;font-size:9px!important}.schedule-action{padding:6px 9px!important;font-size:9px!important}.schedule-result{font-size:8px!important;color:#8996a2!important}
+.footer{border-top:1px solid #252e37!important;color:#65717c!important;font-size:8px!important;letter-spacing:.08em!important;padding-top:8px!important}
+.disaster-card.alert{background:linear-gradient(135deg,#390a12,#160b10 70%)!important;border:2px solid var(--dl-red)!important;box-shadow:0 0 0 1px #ff304833,0 0 35px #ff304822!important}
+.disaster-card.alert .disaster-title>span{color:#ff4057!important}
+.disaster-card.alert .disaster-status{background:#d91f36!important;color:#fff!important;border-color:#ff6577!important}
+.alert-overlay{background:#030507e8!important;backdrop-filter:blur(18px)!important}
+.alert-panel{background:radial-gradient(ellipse at 90% 0%,#56121d,#1a0a0e 58%,#090b0e)!important;border:1px solid #ff3048!important;border-radius:18px!important;box-shadow:0 30px 100px #000e,0 0 55px #ff304822!important}
+.alert-topline{border-bottom:1px solid #ffffff20!important;padding-bottom:12px!important}
+.alert-brand{color:#f4dce0!important;letter-spacing:.14em!important}.alert-live-mark{color:#ff9eaa!important}
+.alert-kicker{background:#e01d37!important;color:#fff!important;border-radius:5px!important;letter-spacing:.1em!important}
+.alert-headline{color:#fff!important;letter-spacing:-.04em!important;font-weight:800!important}
+.alert-detail{color:#f4d5da!important;line-height:1.75!important}
+.alert-close{background:#f4f6f8!important;color:#101318!important;border-radius:7px!important;font-weight:700!important}
+.alert-overlay.test-mode .alert-panel{border:2px dashed #ff7d8d!important}
+.breaking-strip.show,.breaking-strip.show.test-mode{background:#c91e36!important;color:#fff!important;border:1px solid #ff6175!important}
+@media(min-width:1200px) and (min-height:760px){
+ html,body{height:100%!important;overflow:hidden!important}
+ .screen{height:100dvh!important;max-height:100dvh!important;overflow:hidden!important;display:grid!important;grid-template-rows:48px minmax(205px,26vh) minmax(270px,1fr) auto auto auto!important;gap:10px!important;padding:clamp(12px,1.1vw,20px)!important}
+ .topbar{min-height:0!important}
+ .dashboard{display:grid!important;grid-template-columns:minmax(300px,1.18fr) minmax(220px,.78fr) minmax(340px,1.2fr) minmax(175px,.62fr)!important;grid-template-rows:minmax(0,1fr)!important;min-height:0!important;height:100%!important}
+ .dashboard>.clock-card,.dashboard>.weather-card,.dashboard>.news-card,.dashboard>.side-stack{grid-column:auto!important;grid-row:1!important;min-height:0!important;height:100%!important;overflow:hidden!important}
+ .clock-card{padding:clamp(15px,1.4vw,24px)!important}
+ .clock-card .time{font-size:clamp(60px,5.4vw,100px)!important}
+ .weather-card,.news-card,.calendar-card{padding:clamp(11px,1vw,17px)!important}
+ .weather-main{margin:12px 0!important}.weather-icon{font-size:36px!important}
+ .news-tabs{margin:9px 0 4px!important}.news-tab{padding:5px 7px!important}
+ .news-item{padding:6px 0!important}.news-title{font-size:10px!important}
+ .disaster-card{min-height:0!important;overflow:hidden!important;padding:clamp(13px,1.1vw,19px)!important}
+ .disaster-body{min-height:0!important}
+ #quake-map,.quake-map-empty{height:clamp(145px,19vh,230px)!important}
+ .jalert-card{padding:9px 13px!important}.jalert-copy{margin-top:4px!important}
+ .lower-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+ .mini-card{padding:8px 11px!important}.mini-content{font-size:13px!important;margin-top:4px!important}
+ .footer{padding-top:5px!important}
+}
+@media(max-width:1199px){
+ html,body{height:auto!important;overflow:auto!important}
+ .screen{height:auto!important;min-height:100vh!important;overflow:visible!important;padding:14px!important;display:flex!important;flex-direction:column!important}
+ .dashboard{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:auto!important;gap:10px!important}
+ .clock-card{grid-column:1/-1!important;min-height:220px!important}
+ .clock-card .time{font-size:clamp(76px,12vw,132px)!important}
+ .weather-card{grid-column:1!important;min-height:220px!important}
+ .news-card{grid-column:2!important;min-height:280px!important}
+ .side-stack{grid-column:1/-1!important;display:block!important}
+ .calendar-card{height:auto!important}
+ .disaster-body{grid-template-columns:1fr!important}
+ .quake-metrics{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+ .jalert-card{margin-top:0!important}
+ .lower-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:680px){
+ .screen{padding:10px!important;gap:9px!important}
+ .topbar{padding-bottom:8px!important}.brand-mark{width:32px!important;height:32px!important}
+ .brand{font-size:15px!important}.tagline{font-size:7px!important}
+ .top-right{gap:7px!important}.live{font-size:8px!important}.fullscreen{padding:7px 8px!important;font-size:9px!important}
+ .dashboard{grid-template-columns:1fr!important;gap:9px!important}
+ .clock-card,.weather-card,.news-card,.side-stack{grid-column:1!important;min-height:0!important}
+ .clock-card{min-height:190px!important;padding:16px!important}
+ .clock-card .time{font-size:clamp(66px,17vw,102px)!important}
+ .weather-card{min-height:0!important}.news-card{min-height:0!important}
+ .news-tabs{gap:5px!important}.news-tab{font-size:9px!important;padding:6px 8px!important}
+ .disaster-card{padding:13px!important}
+ .disaster-head{align-items:flex-start!important;gap:8px!important;flex-wrap:wrap!important}
+ .disaster-body{grid-template-columns:1fr!important;gap:10px!important}
+ .quake-metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #quake-map,.quake-map-empty{height:190px!important}
+ .disaster-actions{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .disaster-actions>*{text-align:center!important;justify-content:center!important}
+ .jalert-card{padding:12px!important}
+ .jalert-head{gap:7px!important;align-items:flex-start!important;flex-direction:column!important}
+ .jalert-links{display:flex!important;flex-wrap:wrap!important}
+ .lower-grid{grid-template-columns:1fr!important}
+ .mini-card{padding:11px!important}
+ .alert-panel{padding:20px!important}
+}
+@media(min-width:681px) and (max-width:1199px){
+ .disaster-body{grid-template-columns:minmax(0,1.1fr) minmax(260px,.9fr)!important}
+}
+
 </style>
 </head>
 <body>
