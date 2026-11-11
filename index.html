@@ -2396,6 +2396,85 @@ body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP
  .disaster-body{grid-template-columns:1fr}
 }
 
+
+/* DAYLINE — balanced pastel cards and sizing */
+:root{
+ --bg:#f5f3f8;--ink:#343442;--muted:#858397;--line:#e8e3ef;
+ --lav:#eee8f7;--sage:#e8f1eb;--blue:#e7eff8;
+ --peach:#f8eae8;--butter:#f5f0df;--accent:#81779d;
+}
+html,body{background:var(--bg);color:var(--ink)}
+.screen{max-width:1720px}
+.card,.mini-card{border:1px solid #e8e3ef;border-radius:16px;box-shadow:0 3px 14px rgba(92,78,115,.035)}
+.clock-card{background:#eee8f7!important}
+.weather-card{background:#e7eff8!important}
+.news-card{background:#f8eef0!important}
+.calendar-card{background:#e8f1eb!important}
+.market-card{background:#f5f0df!important}
+.disaster-card{background:#f8eae8!important;border-color:#efd9d9}
+.mini-card{background:#eeeefa!important}
+.brand-mark{background:#e9e2f4;color:#756b91}
+.fullscreen,.disaster-button,.test-button{background:#f1edf7;border:1px solid #e3dced;color:#5e5870}
+.fullscreen:hover,.disaster-button:hover,.test-button:hover{background:#e9e2f2}
+.eyebrow,.mini-label{color:#77718f}
+.card-note,.detail-label,.market-label{color:#898398}
+.time{color:#373447}
+.seconds{color:#9186a9}
+.clock-foot{border-color:#ded6eb;color:#817a91}
+.news-item{border-color:#eadfe8}
+.news-num,.source{color:#8a7d9f}
+.news-title{color:#393645}
+.calendar-extra{border-color:#d8e5dc}
+.weather-details{border-color:#d9e3ef}
+.disaster-title,.disaster-main{color:#785c68}
+.disaster-status{background:#f2e3e8;color:#856b78}
+.disaster-card.alert{background:#f8dfe2!important;border-color:#e9bfc5}
+.disaster-card.alert .disaster-title,.disaster-card.alert .disaster-main{color:#8f3945}
+.disaster-card.error{background:#f7efdf!important;border-color:#e8d9b7}
+.disaster-card.error .disaster-main{color:#806c46}
+.alert-panel{background:#fff0f0;border-color:#d88e98}
+.alert-kicker{color:#a24d5b}
+.alert-headline{color:#823b48}
+.alert-detail{color:#76545d}
+.alert-close{background:#9a5967}
+.breaking-strip.show{background:#f8dfe2;border-color:#e9bfc5;color:#8f3945}
+.test-button{background:#eee8f7;color:#625a79}
+.test-button.secondary{background:#f8f5fb;color:#756e82}
+@media(min-width:1051px){
+ .dashboard{
+  grid-template-columns:minmax(250px,.92fr) minmax(360px,1.22fr) minmax(250px,.92fr);
+  grid-template-rows:minmax(185px,.82fr) minmax(235px,1.18fr);
+  gap:14px;padding-top:13px;
+ }
+ .clock-card{padding:clamp(17px,1.7vw,26px) clamp(20px,2vw,34px)}
+ .clock-card .time{font-size:clamp(108px,12vw,190px)}
+ .weather-card,.news-card,.side-stack{min-height:0;height:100%}
+ .side-stack{display:block}
+ .side-stack .calendar-card{height:100%}
+ .news-list{max-height:calc(100% - 60px)}
+ .news-item{padding:9px 0}
+ .disaster-card{margin-top:11px;padding:12px 17px}
+ .lower-grid{margin-top:10px}
+}
+@media(min-width:1051px) and (max-height:800px){
+ .dashboard{grid-template-rows:minmax(155px,.76fr) minmax(190px,1.24fr);gap:10px}
+ .clock-card .time{font-size:clamp(92px,10vw,155px)}
+ .disaster-card{margin-top:7px;padding:8px 14px}
+}
+@media(max-width:1050px){
+ .dashboard{gap:12px}
+ .card{padding:18px}
+}
+@media(max-width:650px){
+ .dashboard{gap:11px}
+ .card{padding:16px;border-radius:14px}
+ .clock-card{min-height:190px}
+ .weather-card{min-height:185px}
+ .news-card{min-height:250px}
+ .side-stack .calendar-card{min-height:150px}
+ .disaster-card{padding:14px}
+}
+
 </style>
 </head>
 <body>
