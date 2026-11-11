@@ -68,9 +68,15 @@ h1{margin:7px 0 0;font-size:clamp(20px,1.8vw,27px);font-weight:650;letter-spacin
   <div class="clock-foot"><span>ASIA / TOKYO · UTC +09:00</span><span>24-HOUR CLOCK</span></div>
  </section>
  <section class="card weather-card">
-  <div class="card-top"><div class="eyebrow">WEATHER</div><div class="card-note" id="weather-place">地域未設定</div></div>
-  <div class="weather-placeholder"><strong>天気情報の地域設定</strong>表示する市区町村を設定すると、現在の気温・天気・降水確率・週間予報を表示できます。</div>
-  <div class="weather-details"><div><div class="detail-label">CURRENT</div><div class="detail-value">設定待ち</div></div><div><div class="detail-label">FORECAST</div><div class="detail-value">設定待ち</div></div></div>
+  <div class="card-top"><div class="eyebrow">WEATHER</div><div class="card-note" id="weather-place">神奈川県川崎市宮前区</div></div>
+  <div class="weather-main"><div class="weather-icon" id="weather-icon">☁️</div><div><div class="weather-temp" id="weather-temp">--°</div><div class="weather-desc" id="weather-desc">天気情報を取得中</div></div></div>
+  <div class="weather-details">
+   <div><div class="detail-label">降水確率（今日）</div><div class="detail-value" id="weather-rain">--%</div></div>
+   <div><div class="detail-label">湿度</div><div class="detail-value" id="weather-humidity">--%</div></div>
+   <div><div class="detail-label">体感温度</div><div class="detail-value" id="weather-feels">--°</div></div>
+   <div><div class="detail-label">風速</div><div class="detail-value" id="weather-wind">-- m/s</div></div>
+  </div>
+  <div class="card-note" id="weather-updated" style="margin-top:12px">天気データ取得中</div>
  </section>
  <section class="card news-card">
   <div class="card-top"><div><div class="eyebrow">LATEST HEADLINES</div><h1>今日のニュース</h1></div><div class="card-note" id="news-count">TOP STORIES</div></div>
@@ -216,6 +222,32 @@ document.getElementById("notify-button").addEventListener("click",async()=>{
  catch(e){document.getElementById("notify-button").textContent="通知設定を確認";}
 });
 loadDisaster();setInterval(loadDisaster,60*1000);
+
+
+const weatherCodes={0:["☀️","快晴"],1:["🌤️","おおむね晴れ"],2:["⛅","一部くもり"],3:["☁️","くもり"],45:["🌫️","霧"],48:["🌫️","着氷性の霧"],51:["🌦️","弱い霧雨"],53:["🌦️","霧雨"],55:["🌧️","強い霧雨"],61:["🌧️","弱い雨"],63:["🌧️","雨"],65:["🌧️","強い雨"],71:["🌨️","弱い雪"],73:["🌨️","雪"],75:["❄️","強い雪"],80:["🌦️","にわか雨"],81:["🌧️","雨の可能性"],82:["⛈️","強いにわか雨"],95:["⛈️","雷雨"],96:["⛈️","ひょうを伴う雷雨"],99:["⛈️","強い雷雨"]};
+async function loadWeather(){
+ try{
+  const url="https://api.open-meteo.com/v1/forecast?latitude=35.586&longitude=139.578&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,wind_speed_10m&daily=precipitation_probability_max,weather_code,temperature_2m_max,temperature_2m_min&forecast_days=3&timezone=Asia%2FTokyo";
+  const response=await fetch(url,{cache:"no-store"});if(!response.ok)throw Error("weather HTTP");
+  const data=await response.json();const now=data.current,daily=data.daily;
+  const condition=weatherCodes[now.weather_code]||["🌡️","天気情報"];
+  document.getElementById("weather-icon").textContent=condition[0];
+  document.getElementById("weather-temp").textContent=Math.round(now.temperature_2m)+"°";
+  document.getElementById("weather-desc").textContent=condition[1];
+  document.getElementById("weather-rain").textContent=(daily.precipitation_probability_max?.[0]??"—")+"%";
+  document.getElementById("weather-humidity").textContent=now.relative_humidity_2m+"%";
+  document.getElementById("weather-feels").textContent=Math.round(now.apparent_temperature)+"°";
+  document.getElementById("weather-wind").textContent=now.wind_speed_10m+" m/s";
+  const time=new Intl.DateTimeFormat("ja-JP",{...jst,hour:"2-digit",minute:"2-digit"}).format(new Date());
+  document.getElementById("weather-updated").textContent="最終取得 "+time+" · Open-Meteo";
+ }catch(e){
+  document.getElementById("weather-icon").textContent="—";
+  document.getElementById("weather-temp").textContent="--°";
+  document.getElementById("weather-desc").textContent="天気情報を取得できません";
+  document.getElementById("weather-updated").textContent="通信状態を確認してください";
+ }
+}
+loadWeather();setInterval(loadWeather,15*60*1000);
 
 const notes=["小さな一歩を積み重ねる一日に。","新しいことをひとつ知るだけでも前進。","焦らず、自分のペースで進めよう。","今日の発見が明日の力になる。","余白をつくることも、大切な準備。"];
 const day=Math.floor(Date.now()/86400000);document.getElementById("daily-note").textContent=notes[((day%notes.length)+notes.length)%notes.length];
