@@ -3,94 +3,239 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f5f6f8">
-  <title>Daily Desk | 日付・時刻・ニュース</title>
+  <meta name="theme-color" content="#10151d">
+  <meta name="description" content="DAYLINE — 日付、現在時刻、最新ニュースをひとつの画面に。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%2310151d'/%3E%3Cpath d='M14 32h36M32 14v36' stroke='%237be0c3' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+  <title>DAYLINE — Daily Information Display</title>
   <style>
     :root {
-      color-scheme: light;
-      --ink: #17191d;
-      --muted: #777e89;
-      --line: #e7e9ed;
-      --paper: #ffffff;
-      --bg: #f5f6f8;
-      --accent: #315efb;
+      color-scheme: dark;
+      --bg: #10151d;
+      --panel: #171e28;
+      --panel-soft: #1c2531;
+      --line: rgba(220,232,245,.10);
+      --text: #f2f5f8;
+      --muted: #8995a4;
+      --accent: #7be0c3;
+      --accent-dim: rgba(123,224,195,.12);
     }
     * { box-sizing: border-box; }
+    html { min-height: 100%; background: var(--bg); }
     body {
       margin: 0;
       min-height: 100vh;
-      background: var(--bg);
-      color: var(--ink);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", sans-serif;
+      background: radial-gradient(ellipse at 15% 0%, #1b2935 0%, transparent 43%), var(--bg);
+      color: var(--text);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", sans-serif;
       -webkit-font-smoothing: antialiased;
     }
-    .shell { width: min(100% - 40px, 920px); margin: 0 auto; padding: 34px 0 56px; }
-    header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
-    .brand { font-size: 13px; font-weight: 750; letter-spacing: .16em; }
-    .edition { color: var(--muted); font-size: 11px; letter-spacing: .08em; }
-    .hero { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; margin-top: 28px; padding: 34px 38px 30px; }
-    .eyebrow { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
-    .date { margin-top: 13px; font-size: clamp(17px, 3vw, 22px); font-weight: 600; letter-spacing: .03em; }
-    .time { margin-top: 8px; font-size: clamp(58px, 12vw, 112px); line-height: 1.08; font-weight: 300; letter-spacing: -.065em; font-variant-numeric: tabular-nums; }
-    .timezone { margin-top: 10px; color: var(--muted); font-size: 11px; letter-spacing: .12em; }
-    .section-head { display: flex; justify-content: space-between; align-items: end; margin: 34px 2px 14px; }
-    h1 { margin: 0; font-size: 21px; letter-spacing: .02em; }
-    .updated { color: var(--muted); font-size: 11px; }
-    .news { overflow: hidden; background: var(--paper); border: 1px solid var(--line); border-radius: 16px; }
-    .news-item { display: block; padding: 19px 22px; color: inherit; text-decoration: none; border-bottom: 1px solid var(--line); transition: background .18s ease; }
-    .news-item:last-child { border-bottom: 0; }
-    .news-item:hover { background: #fafbff; }
-    .news-meta { display: flex; gap: 10px; align-items: center; margin-bottom: 7px; color: var(--muted); font-size: 11px; }
+    button { font: inherit; }
+    .screen {
+      width: min(100%, 1920px);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: clamp(22px, 2.7vw, 48px) clamp(22px, 4vw, 76px);
+      display: flex;
+      flex-direction: column;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--line);
+    }
+    .brand-wrap { display: flex; align-items: center; gap: 14px; }
+    .brand-mark {
+      width: 38px; height: 38px; border-radius: 12px;
+      display: grid; place-items: center;
+      background: var(--accent-dim); color: var(--accent);
+      font-size: 22px; font-weight: 500;
+    }
+    .brand { font-size: 19px; font-weight: 800; letter-spacing: .18em; }
+    .tagline { margin-top: 3px; color: var(--muted); font-size: 10px; letter-spacing: .17em; }
+    .top-right { display: flex; align-items: center; gap: 22px; }
+    .live { display: flex; align-items: center; gap: 9px; color: #b8c4d0; font-size: 11px; letter-spacing: .12em; }
+    .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 13px rgba(123,224,195,.65); }
+    .fullscreen {
+      border: 1px solid var(--line); border-radius: 9px;
+      padding: 9px 13px; background: var(--panel); color: #dce4ec;
+      font-size: 11px; cursor: pointer; transition: .2s ease;
+    }
+    .fullscreen:hover { border-color: rgba(123,224,195,.45); color: var(--accent); }
+    .dashboard {
+      flex: 1;
+      display: grid;
+      grid-template-columns: minmax(0, .94fr) minmax(0, 1.06fr);
+      gap: clamp(18px, 2.3vw, 42px);
+      padding-top: clamp(24px, 3vw, 52px);
+      min-height: 0;
+    }
+    .clock-panel, .news-panel {
+      min-width: 0;
+      background: linear-gradient(145deg, rgba(255,255,255,.035), rgba(255,255,255,.012));
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      overflow: hidden;
+    }
+    .clock-panel {
+      display: flex; flex-direction: column; justify-content: space-between;
+      padding: clamp(28px, 4vw, 70px);
+      min-height: 570px;
+      position: relative;
+    }
+    .clock-panel:after {
+      content: ""; position: absolute; width: 330px; height: 330px;
+      right: -145px; bottom: -170px; border-radius: 50%;
+      border: 1px solid rgba(123,224,195,.12);
+      box-shadow: 0 0 0 34px rgba(123,224,195,.025), 0 0 0 70px rgba(123,224,195,.018);
+      pointer-events: none;
+    }
+    .eyebrow { color: var(--accent); font-size: 11px; font-weight: 750; letter-spacing: .2em; }
+    .date { margin-top: 23px; color: #d9e0e8; font-size: clamp(20px, 2.1vw, 31px); font-weight: 500; letter-spacing: .035em; }
+    .date-en { margin-top: 8px; color: var(--muted); font-size: 12px; letter-spacing: .14em; }
+    .time {
+      margin: clamp(35px, 5vw, 84px) 0 0 -5px;
+      white-space: nowrap;
+      font-size: clamp(76px, 8.5vw, 158px);
+      line-height: .98; font-weight: 250; letter-spacing: -.075em;
+      font-variant-numeric: tabular-nums; font-feature-settings: "tnum";
+    }
+    .time .seconds { color: var(--accent); }
+    .clock-bottom {
+      display: flex; justify-content: space-between; align-items: end; gap: 18px;
+      margin-top: 55px; padding-top: 22px; border-top: 1px solid var(--line);
+      position: relative; z-index: 1;
+    }
+    .timezone-label { color: var(--muted); font-size: 11px; letter-spacing: .12em; }
+    .timezone-value { margin-top: 6px; color: #dce4ec; font-size: 13px; font-weight: 650; }
+    .seconds-label { color: var(--muted); font-size: 10px; letter-spacing: .14em; }
+    .news-panel { display: flex; flex-direction: column; padding: clamp(25px, 3vw, 48px); }
+    .news-head {
+      display: flex; justify-content: space-between; align-items: end; gap: 15px;
+      padding-bottom: 23px; border-bottom: 1px solid var(--line);
+    }
+    h1 { margin: 9px 0 0; font-size: clamp(23px, 2.4vw, 34px); font-weight: 650; letter-spacing: .025em; }
+    .news-count { color: var(--muted); font-size: 11px; white-space: nowrap; }
+    .news-list { flex: 1; min-height: 0; }
+    .news-item {
+      display: grid; grid-template-columns: 42px minmax(0,1fr); gap: 16px;
+      padding: clamp(15px, 1.5vw, 24px) 0;
+      border-bottom: 1px solid var(--line);
+      color: inherit; text-decoration: none;
+      transition: padding-left .18s ease, background .18s ease;
+    }
+    .news-item:hover { padding-left: 7px; }
+    .news-number { color: var(--accent); font-size: 12px; font-weight: 700; letter-spacing: .08em; padding-top: 3px; }
+    .news-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; margin-bottom: 7px; color: var(--muted); font-size: 10px; }
     .source { color: var(--accent); font-weight: 700; }
-    .news-title { font-size: 14px; line-height: 1.7; font-weight: 600; }
-    .news-empty { padding: 26px 22px; color: var(--muted); font-size: 13px; line-height: 1.8; }
-    footer { display: flex; justify-content: space-between; gap: 16px; margin-top: 18px; color: var(--muted); font-size: 10px; line-height: 1.7; }
-    footer a { color: inherit; }
+    .news-title { color: #e9eef3; font-size: clamp(13px, 1.15vw, 17px); line-height: 1.65; font-weight: 570; }
+    .news-empty { padding: 28px 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
+    .news-empty a { color: var(--accent); }
+    .news-foot {
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      margin-top: auto; padding-top: 18px; color: var(--muted);
+      font-size: 10px; letter-spacing: .04em;
+    }
+    .refresh { color: var(--accent); }
+    .bottomline {
+      display: flex; justify-content: space-between; gap: 15px;
+      padding-top: 19px; color: #657180; font-size: 10px; letter-spacing: .06em;
+    }
+    @media (min-width: 1500px) and (min-height: 850px) {
+      .dashboard { min-height: 700px; }
+      .clock-panel { min-height: 700px; }
+    }
+    @media (max-width: 1050px) {
+      .dashboard { grid-template-columns: 1fr; }
+      .clock-panel { min-height: 440px; }
+      .time { font-size: clamp(75px, 13vw, 130px); }
+      .news-panel { min-height: 540px; }
+    }
     @media (max-width: 600px) {
-      .shell { width: min(100% - 28px, 920px); padding-top: 22px; }
-      .hero { margin-top: 20px; padding: 26px 22px 24px; border-radius: 15px; }
-      .section-head { margin-top: 28px; }
-      .news-item { padding: 17px 17px; }
-      footer { flex-direction: column; }
+      .screen { padding: 18px 14px 24px; }
+      .topbar { padding-bottom: 16px; }
+      .brand { font-size: 16px; }
+      .tagline { font-size: 8px; }
+      .top-right { gap: 10px; }
+      .live { font-size: 9px; }
+      .fullscreen { padding: 8px 9px; font-size: 10px; }
+      .dashboard { gap: 14px; padding-top: 16px; }
+      .clock-panel { min-height: 360px; padding: 25px 21px; border-radius: 16px; }
+      .date { margin-top: 16px; font-size: 18px; }
+      .time { margin-top: 48px; font-size: clamp(65px, 15vw, 90px); }
+      .clock-bottom { margin-top: 42px; }
+      .news-panel { min-height: 500px; padding: 23px 20px; border-radius: 16px; }
+      .news-item { grid-template-columns: 30px minmax(0,1fr); gap: 10px; }
+      .news-title { font-size: 13px; }
+      .bottomline { flex-direction: column; gap: 6px; }
     }
   </style>
 </head>
 <body>
-  <main class="shell">
-    <header>
-      <div class="brand">DAILY DESK</div>
-      <div class="edition">JAPAN STANDARD TIME</div>
+  <main class="screen">
+    <header class="topbar">
+      <div class="brand-wrap">
+        <div class="brand-mark" aria-hidden="true">＋</div>
+        <div>
+          <div class="brand">DAYLINE</div>
+          <div class="tagline">YOUR DAILY INFORMATION DISPLAY</div>
+        </div>
+      </div>
+      <div class="top-right">
+        <div class="live"><span class="live-dot"></span><span>LIVE · JST</span></div>
+        <button class="fullscreen" id="fullscreen-button" type="button">全画面表示 ↗</button>
+      </div>
     </header>
 
-    <section class="hero" aria-label="現在の日付と時刻">
-      <div class="eyebrow">TODAY</div>
-      <div class="date" id="date">日付を読み込み中</div>
-      <div class="time" id="time">--:--:--</div>
-      <div class="timezone">東京・日本標準時（JST）</div>
-    </section>
-
-    <section aria-labelledby="news-heading">
-      <div class="section-head">
+    <div class="dashboard">
+      <section class="clock-panel" aria-label="日付と現在時刻">
         <div>
-          <div class="eyebrow">LATEST UPDATES</div>
-          <h1 id="news-heading">最新ニュース</h1>
+          <div class="eyebrow">TODAY / JAPAN</div>
+          <div class="date" id="date">日付を読み込み中</div>
+          <div class="date-en" id="date-en">JAPAN STANDARD TIME</div>
+          <div class="time" id="time" aria-live="off">--:--:<span class="seconds">--</span></div>
         </div>
-        <div class="updated" id="updated">取得中…</div>
-      </div>
-      <div class="news" id="news-list" aria-live="polite">
-        <div class="news-empty">最新ニュースを読み込んでいます。</div>
-      </div>
-    </section>
+        <div class="clock-bottom">
+          <div>
+            <div class="timezone-label">TIME ZONE</div>
+            <div class="timezone-value">Asia / Tokyo · UTC +09:00</div>
+          </div>
+          <div class="seconds-label">24-HOUR CLOCK</div>
+        </div>
+      </section>
 
-    <footer>
-      <span>ニュース見出し：Google ニュース提供フィード</span>
-      <span>時刻・日付は日本時間で表示</span>
+      <section class="news-panel" aria-labelledby="news-heading">
+        <div class="news-head">
+          <div>
+            <div class="eyebrow">LATEST HEADLINES</div>
+            <h1 id="news-heading">今日のニュース</h1>
+          </div>
+          <div class="news-count" id="news-count">TOP STORIES</div>
+        </div>
+        <div class="news-list" id="news-list" aria-live="polite">
+          <div class="news-empty">最新ニュースを読み込んでいます…</div>
+        </div>
+        <div class="news-foot">
+          <span>GOOGLE NEWS · JAPAN</span>
+          <span class="refresh" id="updated">更新を準備中</span>
+        </div>
+      </section>
+    </div>
+
+    <footer class="bottomline">
+      <span>DAYLINE — A CLEAR VIEW OF YOUR DAY.</span>
+      <span>ニュース見出しはGoogle ニュースのフィードを使用しています。</span>
     </footer>
   </main>
 
   <script>
     const dateFormatter = new Intl.DateTimeFormat("ja-JP", {
       timeZone: "Asia/Tokyo", year: "numeric", month: "long", day: "numeric", weekday: "long"
+    });
+    const englishDateFormatter = new Intl.DateTimeFormat("en-US", {
+      timeZone: "Asia/Tokyo", weekday: "long", month: "long", day: "numeric", year: "numeric"
     });
     const timeFormatter = new Intl.DateTimeFormat("ja-JP", {
       timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23"
@@ -99,10 +244,29 @@
     function updateClock() {
       const now = new Date();
       document.getElementById("date").textContent = dateFormatter.format(now);
-      document.getElementById("time").textContent = timeFormatter.format(now);
+      document.getElementById("date-en").textContent = englishDateFormatter.format(now).toUpperCase();
+      const parts = timeFormatter.formatToParts(now);
+      const hour = parts.find(part => part.type === "hour").value;
+      const minute = parts.find(part => part.type === "minute").value;
+      const second = parts.find(part => part.type === "second").value;
+      document.getElementById("time").innerHTML =
+        hour + ":" + minute + ':<span class="seconds">' + second + "</span>";
     }
     updateClock();
     setInterval(updateClock, 1000);
+
+    document.getElementById("fullscreen-button").addEventListener("click", async () => {
+      try {
+        if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
+        else await document.exitFullscreen();
+      } catch (error) {
+        document.getElementById("fullscreen-button").textContent = "F11で全画面表示";
+      }
+    });
+    document.addEventListener("fullscreenchange", () => {
+      document.getElementById("fullscreen-button").textContent =
+        document.fullscreenElement ? "全画面を終了" : "全画面表示 ↗";
+    });
 
     const feedUrl = "https://news.google.com/rss?hl=ja&gl=JP&ceid=JP:ja";
     const apiUrl = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(feedUrl);
@@ -115,20 +279,33 @@
 
     function renderNews(items) {
       const list = document.getElementById("news-list");
-      const validItems = (items || []).filter(item => item.title && item.link).slice(0, 8);
+      const validItems = (items || []).filter(item => item.title && item.link).slice(0, 7);
       if (!validItems.length) throw new Error("ニュースがありません");
-      list.innerHTML = validItems.map(item => {
+      list.innerHTML = validItems.map((item, index) => {
         const date = item.pubDate ? new Date(item.pubDate) : null;
-        const time = date && !Number.isNaN(date.getTime())
-          ? new Intl.DateTimeFormat("ja-JP", { timeZone: "Asia/Tokyo", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" }).format(date)
+        const published = date && !Number.isNaN(date.getTime())
+          ? new Intl.DateTimeFormat("ja-JP", {
+              timeZone: "Asia/Tokyo", month: "numeric", day: "numeric",
+              hour: "2-digit", minute: "2-digit"
+            }).format(date)
           : "";
+        let safeLink = "https://news.google.com/?hl=ja&gl=JP&ceid=JP:ja";
+        try {
+          const parsed = new URL(item.link);
+          if (parsed.protocol === "https:") safeLink = parsed.href;
+        } catch (error) {}
         const source = item.author || "Google ニュース";
-        return '<a class="news-item" href="' + escapeHtml(item.link) + '" target="_blank" rel="noopener noreferrer">' +
-          '<div class="news-meta"><span class="source">' + escapeHtml(source) + '</span><span>' + escapeHtml(time) + '</span></div>' +
-          '<div class="news-title">' + escapeHtml(item.title) + '</div></a>';
+        return '<a class="news-item" href="' + escapeHtml(safeLink) + '" target="_blank" rel="noopener noreferrer">' +
+          '<div class="news-number">' + String(index + 1).padStart(2, "0") + '</div>' +
+          '<div><div class="news-meta"><span class="source">' + escapeHtml(source) +
+          '</span><span>' + escapeHtml(published) + '</span></div>' +
+          '<div class="news-title">' + escapeHtml(item.title) + '</div></div></a>';
       }).join("");
+      document.getElementById("news-count").textContent = "TOP " + validItems.length + " STORIES";
       document.getElementById("updated").textContent =
-        "更新 " + new Intl.DateTimeFormat("ja-JP", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit" }).format(new Date());
+        "最終更新 " + new Intl.DateTimeFormat("ja-JP", {
+          timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit"
+        }).format(new Date());
     }
 
     async function loadNews() {
@@ -140,7 +317,8 @@
         renderNews(data.items);
       } catch (error) {
         document.getElementById("news-list").innerHTML =
-          '<div class="news-empty">ニュースを読み込めませんでした。通信状況を確認するか、<a href="https://news.google.com/?hl=ja&gl=JP&ceid=JP:ja" target="_blank" rel="noopener noreferrer">Google ニュース</a>をご覧ください。</div>';
+          '<div class="news-empty">ニュースを読み込めませんでした。ネットワークを確認するか、<a href="https://news.google.com/?hl=ja&gl=JP&ceid=JP:ja" target="_blank" rel="noopener noreferrer">Google ニュース</a>を開いてください。</div>';
+        document.getElementById("news-count").textContent = "FEED UNAVAILABLE";
         document.getElementById("updated").textContent = "取得できません";
       }
     }
