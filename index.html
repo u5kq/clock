@@ -522,6 +522,90 @@ body{background:#f3f5f7;color:#172536}
  .alert-panel{padding:25px 18px!important}
 }
 
+
+/* FINAL LAYOUT — use the available canvas, remove dead zones */
+@media (min-width:1051px){
+ html,body{height:auto!important;min-height:100%!important;overflow:auto!important}
+ .screen{
+  width:min(100%,1920px)!important;
+  height:auto!important;min-height:100vh!important;
+  padding:18px clamp(22px,2.4vw,42px) 14px!important;
+  overflow:visible!important;
+ }
+ .topbar{padding-bottom:12px!important}
+ .dashboard{
+  display:grid!important;
+  grid-template-columns:repeat(12,minmax(0,1fr))!important;
+  grid-template-rows:minmax(210px, min(27vh,300px)) minmax(290px,auto)!important;
+  gap:12px!important;
+  padding-top:12px!important;
+  align-content:stretch!important;
+ }
+ .clock-card{
+  grid-column:1/-1!important;grid-row:1!important;
+  min-height:210px!important;height:100%!important;
+  display:grid!important;grid-template-columns:minmax(220px,.75fr) minmax(0,1.8fr)!important;
+  padding:20px clamp(24px,3vw,46px)!important;
+ }
+ .clock-card .time{font-size:clamp(118px,12vw,218px)!important;line-height:.92!important}
+ .clock-card .date{font-size:clamp(18px,1.5vw,24px)!important}
+ .clock-card .clock-foot{grid-column:1/-1!important}
+ .weather-card{
+  grid-column:1/span 4!important;grid-row:2!important;
+  min-height:290px!important;height:100%!important;
+ }
+ .news-card{
+  grid-column:5/span 5!important;grid-row:2!important;
+  min-height:290px!important;height:100%!important;
+ }
+ .side-stack{
+  grid-column:10/span 3!important;grid-row:2!important;
+  display:block!important;min-height:290px!important;height:100%!important;
+ }
+ .side-stack .calendar-card{height:100%!important;min-height:0!important}
+ .news-list{max-height:360px!important;overflow:auto!important}
+ .weather-main{margin-top:24px!important}
+ .weather-details{margin-top:22px!important}
+ .calendar-date{font-size:clamp(34px,3vw,48px)!important}
+ .disaster-card{
+  margin-top:12px!important;min-height:0!important;
+  padding:14px 18px!important;flex:initial!important;
+ }
+ .disaster-body{margin-top:9px!important}
+ .lower-grid{
+  display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:12px!important;margin-top:12px!important;flex:initial!important;
+ }
+ .mini-card{min-height:82px!important;padding:12px 16px!important}
+ .footer{padding-top:12px!important}
+}
+@media (min-width:1051px) and (max-height:800px){
+ .clock-card .time{font-size:clamp(100px,10vw,170px)!important}
+ .dashboard{grid-template-rows:minmax(185px,25vh) minmax(270px,auto)!important}
+ .weather-card,.news-card,.side-stack{min-height:270px!important}
+}
+@media (min-width:651px) and (max-width:1050px){
+ .screen{height:auto!important;min-height:100vh!important;overflow:visible!important}
+ .dashboard{
+  display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;
+  grid-template-rows:auto!important;gap:12px!important;
+ }
+ .clock-card{grid-column:1/-1!important;grid-row:auto!important;min-height:210px!important}
+ .weather-card{grid-column:1/span 3!important;grid-row:auto!important}
+ .news-card{grid-column:4/span 3!important;grid-row:auto!important;min-height:320px!important}
+ .side-stack{grid-column:1/-1!important;grid-row:auto!important;display:block!important;min-height:0!important}
+ .side-stack .calendar-card{min-height:150px!important}
+ .disaster-card{margin-top:12px!important}
+}
+@media (max-width:650px){
+ .screen{overflow:visible!important}
+ .dashboard{display:flex!important;flex-direction:column!important}
+ .clock-card,.weather-card,.news-card,.side-stack{width:100%!important}
+ .side-stack{display:block!important}
+ .side-stack .calendar-card{min-height:145px!important}
+ .disaster-card{margin-top:10px!important}
+}
+
 </style>
 </head>
 <body>
