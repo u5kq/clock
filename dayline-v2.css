@@ -1,0 +1,83 @@
+/* DAYLINE 2.0 — editorial monochrome interface */
+:root{--dl-black:#050505;--dl-white:#f7f7f7;--dl-ink:#17191c;--dl-muted:#777d84;--dl-line:#dedfe1;--dl-paper:#f4f4f2}
+html,body{background:var(--dl-paper)!important;color:var(--dl-ink)!important}
+body .screen{width:min(100%,1600px)!important;max-width:1600px!important;min-height:100vh!important;height:auto!important;overflow:visible!important;margin:auto!important;padding:22px clamp(16px,3vw,48px) 30px!important}
+body .topbar{padding:0 0 18px!important;border-bottom:1px solid #d9dadd!important}
+body .brand-mark{background:#080808!important;color:#fff!important;border-radius:3px!important;width:34px!important;height:34px!important}
+body .brand{font-size:18px!important;letter-spacing:.18em!important;color:#111!important}
+body .tagline{letter-spacing:.2em!important;color:#777!important}
+body .live{font-size:9px!important;letter-spacing:.16em!important}
+body .live-dot{background:#111!important;box-shadow:0 0 0 3px #e4e4e2!important}
+body .fullscreen{border-radius:3px!important;border:1px solid #ccc!important;background:transparent!important;color:#222!important}
+#dayline-nav{display:flex;align-items:center;gap:5px;overflow-x:auto;padding:14px 0 18px;border-bottom:1px solid #d9dadd;scrollbar-width:none}
+#dayline-nav::-webkit-scrollbar{display:none}
+#dayline-nav button{flex:0 0 auto;border:1px solid transparent;background:transparent;color:#777;padding:9px 14px;border-radius:3px;font-size:10px;font-weight:750;letter-spacing:.14em;cursor:pointer}
+#dayline-nav button[aria-current="page"]{background:#080808;color:#fff;border-color:#080808}
+#dayline-nav button:focus-visible{outline:2px solid #777;outline-offset:2px}
+#dayline-pages{padding-top:22px;min-height:65vh}
+.dayline-page{display:none;animation:dl-enter .22s ease}
+.dayline-page.is-active{display:block}
+@keyframes dl-enter{from{opacity:.5;transform:translateY(4px)}to{opacity:1;transform:none}}
+.dayline-page-head{display:flex;justify-content:space-between;align-items:end;gap:14px;margin:0 0 18px}
+.dayline-page-kicker{font-size:10px;font-weight:800;letter-spacing:.2em;color:#777}
+.dayline-page-title{font-size:clamp(22px,3vw,34px);font-weight:800;letter-spacing:-.04em;margin:5px 0 0}
+.dayline-page-description{font-size:11px;color:#858585;line-height:1.6}
+#dayline-clock-page .clock-card{display:grid!important;grid-template-columns:1fr!important;grid-template-rows:auto auto auto auto!important;gap:16px!important;min-height:0!important;grid-column:auto!important;width:100%!important;background:var(--dl-black)!important;color:var(--dl-white)!important;border:1px solid #222!important;border-radius:4px!important;box-shadow:none!important;padding:clamp(22px,4vw,58px)!important}
+#dayline-clock-page .clock-heading{display:flex;justify-content:space-between;gap:12px;align-items:center}
+#dayline-clock-page .clock-heading .eyebrow,#dayline-clock-page .clock-heading .card-note{color:#aaa!important}
+#dayline-clock-page .time{display:flex!important;align-items:baseline!important;gap:.02em!important;margin:0!important;color:#fff!important;font-size:clamp(88px,17vw,230px)!important;font-weight:850!important;letter-spacing:-.085em!important;line-height:.9!important;text-shadow:none!important}
+#dayline-clock-page .time-unit,#dayline-clock-page .time-separator{color:#fff!important;font-weight:850!important}
+#dayline-clock-page .time-unit-small{font-size:.42em!important;color:#aaa!important}
+#dayline-clock-page .clock-foot{border-top:1px solid #333!important;color:#bbb!important;margin:0!important;padding-top:14px!important}
+#dayline-clock-page .clock-foot .date{color:#fff!important;font-size:clamp(16px,2vw,23px)!important;font-weight:700!important;margin:0!important}
+#dayline-clock-page .clock-foot .date-en,#dayline-clock-page .clock-format{color:#888!important}
+#dayline-clock-page .dayline-timeline{display:block!important;width:100%!important;margin:0!important;padding:0!important}
+#dayline-clock-page .timeline-head{display:flex!important;justify-content:space-between!important;color:#aaa!important;font-size:10px!important;font-weight:800!important;letter-spacing:.18em!important;margin:0 0 14px!important}
+#dayline-clock-page #timeline-now{color:#fff!important}
+#dayline-clock-page .timeline-track{display:block!important;position:relative!important;height:4px!important;min-height:4px!important;background:#454545!important;border-radius:0!important;overflow:visible!important}
+#dayline-clock-page .timeline-progress{display:block!important;height:4px!important;background:#fff!important}
+#dayline-clock-page .timeline-marker{display:block!important;width:11px!important;height:11px!important;background:#fff!important;border:2px solid #050505!important;box-shadow:0 0 0 1px #fff!important}
+#dayline-clock-page .timeline-labels{display:flex!important;justify-content:space-between!important;color:#aaa!important;margin-top:12px!important;font-size:10px!important;font-weight:700!important}
+.dayline-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.dayline-grid>.card,.dayline-grid>.mini-card,.dayline-grid>.jalert-card,.dayline-grid>.disaster-card{grid-column:auto!important;min-height:0!important;height:auto!important;margin:0!important;border-radius:4px!important;box-shadow:none!important}
+.dayline-grid .news-card{grid-column:1/-1!important}
+.dayline-grid .news-list{max-height:none!important;overflow:visible!important}
+.dayline-grid .disaster-card{grid-column:1/-1!important}
+.dayline-grid .quake-map-wrap{min-width:0}
+.dayline-grid .lower-grid{display:contents!important}
+.dayline-grid .mini-card{border-radius:4px!important}
+#dayline-timeline-page .timeline-large{background:#fff;border:1px solid #ddd;padding:clamp(22px,4vw,48px);border-radius:4px}
+.timeline-large .timeline-head{font-size:11px;font-weight:800;letter-spacing:.16em;display:flex;justify-content:space-between}
+.timeline-large .timeline-rail{height:8px;background:#e6e6e6;margin:30px 0 16px;position:relative}
+.timeline-large .timeline-rail-fill{height:100%;width:0;background:#080808}
+.timeline-large .timeline-rail-dot{position:absolute;left:0;top:50%;width:16px;height:16px;border-radius:50%;background:#080808;transform:translate(-50%,-50%);border:3px solid #fff;box-shadow:0 0 0 1px #080808}
+.timeline-large .timeline-marks{display:flex;justify-content:space-between;font-size:11px;color:#777;font-variant-numeric:tabular-nums}
+.timeline-large .timeline-summary{margin-top:35px;padding-top:20px;border-top:1px solid #e5e5e5;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.timeline-large .timeline-summary strong{font-size:24px;font-variant-numeric:tabular-nums}
+#dayline-daily-page .weather-card,#dayline-daily-page .news-card,#dayline-daily-page .calendar-card,#dayline-daily-page .market-card{background:#fff!important}
+#dayline-safety-page .disaster-card,#dayline-safety-page .jalert-card{background:#fff!important;border:1px solid #ddd!important;border-radius:4px!important;box-shadow:none!important}
+#dayline-safety-page .disaster-title,#dayline-safety-page .disaster-main{color:#222!important}
+#dayline-safety-page .disaster-status{background:#f0f0f0!important;color:#444!important}
+#dayline-safety-page .disaster-card.alert{background:#fff0f0!important;border-color:#d65a60!important}
+#dayline-world-page .mini-card{background:#fff!important;border:1px solid #ddd!important;border-radius:4px!important;padding:22px!important}
+#dayline-settings-page .settings-panel{background:#fff;border:1px solid #ddd;border-radius:4px;padding:22px}
+#dayline-settings-page .settings-actions{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:18px}
+#dayline-settings-page .settings-actions .disaster-button{border-radius:3px!important}
+#dayline-settings-page #disaster-settings{display:block!important;margin:0!important;padding:18px 0 0!important;border-top:1px solid #ddd}
+#dayline-settings-page #disaster-settings[hidden]{display:block!important}
+.dayline-note{font-size:11px;color:#777;line-height:1.8;margin-top:14px}
+#dayline-original-dashboard{display:none!important}
+.footer{margin-top:28px!important;padding-top:14px!important;border-top:1px solid #ddd!important;color:#888!important}
+@media(max-width:760px){
+ body .screen{padding:14px 12px 24px!important}
+ #dayline-nav{gap:2px;padding:10px 0 13px}
+ #dayline-nav button{padding:9px 11px;font-size:9px}
+ #dayline-pages{padding-top:16px}
+ .dayline-grid{grid-template-columns:1fr}
+ .dayline-grid .news-card,.dayline-grid .disaster-card{grid-column:auto!important}
+ #dayline-clock-page .time{font-size:clamp(65px,17vw,120px)!important}
+ #dayline-clock-page .clock-heading{align-items:flex-start;flex-direction:column}
+ #dayline-clock-page .clock-foot{align-items:flex-start;flex-direction:column;gap:8px}
+ .dayline-page-head{align-items:flex-start;flex-direction:column}
+}
+@media(prefers-reduced-motion:reduce){.dayline-page{animation:none}}
