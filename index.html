@@ -3340,6 +3340,76 @@ html,body{background:#f4f8f8!important;color:#465466!important}
 }
 
 </style>
+<style id="dayline-final-force">
+/* DAYLINE FINAL OVERRIDE */
+html body main.screen .dashboard > section.card.clock-card{
+  background:#050505!important;
+  background-image:none!important;
+  color:#f7f7f7!important;
+  border:1px solid #252525!important;
+  border-radius:12px!important;
+  box-shadow:none!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  grid-template-rows:auto auto auto auto!important;
+  align-content:space-between!important;
+  gap:5px!important;
+  padding:clamp(14px,1.5vw,24px)!important;
+  min-height:170px!important;
+}
+html body main.screen .dashboard > section.card.clock-card .clock-heading,
+html body main.screen .dashboard > section.card.clock-card .clock-foot,
+html body main.screen .dashboard > section.card.clock-card .dayline-timeline{grid-column:1!important;width:100%!important;min-width:0!important}
+html body main.screen .dashboard > section.card.clock-card #time{
+  display:block!important;
+  color:#f7f7f7!important;
+  font-size:clamp(76px,8vw,146px)!important;
+  font-weight:850!important;
+  line-height:.95!important;
+  letter-spacing:-.075em!important;
+  text-shadow:none!important;
+  white-space:nowrap!important;
+  margin:0!important;
+}
+html body main.screen .dashboard > section.card.clock-card #time .time-unit,
+html body main.screen .dashboard > section.card.clock-card #time .time-separator{color:#f7f7f7!important;font-weight:850!important}
+html body main.screen .dashboard > section.card.clock-card #time .time-unit-small{font-size:.48em!important;color:#a9a9a9!important}
+html body main.screen .dashboard > section.card.clock-card .clock-heading *,
+html body main.screen .dashboard > section.card.clock-card .clock-foot *,
+html body main.screen .dashboard > section.card.clock-card .timeline-head,
+html body main.screen .dashboard > section.card.clock-card .timeline-labels{color:#b8b8b8!important}
+html body main.screen .dashboard > section.card.clock-card .dayline-timeline{
+  display:block!important;visibility:visible!important;opacity:1!important;
+  margin:4px 0 0!important;padding:5px 0 0!important;
+}
+html body main.screen .dashboard > section.card.clock-card .timeline-head{
+  display:flex!important;justify-content:space-between!important;
+  font-size:10px!important;font-weight:800!important;letter-spacing:.15em!important;
+  margin:0 0 10px!important;
+}
+html body main.screen .dashboard > section.card.clock-card #timeline-now{color:#fff!important}
+html body main.screen .dashboard > section.card.clock-card .timeline-track{
+  display:block!important;visibility:visible!important;opacity:1!important;
+  position:relative!important;width:100%!important;height:4px!important;min-height:4px!important;
+  background:#454545!important;border-radius:99px!important;overflow:visible!important;
+}
+html body main.screen .dashboard > section.card.clock-card .timeline-progress{
+  display:block!important;height:4px!important;background:#fff!important;
+}
+html body main.screen .dashboard > section.card.clock-card .timeline-marker{
+  display:block!important;visibility:visible!important;width:10px!important;height:10px!important;
+  background:#fff!important;border:2px solid #050505!important;box-shadow:0 0 0 1px #fff!important;
+}
+html body main.screen .dashboard > section.card.clock-card .timeline-labels{
+  display:flex!important;justify-content:space-between!important;
+  margin-top:10px!important;font-size:10px!important;font-weight:800!important;
+  color:#b8b8b8!important;
+}
+@media(max-width:650px){
+ html body main.screen .dashboard > section.card.clock-card{min-height:190px!important}
+ html body main.screen .dashboard > section.card.clock-card #time{font-size:clamp(58px,15vw,100px)!important}
+}
+</style>
 </head>
 <body>
 <main class="screen">
