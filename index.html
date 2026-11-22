@@ -3290,6 +3290,55 @@ html,body{background:#f4f8f8!important;color:#465466!important}
  .alert-close{width:100%!important}
 }
 
+
+/* DAYLINE v2 — monochrome clock and 24-hour timeline */
+:root{--dayline-black:#050505;--dayline-white:#f7f7f7;--dayline-dim:#858585}
+.clock-card{
+ background:var(--dayline-black)!important;
+ color:var(--dayline-white)!important;
+ border:1px solid #252525!important;
+ border-radius:10px!important;
+ box-shadow:none!important;
+}
+.clock-card .eyebrow,.clock-card .card-note,.clock-card .date-en,
+.clock-card .clock-format,.timeline-head,.timeline-labels{color:var(--dayline-dim)!important}
+.clock-card .eyebrow{color:#d4d4d4!important}
+.clock-card .time{
+ color:var(--dayline-white)!important;
+ font-weight:800!important;
+ letter-spacing:-.085em!important;
+ font-variant-numeric:tabular-nums;
+}
+.clock-card .time-separator{color:#f7f7f7!important;opacity:.9}
+.clock-card .seconds{color:#a9a9a9!important}
+.clock-card .date{color:#fff!important;font-weight:750!important}
+.clock-card .clock-foot{border-top:1px solid #292929!important}
+.dayline-timeline{
+ grid-column:1/-1;
+ width:100%;
+ min-width:0;
+ margin-top:2px;
+ padding-top:4px;
+}
+.timeline-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;font-size:10px;font-weight:750;letter-spacing:.16em}
+#timeline-now{color:#fff!important;font-variant-numeric:tabular-nums;letter-spacing:.08em}
+.timeline-track{height:3px;position:relative;background:#3a3a3a;border-radius:99px;margin:0 2px}
+.timeline-progress{position:absolute;inset:0 auto 0 0;width:var(--day-progress,0%);background:#fff;border-radius:99px}
+.timeline-marker{position:absolute;top:50%;left:var(--day-progress,0%);width:11px;height:11px;transform:translate(-50%,-50%);border:2px solid #050505;border-radius:50%;background:#fff;box-shadow:0 0 0 1px #fff}
+.timeline-labels{display:flex;justify-content:space-between;margin-top:11px;font-size:10px;font-weight:750;font-variant-numeric:tabular-nums;letter-spacing:.04em}
+@media(max-width:650px){
+ .clock-card{gap:0!important;padding:17px 15px!important}
+ .clock-card .time{font-size:clamp(64px,16vw,108px)!important}
+ .dayline-timeline{margin-top:7px}
+ .timeline-head{font-size:9px;margin-bottom:11px}
+ .timeline-labels{font-size:9px;margin-top:10px}
+ .timeline-marker{width:10px;height:10px}
+}
+@media(min-width:651px) and (max-width:1050px){
+ .dayline-timeline{margin-top:7px}
+ .clock-card .time{font-size:clamp(100px,16vw,190px)!important}
+}
+
 </style>
 </head>
 <body>
@@ -3314,6 +3363,14 @@ html,body{background:#f4f8f8!important;color:#465466!important}
   <div class="clock-heading"><div class="eyebrow">現在時刻 <span>／</span> JAPAN STANDARD TIME</div><div class="card-note">ASIA / TOKYO · UTC+09:00</div></div>
   <div class="time" id="time" aria-label="現在時刻"><span class="time-unit" id="time-hour">--</span><span class="time-separator">:</span><span class="time-unit" id="time-minute">--</span><span class="time-separator">:</span><span class="time-unit time-unit-small" id="time-second">--</span></div>
   <div class="clock-foot"><div class="clock-date-group"><div class="date" id="date">日付を読み込み中</div><div class="date-en" id="date-en"></div></div><span class="clock-format">24-HOUR DISPLAY</span></div>
+  <div class="dayline-timeline" aria-label="24時間の時間軸">
+   <div class="timeline-head"><span>24-HOUR TIMELINE</span><span id="timeline-now">--:-- JST</span></div>
+   <div class="timeline-track" id="timeline-track" role="img" aria-label="現在時刻の位置">
+    <div class="timeline-progress" id="timeline-progress"></div>
+    <div class="timeline-marker" id="timeline-marker"></div>
+   </div>
+   <div class="timeline-labels"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>24:00</span></div>
+  </div>
  </section>
  <section class="card weather-card">
   <div class="card-top"><div class="eyebrow">WEATHER</div><div class="card-note" id="weather-place">神奈川県川崎市宮前区</div></div>
@@ -3438,6 +3495,13 @@ function updateClock(){
  document.getElementById("calendar-weekday").textContent=new Intl.DateTimeFormat("ja-JP",{...jst,weekday:"long"}).format(now);
  document.getElementById("london-time").textContent=new Intl.DateTimeFormat("ja-JP",{timeZone:"Europe/London",hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"}).format(now);
  document.getElementById("newyork-time").textContent=new Intl.DateTimeFormat("ja-JP",{timeZone:"America/New_York",hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"}).format(now);
+ const dayProgress=((now.getHours()*3600+now.getMinutes()*60+now.getSeconds())/86400)*100;
+ const timeline=document.getElementById("timeline-track");
+ if(timeline){
+  timeline.style.setProperty("--day-progress",dayProgress+"%");
+  timeline.setAttribute("aria-label","現在 "+get("hour")+":"+get("minute")+"、一日の "+dayProgress.toFixed(1)+" パーセント");
+  document.getElementById("timeline-now").textContent=get("hour")+":"+get("minute")+" JST";
+ }
 }
 updateClock();setInterval(updateClock,1000);
 document.getElementById("fullscreen-button").addEventListener("click",async()=>{try{if(!document.fullscreenElement)await document.documentElement.requestFullscreen();else await document.exitFullscreen()}catch(e){document.getElementById("fullscreen-button").textContent="F11で全画面表示"}});
