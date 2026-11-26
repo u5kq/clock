@@ -3409,7 +3409,12 @@ html body main.screen .dashboard > section.card.clock-card .timeline-labels{
  html body main.screen .dashboard > section.card.clock-card #time{font-size:clamp(58px,15vw,100px)!important}
 }
 </style>
-<link rel="stylesheet" href="./dayline-v2.css?v=1"><link rel="icon" type="image/svg+xml" href="./icon.svg?v=1"><link rel="apple-touch-icon" href="./icon.svg"></head>
+<link rel="stylesheet" href="./dayline-v2.css?v=1"><link rel="icon" type="image/svg+xml" href="./icon.svg?v=1"><link rel="apple-touch-icon" href="./icon.svg">
+<style id="dayline-news-refresh-style">
+/* DAYLINE NEWS REFRESH CONTROL */
+.news-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}.news-refresh{border:1px solid #41536a;background:#17263a;color:#eaf1f8;border-radius:6px;padding:7px 11px;font:inherit;font-size:11px;font-weight:700;cursor:pointer;min-height:36px;touch-action:manipulation}.news-refresh:hover{background:#233951}.news-refresh:disabled{opacity:.65;cursor:wait}@media(max-width:520px){.news-tools{gap:6px}.news-refresh{min-height:40px;padding:8px 10px}}
+</style>
+</head>
 <body>
 <main class="screen">
 <div class="breaking-strip" id="breaking-strip" role="status"></div>
@@ -3453,7 +3458,7 @@ html body main.screen .dashboard > section.card.clock-card .timeline-labels{
   <div class="card-note" id="weather-updated" style="margin-top:12px">天気データ取得中</div>
  </section>
  <section class="card news-card">
-  <div class="card-top"><div><div class="eyebrow">LATEST HEADLINES</div><h1>今日のニュース</h1></div><div class="card-note" id="news-count">TOP STORIES</div></div>
+  <div class="card-top"><div><div class="eyebrow">LATEST HEADLINES</div><h1>今日のニュース</h1></div><div class="news-tools"><div class="card-note" id="news-count">TOP STORIES</div><button type="button" class="news-refresh" id="news-refresh" aria-label="ニュースを今すぐ更新">↻ 更新</button></div></div>
   <div class="news-tabs" id="news-tabs" aria-label="ニュースの分野"><button class="news-tab" data-topic="NATION" aria-pressed="true">国内</button><button class="news-tab" data-topic="WORLD" aria-pressed="false">国際</button><button class="news-tab" data-topic="BUSINESS" aria-pressed="false">経済</button><button class="news-tab" data-topic="TECHNOLOGY" aria-pressed="false">科学・技術</button><button class="news-tab" data-topic="SPORTS" aria-pressed="false">スポーツ</button><button class="news-tab" data-topic="ENTERTAINMENT" aria-pressed="false">エンタメ</button></div><div class="news-list" id="news-list" aria-live="polite"><div class="empty">最新ニュースを読み込んでいます…</div></div>
   <div class="card-note" id="updated" style="text-align:right;margin-top:10px">更新を準備中</div>
  </section>
@@ -3578,15 +3583,28 @@ document.addEventListener("fullscreenchange",()=>{document.getElementById("fulls
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 const newsTopics={NATION:"国内",WORLD:"国際",BUSINESS:"経済",TECHNOLOGY:"科学・技術",SPORTS:"スポーツ",ENTERTAINMENT:"エンタメ"};
 let selectedNewsTopic=localStorage.getItem("dayline_news_topic")||"NATION";
+let newsLoading=false;
 async function loadNews(){
- const list=document.getElementById("news-list"),topic=selectedNewsTopic;
+ if(newsLoading)return;
+ newsLoading=true;
+ const list=document.getElementById("news-list"),topic=selectedNewsTopic,refresh=document.getElementById("news-refresh");
+ if(refresh){refresh.disabled=true;refresh.textContent="更新中…"}
  document.querySelectorAll(".news-tab").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.topic===topic)));
  const feed="https://news.google.com/rss/headlines/section/topic/"+topic+"?hl=ja&gl=JP&ceid=JP:ja";
- try{const res=await fetch("https://api.rss2json.com/v1/api.json?rss_url="+encodeURIComponent(feed),{cache:"no-store"});if(!res.ok)throw Error("feed");const data=await res.json();if(data.status!=="ok")throw Error("feed");const items=(data.items||[]).filter(x=>x.title&&x.link).slice(0,5);if(!items.length)throw Error("empty");
- list.innerHTML=items.map((x,i)=>{const d=x.pubDate?new Date(x.pubDate):null;const when=d&&!isNaN(d)?new Intl.DateTimeFormat("ja-JP",{...jst,month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"}).format(d):"";let link="https://news.google.com/?hl=ja&gl=JP&ceid=JP:ja";try{const u=new URL(x.link);if(u.protocol==="https:")link=u.href}catch(e){}return '<a class="news-item" href="'+esc(link)+'" target="_blank" rel="noopener noreferrer"><div class="news-num">'+String(i+1).padStart(2,"0")+'</div><div><div class="news-meta"><span class="source">'+esc(x.author||newsTopics[topic])+'</span><span>'+esc(when)+'</span></div><div class="news-title">'+esc(x.title)+'</div></div></a>'}).join("");
- document.getElementById("news-count").textContent=newsTopics[topic]+" · "+items.length+"件";document.getElementById("updated").textContent="最終更新 "+new Intl.DateTimeFormat("ja-JP",{...jst,hour:"2-digit",minute:"2-digit"}).format(new Date());
- }catch(e){list.innerHTML='<div class="empty">この分野のニュースを取得できませんでした。通信状況を確認してください。</div>';document.getElementById("news-count").textContent=newsTopics[topic]+" · 取得不可";document.getElementById("updated").textContent="取得を再試行します"}
+ try{
+  const res=await fetch("https://api.rss2json.com/v1/api.json?rss_url="+encodeURIComponent(feed),{cache:"no-store"});
+  if(!res.ok)throw Error("feed");const data=await res.json();if(data.status!=="ok")throw Error("feed");
+  const items=(data.items||[]).filter(x=>x.title&&x.link).slice(0,5);if(!items.length)throw Error("empty");
+  list.innerHTML=items.map((x,i)=>{const d=x.pubDate?new Date(x.pubDate):null;const when=d&&!isNaN(d)?new Intl.DateTimeFormat("ja-JP",{...jst,month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"}).format(d):"";let link="https://news.google.com/?hl=ja&gl=JP&ceid=JP:ja";try{const u=new URL(x.link);if(u.protocol==="https:")link=u.href}catch(e){}return '<a class="news-item" href="'+esc(link)+'" target="_blank" rel="noopener noreferrer"><div class="news-num">'+String(i+1).padStart(2,"0")+'</div><div><div class="news-meta"><span class="source">'+esc(x.author||newsTopics[topic])+'</span><span>'+esc(when)+'</span></div><div class="news-title">'+esc(x.title)+'</div></div></a>'}).join("");
+  document.getElementById("news-count").textContent=newsTopics[topic]+" · "+items.length+"件";
+  document.getElementById("updated").textContent="最終更新 "+new Intl.DateTimeFormat("ja-JP",{...jst,month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"}).format(new Date())+" ／ 2分ごとに自動更新";
+ }catch(e){
+  document.getElementById("news-count").textContent=newsTopics[topic]+" · 更新失敗";
+  document.getElementById("updated").textContent="取得できませんでした。前回のニュースがあればそのまま表示します。";
+  if(!list.querySelector(".news-item"))list.innerHTML='<div class="empty">ニュースを取得できませんでした。通信状況を確認して再度お試しください。</div>';
+ }finally{newsLoading=false;if(refresh){refresh.disabled=false;refresh.textContent="↻ 更新"}}
 }
+document.getElementById("news-refresh").addEventListener("click",loadNews);
 document.getElementById("news-tabs").addEventListener("click",e=>{const b=e.target.closest("button[data-topic]");if(!b)return;selectedNewsTopic=b.dataset.topic;localStorage.setItem("dayline_news_topic",selectedNewsTopic);loadNews()});
 loadNews();setInterval(loadNews,2*60*1000);
 
