@@ -81,3 +81,16 @@ body .fullscreen{border-radius:3px!important;border:1px solid #ccc!important;bac
  .dayline-page-head{align-items:flex-start;flex-direction:column}
 }
 @media(prefers-reduced-motion:reduce){.dayline-page{animation:none}}
+
+/* DAYLINE DEVICE OPTIMIZATION — 2026 */
+html{scroll-padding-top:12px}
+body{overflow-x:clip}
+#dayline-nav button{min-height:44px;touch-action:manipulation}
+@media (pointer:coarse){button{min-height:44px}}
+@media (min-width:761px) and (max-width:1100px){
+  body .screen{padding:22px 28px 32px!important}
+  .dayline-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .dayline-grid>.clock-card,.dayline-grid>.news-card{grid-column:1/-1!important}
+  .dayline-grid>.side-stack{grid-column:auto!important}
+}
+@media (max-width:760px){body .screen{padding-left:14px!important;padding-right:14px!important}#dayline-nav{scroll-snap-type:x proximity}#dayline-nav button{scroll-snap-align:start}}
